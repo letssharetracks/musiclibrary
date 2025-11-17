@@ -26,8 +26,8 @@
 
         header {
             text-align: center;
-            margin-bottom: 40px;
-            padding: 40px 20px;
+            margin-bottom: 30px;
+            padding: 40px 20px 20px;
         }
 
         h1 {
@@ -44,22 +44,26 @@
             color: #a0a0a0;
         }
 
+        .filter-section {
+            margin-bottom: 20px;
+        }
+
         .filter-buttons {
             display: flex;
             justify-content: center;
             gap: 15px;
-            margin: 30px auto;
-            max-width: 500px;
+            margin: 20px auto;
+            max-width: 600px;
             flex-wrap: wrap;
         }
 
         .filter-btn {
-            padding: 12px 28px;
+            padding: 10px 24px;
             border: 2px solid rgba(255, 255, 255, 0.2);
             border-radius: 30px;
             background: rgba(255, 255, 255, 0.05);
             color: #fff;
-            font-size: 1em;
+            font-size: 0.95em;
             cursor: pointer;
             transition: all 0.3s;
             display: flex;
@@ -83,13 +87,47 @@
         }
 
         .filter-btn .icon {
-            font-size: 1.2em;
+            font-size: 1.1em;
+        }
+
+        .tags-container {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin: 20px auto;
+            max-width: 1200px;
+            flex-wrap: wrap;
+            padding: 0 20px;
+        }
+
+        .tag-btn {
+            padding: 8px 18px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.03);
+            color: #ccc;
+            font-size: 0.85em;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .tag-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(0, 212, 255, 0.4);
+            color: #fff;
+        }
+
+        .tag-btn.active {
+            background: rgba(0, 212, 255, 0.2);
+            border-color: #00d4ff;
+            color: #00d4ff;
+            font-weight: 500;
         }
 
         .search-box {
             position: relative;
             max-width: 600px;
-            margin: 30px auto;
+            margin: 20px auto;
         }
 
         .search-box input {
@@ -241,104 +279,6 @@
         .gradient-7 { background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%); }
         .gradient-8 { background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%); }
 
-        /* Modal styles */
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.9);
-            z-index: 1000;
-            justify-content: center;
-            align-items: center;
-            backdrop-filter: blur(10px);
-        }
-
-        .modal.active {
-            display: flex;
-        }
-
-        .modal-content {
-            background: #1a1a2e;
-            border-radius: 20px;
-            padding: 30px;
-            max-width: 800px;
-            width: 90%;
-            max-height: 90vh;
-            overflow-y: auto;
-            position: relative;
-            border: 2px solid rgba(0, 212, 255, 0.3);
-        }
-
-        .modal-close {
-            position: absolute;
-            top: 15px;
-            right: 15px;
-            font-size: 2em;
-            background: none;
-            border: none;
-            color: #fff;
-            cursor: pointer;
-            width: 40px;
-            height: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 50%;
-            transition: all 0.3s;
-        }
-
-        .modal-close:hover {
-            background: rgba(255, 255, 255, 0.1);
-            transform: rotate(90deg);
-        }
-
-        .modal-header {
-            margin-bottom: 20px;
-        }
-
-        .modal-title {
-            font-size: 1.5em;
-            margin-bottom: 5px;
-            color: #00d4ff;
-        }
-
-        .modal-artist {
-            color: #a0a0a0;
-            font-size: 1.1em;
-        }
-
-        .player-container {
-            width: 100%;
-            margin-top: 20px;
-        }
-
-        .player-container iframe {
-            width: 100%;
-            border: none;
-            border-radius: 10px;
-        }
-
-        .open-external {
-            margin-top: 20px;
-            padding: 12px 24px;
-            background: linear-gradient(135deg, #00d4ff, #7b2ff7);
-            border: none;
-            border-radius: 25px;
-            color: #fff;
-            font-size: 1em;
-            cursor: pointer;
-            transition: all 0.3s;
-            width: 100%;
-        }
-
-        .open-external:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0, 212, 255, 0.4);
-        }
-
         @media (max-width: 768px) {
             .grid {
                 grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
@@ -363,8 +303,13 @@
             }
 
             .filter-btn {
-                padding: 10px 20px;
-                font-size: 0.9em;
+                padding: 8px 16px;
+                font-size: 0.85em;
+            }
+
+            .tag-btn {
+                padding: 6px 14px;
+                font-size: 0.8em;
             }
         }
     </style>
@@ -376,19 +321,23 @@
             <p class="subtitle">Discover and explore music from Bandcamp & YouTube</p>
         </header>
 
-        <div class="filter-buttons">
-            <button class="filter-btn active" data-filter="all">
-                <span class="icon">🌐</span>
-                <span>All</span>
-            </button>
-            <button class="filter-btn" data-filter="bandcamp">
-                <span class="icon">💿</span>
-                <span>Bandcamp</span>
-            </button>
-            <button class="filter-btn" data-filter="youtube">
-                <span class="icon">▶️</span>
-                <span>YouTube</span>
-            </button>
+        <div class="filter-section">
+            <div class="filter-buttons">
+                <button class="filter-btn active" data-filter="all">
+                    <span class="icon">🌐</span>
+                    <span>All</span>
+                </button>
+                <button class="filter-btn" data-filter="bandcamp">
+                    <span class="icon">💿</span>
+                    <span>Bandcamp</span>
+                </button>
+                <button class="filter-btn" data-filter="youtube">
+                    <span class="icon">▶️</span>
+                    <span>YouTube</span>
+                </button>
+            </div>
+
+            <div class="tags-container" id="tagsContainer"></div>
         </div>
 
         <div class="search-box">
@@ -407,94 +356,13 @@
         </div>
     </div>
 
-    <!-- Player Modal -->
-    <div class="modal" id="playerModal">
-        <div class="modal-content">
-            <button class="modal-close" onclick="closePlayer()">×</button>
-            <div class="modal-header">
-                <div class="modal-title" id="modalTitle"></div>
-                <div class="modal-artist" id="modalArtist"></div>
-            </div>
-            <div class="player-container" id="playerContainer"></div>
-            <button class="open-external" id="openExternal">Open in New Tab</button>
-        </div>
-    </div>
-
     <script>
         const gradients = ['gradient-1', 'gradient-2', 'gradient-3', 'gradient-4', 'gradient-5', 'gradient-6', 'gradient-7', 'gradient-8'];
 
         let allItems = [];
-        let imageData = {};
         let currentFilter = 'all';
-
-        function getYouTubeVideoId(url) {
-            const match = url.match(/[?&]v=([^&]+)/);
-            return match ? match[1] : null;
-        }
-
-        function openPlayer(item) {
-            const modal = document.getElementById('playerModal');
-            const playerContainer = document.getElementById('playerContainer');
-            const modalTitle = document.getElementById('modalTitle');
-            const modalArtist = document.getElementById('modalArtist');
-            const openExternal = document.getElementById('openExternal');
-
-            modalTitle.textContent = item.title;
-            modalArtist.textContent = item.artist;
-            openExternal.onclick = () => window.open(item.url, '_blank');
-
-            playerContainer.innerHTML = '';
-
-            if (item.source === 'youtube') {
-                const videoId = getYouTubeVideoId(item.url);
-                if (videoId) {
-                    const iframe = document.createElement('iframe');
-                    iframe.width = '100%';
-                    iframe.height = '400';
-                    iframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1`;
-                    iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
-                    iframe.allowFullscreen = true;
-                    playerContainer.appendChild(iframe);
-                }
-            } else {
-                // Bandcamp embed
-                const trackId = item.url.split('/').pop().split('?')[0];
-                const artist = item.url.split('//')[1].split('.')[0];
-                
-                const iframe = document.createElement('iframe');
-                iframe.style.border = '0';
-                iframe.width = '100%';
-                iframe.height = '120';
-                
-                if (item.type === 'album') {
-                    iframe.src = `https://bandcamp.com/EmbeddedPlayer/album=${trackId}/size=large/bgcol=1a1a2e/linkcol=00d4ff/tracklist=false/artwork=small/transparent=true/`;
-                } else if (item.type === 'track') {
-                    iframe.src = `https://bandcamp.com/EmbeddedPlayer/track=${trackId}/size=large/bgcol=1a1a2e/linkcol=00d4ff/tracklist=false/artwork=small/transparent=true/`;
-                } else {
-                    // Artist page - just show link
-                    playerContainer.innerHTML = '<p style="color: #a0a0a0; text-align: center; padding: 40px;">Artist pages cannot be embedded. Click "Open in New Tab" to visit.</p>';
-                }
-                
-                if (item.type !== 'artist') {
-                    playerContainer.appendChild(iframe);
-                }
-            }
-
-            modal.classList.add('active');
-        }
-
-        function closePlayer() {
-            const modal = document.getElementById('playerModal');
-            modal.classList.remove('active');
-            document.getElementById('playerContainer').innerHTML = '';
-        }
-
-        // Close modal when clicking outside
-        document.getElementById('playerModal').addEventListener('click', (e) => {
-            if (e.target.id === 'playerModal') {
-                closePlayer();
-            }
-        });
+        let currentTag = null;
+        let allTags = new Set();
 
         function parseUrl(url) {
             const urlParts = url.replace('https://', '').split('/');
@@ -511,33 +379,93 @@
             };
         }
 
+        function createTagButtons() {
+            const tagsContainer = document.getElementById('tagsContainer');
+            tagsContainer.innerHTML = '';
+
+            // Convert Set to Array and sort
+            const sortedTags = Array.from(allTags).sort();
+
+            sortedTags.forEach(tag => {
+                const btn = document.createElement('button');
+                btn.className = 'tag-btn';
+                btn.textContent = tag;
+                btn.onclick = () => {
+                    // Toggle tag selection
+                    if (currentTag === tag) {
+                        currentTag = null;
+                        document.querySelectorAll('.tag-btn').forEach(b => b.classList.remove('active'));
+                    } else {
+                        currentTag = tag;
+                        document.querySelectorAll('.tag-btn').forEach(b => b.classList.remove('active'));
+                        btn.classList.add('active');
+                    }
+                    renderCards(allItems);
+                };
+                tagsContainer.appendChild(btn);
+            });
+        }
+
         async function loadData() {
             try {
-                // Load Bandcamp data
-                const response = await fetch('bandcamp_images.json');
-                imageData = await response.json();
-                
+                // Load Bandcamp images
+                const imgResponse = await fetch('bandcamp_images.json');
+                const imageData = await imgResponse.json();
+
+                // Load Bandcamp metadata
+                const metaResponse = await fetch('bandcamp_metadata.json');
+                const metaDataArray = await metaResponse.json();
+
+                // Create a map of URL to metadata
+                const metaMap = {};
+                metaDataArray.forEach(item => {
+                    metaMap[item.url] = item;
+                    // Collect first tag only
+                    if (item.tags && item.tags.length > 0) {
+                        allTags.add(item.tags[0].toLowerCase());
+                    }
+                });
+
                 allItems = Object.keys(imageData).map(url => {
                     const item = parseUrl(url);
                     item.imageUrl = imageData[url];
+                    
+                    // Add metadata if available
+                    if (metaMap[url]) {
+                        item.tag = metaMap[url].tags && metaMap[url].tags.length > 0 
+                            ? metaMap[url].tags[0].toLowerCase() 
+                            : null;
+                    }
+                    
                     return item;
                 });
 
-                // Try to load YouTube data (optional)
+                // Try to load YouTube data
                 try {
                     const ytResponse = await fetch('youtube_videos.json');
                     const ytData = await ytResponse.json();
+                    
+                    // Sort YouTube videos alphabetically
+                    ytData.sort((a, b) => {
+                        const artistCompare = a.artist.localeCompare(b.artist);
+                        if (artistCompare !== 0) return artistCompare;
+                        return a.title.localeCompare(b.title);
+                    });
+                    
                     allItems = allItems.concat(ytData);
                 } catch (e) {
                     console.log('No YouTube data found (optional)');
                 }
+
+                // Create tag filter buttons
+                createTagButtons();
 
                 document.getElementById('loading').style.display = 'none';
                 document.getElementById('musicGrid').style.display = 'grid';
                 renderCards(allItems);
             } catch (error) {
                 console.error('Error loading data:', error);
-                document.getElementById('loading').innerHTML = 'Error loading music library. Make sure bandcamp_images.json is in the same folder.';
+                document.getElementById('loading').innerHTML = 'Error loading music library.';
             }
         }
 
@@ -546,10 +474,15 @@
             const noResults = document.getElementById('noResults');
             const resultCount = document.getElementById('resultCount');
 
-            // Filter based on current filter
+            // Filter by source
             let filteredItems = items;
             if (currentFilter !== 'all') {
-                filteredItems = items.filter(item => item.source === currentFilter);
+                filteredItems = filteredItems.filter(item => item.source === currentFilter);
+            }
+
+            // Filter by tag
+            if (currentTag) {
+                filteredItems = filteredItems.filter(item => item.tag === currentTag);
             }
 
             grid.innerHTML = '';
@@ -582,7 +515,6 @@
 
                     grid.appendChild(card);
 
-                    // Load the actual image if we have it
                     if (item.imageUrl) {
                         const cardImage = card.querySelector('.card-image');
                         const img = document.createElement('img');
@@ -615,7 +547,7 @@
             }
         });
 
-        // Filter button functionality
+        // Source filter buttons
         document.querySelectorAll('.filter-btn').forEach(btn => {
             btn.addEventListener('click', (e) => {
                 document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
@@ -625,7 +557,6 @@
             });
         });
 
-        // Load data when page loads
         loadData();
     </script>
 </body>
