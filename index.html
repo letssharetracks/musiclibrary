@@ -19,34 +19,7 @@
             transition: background 0.5s ease;
         }
 
-        /* Dynamic theme classes - will be applied via JavaScript */
-        body.theme-ocean {
-            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
-        }
-
-        body.theme-sunset {
-            background: linear-gradient(135deg, #2c1810 0%, #4a1a1a 100%);
-        }
-
-        body.theme-forest {
-            background: linear-gradient(135deg, #0d1b0d 0%, #1a2e1a 100%);
-        }
-
-        body.theme-purple {
-            background: linear-gradient(135deg, #1a0d2e 0%, #2d1b4e 100%);
-        }
-
-        body.theme-midnight {
-            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 100%);
-        }
-
-        body.theme-rose {
-            background: linear-gradient(135deg, #2e1a2e 0%, #3d1a2e 100%);
-        }
-
-        body.theme-teal {
-            background: linear-gradient(135deg, #0d2e2e 0%, #1a3d3d 100%);
-        }
+        /* Dynamic theme - will be applied via JavaScript inline styles */
 
         .container {
             max-width: 1400px;
@@ -57,6 +30,7 @@
             text-align: center;
             margin-bottom: 30px;
             padding: 40px 20px 20px;
+            position: relative;
         }
 
         h1 {
@@ -71,6 +45,31 @@
         .subtitle {
             font-size: 1.2em;
             color: #a0a0a0;
+        }
+
+        .theme-toggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            padding: 8px 16px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            font-size: 0.85em;
+            cursor: pointer;
+            transition: all 0.3s;
+            backdrop-filter: blur(10px);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .theme-toggle:hover {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: rgba(0, 212, 255, 0.5);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 212, 255, 0.3);
         }
 
         .filter-section {
@@ -371,12 +370,27 @@
                 padding: 6px 14px;
                 font-size: 0.8em;
             }
+
+            .theme-toggle {
+                position: static;
+                margin: 0 auto 15px;
+                font-size: 0.8em;
+                padding: 6px 12px;
+            }
+
+            header {
+                padding: 20px 20px 20px;
+            }
         }
     </style>
 </head>
 <body>
     <div class="container">
         <header>
+            <button class="theme-toggle" id="themeToggle">
+                <span>🎨</span>
+                <span>Change Theme</span>
+            </button>
             <h1>🎵 Lets Share Tracks</h1>
             <p class="subtitle">Discover and explore music from Bandcamp & YouTube</p>
         </header>
@@ -425,25 +439,66 @@
     <script>
         const gradients = ['gradient-1', 'gradient-2', 'gradient-3', 'gradient-4', 'gradient-5', 'gradient-6', 'gradient-7', 'gradient-8'];
 
-        // Daily theme system
-        const themes = ['ocean', 'sunset', 'forest', 'purple', 'midnight', 'rose', 'teal'];
-        
-        function getDailyTheme() {
-            // Get today's date as a string (YYYY-MM-DD)
-            const today = new Date();
-            const dateString = today.toISOString().split('T')[0];
-            
-            // Convert date string to a number for seeding
-            const seed = dateString.split('-').join('');
-            const themeIndex = parseInt(seed) % themes.length;
-            
-            return themes[themeIndex];
+        // Generate 365 unique color themes
+        function generateThemes() {
+            const themes = [];
+            for (let i = 0; i < 365; i++) {
+                // Generate unique hue for each day (0-360 degrees)
+                const hue1 = (i * 360 / 365) % 360;
+                const hue2 = (hue1 + 30) % 360; // Offset by 30 degrees for variation
+                
+                // Vary saturation and lightness for more diversity
+                const sat1 = 20 + (i % 30);
+                const sat2 = 25 + ((i * 7) % 35);
+                const light1 = 8 + (i % 8);
+                const light2 = 12 + ((i * 3) % 10);
+                
+                themes.push({
+                    color1: `hsl(${hue1}, ${sat1}%, ${light1}%)`,
+                    color2: `hsl(${hue2}, ${sat2}%, ${light2}%)`
+                });
+            }
+            return themes;
         }
 
-        // Apply the daily theme
-        const dailyTheme = getDailyTheme();
-        document.body.classList.add(`theme-${dailyTheme}`);
-        console.log(`Today's theme: ${dailyTheme}`);
+        const allThemes = generateThemes();
+        
+        function getDayOfYear() {
+            const now = new Date();
+            const start = new Date(now.getFullYear(), 0, 0);
+            const diff = now - start;
+            const oneDay = 1000 * 60 * 60 * 24;
+            return Math.floor(diff / oneDay);
+        }
+
+        function applyTheme(themeIndex) {
+            const theme = allThemes[themeIndex % 365];
+            document.body.style.background = `linear-gradient(135deg, ${theme.color1} 0%, ${theme.color2} 100%)`;
+            
+            // Store the current theme in sessionStorage (so it persists during the session)
+            sessionStorage.setItem('currentThemeIndex', themeIndex);
+            
+            console.log(`Applied theme ${themeIndex + 1}/365`);
+        }
+
+        // Get today's theme based on day of year
+        const todayThemeIndex = getDayOfYear();
+        
+        // Check if user has manually changed theme this session
+        const storedThemeIndex = sessionStorage.getItem('currentThemeIndex');
+        
+        if (storedThemeIndex !== null) {
+            applyTheme(parseInt(storedThemeIndex));
+        } else {
+            applyTheme(todayThemeIndex);
+        }
+
+        // Theme toggle button
+        document.getElementById('themeToggle').addEventListener('click', () => {
+            const currentIndex = parseInt(sessionStorage.getItem('currentThemeIndex')) || todayThemeIndex;
+            const nextIndex = (currentIndex + 1) % 365;
+            applyTheme(nextIndex);
+        });
 
         let allItems = [];
         let currentFilter = 'all';
