@@ -90,35 +90,66 @@
             font-size: 1.1em;
         }
 
-        .tags-container {
-            display: flex;
-            justify-content: center;
-            gap: 8px;
-            margin: 20px auto;
-            max-width: 1200px;
-            flex-wrap: wrap;
-            padding: 0 20px;
+        .tags-toggle {
+            text-align: center;
+            margin: 15px 0;
         }
 
-        .tag-btn {
-            padding: 8px 18px;
+        .tags-toggle-btn {
+            padding: 8px 20px;
             border: 1px solid rgba(255, 255, 255, 0.2);
             border-radius: 20px;
-            background: rgba(255, 255, 255, 0.03);
+            background: rgba(255, 255, 255, 0.05);
             color: #ccc;
             font-size: 0.85em;
             cursor: pointer;
             transition: all 0.3s;
         }
 
-        .tag-btn:hover {
+        .tags-toggle-btn:hover {
             background: rgba(255, 255, 255, 0.1);
             border-color: rgba(0, 212, 255, 0.4);
-            color: #fff;
+        }
+
+        .tags-toggle-btn.active {
+            background: rgba(0, 212, 255, 0.2);
+            border-color: #00d4ff;
+            color: #00d4ff;
+        }
+
+        .tags-container {
+            display: none;
+            justify-content: center;
+            gap: 6px;
+            margin: 15px auto;
+            max-width: 1200px;
+            flex-wrap: wrap;
+            padding: 0 20px;
+        }
+
+        .tags-container.visible {
+            display: flex;
+        }
+
+        .tag-btn {
+            padding: 4px 12px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 15px;
+            background: rgba(255, 255, 255, 0.03);
+            color: #999;
+            font-size: 0.75em;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .tag-btn:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(0, 212, 255, 0.3);
+            color: #ddd;
         }
 
         .tag-btn.active {
-            background: rgba(0, 212, 255, 0.2);
+            background: rgba(0, 212, 255, 0.25);
             border-color: #00d4ff;
             color: #00d4ff;
             font-weight: 500;
@@ -337,6 +368,12 @@
                 </button>
             </div>
 
+            <div class="tags-toggle">
+                <button class="tags-toggle-btn" id="tagsToggleBtn">
+                    🏷️ Show Tags
+                </button>
+            </div>
+
             <div class="tags-container" id="tagsContainer"></div>
         </div>
 
@@ -361,8 +398,9 @@
 
         let allItems = [];
         let currentFilter = 'all';
-        let currentTag = null;
+        let currentTags = new Set();
         let allTags = new Set();
+        let tagsVisible = false;
 
         function parseUrl(url) {
             const urlParts = url.replace('https://', '').split('/');
@@ -383,6 +421,11 @@
             const tagsContainer = document.getElementById('tagsContainer');
             tagsContainer.innerHTML = '';
 
+            // Only show tags if Bandcamp filter is active
+            if (currentFilter !== 'bandcamp') {
+                return;
+            }
+
             // Convert Set to Array and sort
             const sortedTags = Array.from(allTags).sort();
 
@@ -390,14 +433,19 @@
                 const btn = document.createElement('button');
                 btn.className = 'tag-btn';
                 btn.textContent = tag;
+                
+                // Check if this tag is currently selected
+                if (currentTags.has(tag)) {
+                    btn.classList.add('active');
+                }
+                
                 btn.onclick = () => {
-                    // Toggle tag selection
-                    if (currentTag === tag) {
-                        currentTag = null;
-                        document.querySelectorAll('.tag-btn').forEach(b => b.classList.remove('active'));
+                    // Toggle tag in the set
+                    if (currentTags.has(tag)) {
+                        currentTags.delete(tag);
+                        btn.classList.remove('active');
                     } else {
-                        currentTag = tag;
-                        document.querySelectorAll('.tag-btn').forEach(b => b.classList.remove('active'));
+                        currentTags.add(tag);
                         btn.classList.add('active');
                     }
                     renderCards(allItems);
@@ -405,6 +453,29 @@
                 tagsContainer.appendChild(btn);
             });
         }
+
+        function toggleTags() {
+            const tagsContainer = document.getElementById('tagsContainer');
+            const toggleBtn = document.getElementById('tagsToggleBtn');
+            
+            tagsVisible = !tagsVisible;
+            
+            if (tagsVisible && currentFilter === 'bandcamp') {
+                tagsContainer.classList.add('visible');
+                toggleBtn.classList.add('active');
+                toggleBtn.textContent = '✕ Hide Tags';
+                createTagButtons();
+            } else {
+                tagsContainer.classList.remove('visible');
+                toggleBtn.classList.remove('active');
+                toggleBtn.textContent = '🏷️ Show Tags';
+                currentTags.clear();
+                renderCards(allItems);
+            }
+        }
+
+        // Tags toggle button
+        document.getElementById('tagsToggleBtn').addEventListener('click', toggleTags);
 
         async function loadData() {
             try {
