@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Music Library</title>
+    <title>Lets Share Tracks</title>
     <style>
         * {
             margin: 0;
@@ -42,6 +42,48 @@
         .subtitle {
             font-size: 1.2em;
             color: #a0a0a0;
+        }
+
+        .filter-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 30px auto;
+            max-width: 500px;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 12px 28px;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 30px;
+            background: rgba(255, 255, 255, 0.05);
+            color: #fff;
+            font-size: 1em;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            backdrop-filter: blur(10px);
+        }
+
+        .filter-btn:hover {
+            background: rgba(255, 255, 255, 0.15);
+            border-color: rgba(0, 212, 255, 0.5);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 212, 255, 0.3);
+        }
+
+        .filter-btn.active {
+            background: linear-gradient(135deg, #00d4ff, #7b2ff7);
+            border-color: transparent;
+            font-weight: 600;
+            box-shadow: 0 8px 20px rgba(0, 212, 255, 0.4);
+        }
+
+        .filter-btn .icon {
+            font-size: 1.2em;
         }
 
         .search-box {
@@ -221,15 +263,35 @@
             .card-artist {
                 font-size: 0.65em;
             }
+
+            .filter-btn {
+                padding: 10px 20px;
+                font-size: 0.9em;
+            }
         }
     </style>
 </head>
 <body>
     <div class="container">
         <header>
-            <h1>🎵 Music Library</h1>
-            <p class="subtitle">Discover and explore music from Bandcamp</p>
+            <h1>🎵 Lets Share Tracks</h1>
+            <p class="subtitle">Discover and explore music from Bandcamp & YouTube</p>
         </header>
+
+        <div class="filter-buttons">
+            <button class="filter-btn active" data-filter="all">
+                <span class="icon">🌐</span>
+                <span>All</span>
+            </button>
+            <button class="filter-btn" data-filter="bandcamp">
+                <span class="icon">💿</span>
+                <span>Bandcamp</span>
+            </button>
+            <button class="filter-btn" data-filter="youtube">
+                <span class="icon">▶️</span>
+                <span>YouTube</span>
+            </button>
+        </div>
 
         <div class="search-box">
             <input type="text" id="searchInput" placeholder="Search for artists, tracks, or albums...">
@@ -252,6 +314,7 @@
 
         let allItems = [];
         let imageData = {};
+        let currentFilter = 'all';
 
         function parseUrl(url) {
             const urlParts = url.replace('https://', '').split('/');
@@ -263,21 +326,31 @@
                 artist: artist.charAt(0).toUpperCase() + artist.slice(1),
                 title: item.charAt(0).toUpperCase() + item.slice(1),
                 type: type,
-                url: url
+                url: url,
+                source: 'bandcamp'
             };
         }
 
         async function loadData() {
             try {
+                // Load Bandcamp data
                 const response = await fetch('bandcamp_images.json');
                 imageData = await response.json();
                 
-                // Create items array from the JSON keys
                 allItems = Object.keys(imageData).map(url => {
                     const item = parseUrl(url);
                     item.imageUrl = imageData[url];
                     return item;
                 });
+
+                // Try to load YouTube data (optional)
+                try {
+                    const ytResponse = await fetch('youtube_videos.json');
+                    const ytData = await ytResponse.json();
+                    allItems = allItems.concat(ytData);
+                } catch (e) {
+                    console.log('No YouTube data found (optional)');
+                }
 
                 document.getElementById('loading').style.display = 'none';
                 document.getElementById('musicGrid').style.display = 'grid';
@@ -293,26 +366,33 @@
             const noResults = document.getElementById('noResults');
             const resultCount = document.getElementById('resultCount');
 
-            grid.innerHTML = '';
-            resultCount.textContent = items.length;
+            // Filter based on current filter
+            let filteredItems = items;
+            if (currentFilter !== 'all') {
+                filteredItems = items.filter(item => item.source === currentFilter);
+            }
 
-            if (items.length === 0) {
+            grid.innerHTML = '';
+            resultCount.textContent = filteredItems.length;
+
+            if (filteredItems.length === 0) {
                 noResults.style.display = 'block';
                 grid.style.display = 'none';
             } else {
                 noResults.style.display = 'none';
                 grid.style.display = 'grid';
 
-                items.forEach((item, index) => {
+                filteredItems.forEach((item, index) => {
                     const card = document.createElement('div');
                     card.className = 'card';
                     card.onclick = () => window.open(item.url, '_blank');
 
                     const gradientClass = gradients[index % gradients.length];
+                    const icon = item.source === 'youtube' ? '▶️' : (item.type === 'album' ? '💿' : '🎵');
 
                     card.innerHTML = `
                         <div class="card-image ${gradientClass}">
-                            <span class="placeholder music-icon">${item.type === 'album' ? '💿' : '🎵'}</span>
+                            <span class="placeholder music-icon">${icon}</span>
                         </div>
                         <div class="card-content">
                             <div class="card-title">${item.title}</div>
@@ -353,6 +433,16 @@
                 );
                 renderCards(filtered);
             }
+        });
+
+        // Filter button functionality
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                e.currentTarget.classList.add('active');
+                currentFilter = e.currentTarget.dataset.filter;
+                renderCards(allItems);
+            });
         });
 
         // Load data when page loads
