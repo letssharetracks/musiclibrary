@@ -648,14 +648,27 @@
             };
         }
 
+        function updateTagsVisibility() {
+            const tagsToggle = document.querySelector('.tags-toggle');
+            const tagsContainer = document.getElementById('tagsContainer');
+            const toggleBtn = document.getElementById('tagsToggleBtn');
+            
+            // Only show tags section when Bandcamp filter is active
+            if (currentFilter === 'bandcamp') {
+                tagsToggle.style.display = 'block';
+            } else {
+                tagsToggle.style.display = 'none';
+                tagsContainer.classList.remove('visible');
+                toggleBtn.classList.remove('active');
+                toggleBtn.textContent = '🏷️ Show Tags';
+                tagsVisible = false;
+                currentTags.clear();
+            }
+        }
+
         function createTagButtons() {
             const tagsContainer = document.getElementById('tagsContainer');
             tagsContainer.innerHTML = '';
-
-            // Only show tags if Bandcamp filter is active
-            if (currentFilter !== 'bandcamp') {
-                return;
-            }
 
             // Convert Set to Array and sort
             const sortedTags = Array.from(allTags).sort();
@@ -691,7 +704,7 @@
             
             tagsVisible = !tagsVisible;
             
-            if (tagsVisible && currentFilter === 'bandcamp') {
+            if (tagsVisible) {
                 tagsContainer.classList.add('visible');
                 toggleBtn.classList.add('active');
                 toggleBtn.textContent = '✕ Hide Tags';
@@ -722,9 +735,11 @@
                 const metaMap = {};
                 metaDataArray.forEach(item => {
                     metaMap[item.url] = item;
-                    // Collect first tag only
+                    // Collect ALL tags
                     if (item.tags && item.tags.length > 0) {
-                        allTags.add(item.tags[0].toLowerCase());
+                        item.tags.forEach(tag => {
+                            allTags.add(tag.toLowerCase());
+                        });
                     }
                 });
 
@@ -732,11 +747,13 @@
                     const item = parseUrl(url);
                     item.imageUrl = imageData[url];
                     
-                    // Add metadata if available
+                    // Add metadata if available - store ALL tags
                     if (metaMap[url]) {
-                        item.tag = metaMap[url].tags && metaMap[url].tags.length > 0 
-                            ? metaMap[url].tags[0].toLowerCase() 
-                            : null;
+                        item.tags = metaMap[url].tags && metaMap[url].tags.length > 0 
+                            ? metaMap[url].tags.map(t => t.toLowerCase())
+                            : [];
+                    } else {
+                        item.tags = [];
                     }
                     
                     return item;
@@ -806,11 +823,12 @@
                 filteredItems = filteredItems.filter(item => item.source === currentFilter);
             }
 
-            // Filter by tags (multiple tags = AND logic - must have all selected tags)
+            // Filter by tags (item must have at least one of the selected tags)
             if (currentTags.size > 0) {
                 filteredItems = filteredItems.filter(item => {
-                    if (!item.tag) return false;
-                    return currentTags.has(item.tag);
+                    if (!item.tags || item.tags.length === 0) return false;
+                    // Check if item has any of the selected tags
+                    return item.tags.some(tag => currentTags.has(tag));
                 });
             }
 
@@ -882,6 +900,7 @@
                 document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
                 e.currentTarget.classList.add('active');
                 currentFilter = e.currentTarget.dataset.filter;
+                updateTagsVisibility();
                 renderCards(allItems);
             });
         });
