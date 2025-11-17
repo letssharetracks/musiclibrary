@@ -13,10 +13,39 @@
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
-            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
             color: #fff;
             min-height: 100vh;
             padding: 20px;
+            transition: background 0.5s ease;
+        }
+
+        /* Dynamic theme classes - will be applied via JavaScript */
+        body.theme-ocean {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+        }
+
+        body.theme-sunset {
+            background: linear-gradient(135deg, #2c1810 0%, #4a1a1a 100%);
+        }
+
+        body.theme-forest {
+            background: linear-gradient(135deg, #0d1b0d 0%, #1a2e1a 100%);
+        }
+
+        body.theme-purple {
+            background: linear-gradient(135deg, #1a0d2e 0%, #2d1b4e 100%);
+        }
+
+        body.theme-midnight {
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 100%);
+        }
+
+        body.theme-rose {
+            background: linear-gradient(135deg, #2e1a2e 0%, #3d1a2e 100%);
+        }
+
+        body.theme-teal {
+            background: linear-gradient(135deg, #0d2e2e 0%, #1a3d3d 100%);
         }
 
         .container {
@@ -396,6 +425,26 @@
     <script>
         const gradients = ['gradient-1', 'gradient-2', 'gradient-3', 'gradient-4', 'gradient-5', 'gradient-6', 'gradient-7', 'gradient-8'];
 
+        // Daily theme system
+        const themes = ['ocean', 'sunset', 'forest', 'purple', 'midnight', 'rose', 'teal'];
+        
+        function getDailyTheme() {
+            // Get today's date as a string (YYYY-MM-DD)
+            const today = new Date();
+            const dateString = today.toISOString().split('T')[0];
+            
+            // Convert date string to a number for seeding
+            const seed = dateString.split('-').join('');
+            const themeIndex = parseInt(seed) % themes.length;
+            
+            return themes[themeIndex];
+        }
+
+        // Apply the daily theme
+        const dailyTheme = getDailyTheme();
+        document.body.classList.add(`theme-${dailyTheme}`);
+        console.log(`Today's theme: ${dailyTheme}`);
+
         let allItems = [];
         let currentFilter = 'all';
         let currentTags = new Set();
@@ -514,18 +563,42 @@
                 // Try to load YouTube data
                 try {
                     const ytResponse = await fetch('youtube_videos.json');
+                    
+                    if (!ytResponse.ok) {
+                        throw new Error(`HTTP error! status: ${ytResponse.status}`);
+                    }
+                    
                     const ytData = await ytResponse.json();
                     
+                    console.log(`Successfully loaded ${ytData.length} YouTube videos`);
+                    
+                    // Validate YouTube data structure
+                    const validYtData = ytData.filter(video => {
+                        if (!video.artist || !video.title || !video.url || !video.source) {
+                            console.warn('Invalid YouTube video entry:', video);
+                            return false;
+                        }
+                        return true;
+                    });
+                    
+                    if (validYtData.length < ytData.length) {
+                        console.warn(`Filtered out ${ytData.length - validYtData.length} invalid YouTube entries`);
+                    }
+                    
                     // Sort YouTube videos alphabetically
-                    ytData.sort((a, b) => {
+                    validYtData.sort((a, b) => {
                         const artistCompare = a.artist.localeCompare(b.artist);
                         if (artistCompare !== 0) return artistCompare;
                         return a.title.localeCompare(b.title);
                     });
                     
-                    allItems = allItems.concat(ytData);
+                    allItems = allItems.concat(validYtData);
+                    
+                    console.log(`Total items loaded: ${allItems.length} (Bandcamp: ${Object.keys(imageData).length}, YouTube: ${validYtData.length})`);
+                    
                 } catch (e) {
-                    console.log('No YouTube data found (optional)');
+                    console.error('Error loading YouTube data:', e);
+                    console.log('Continuing with Bandcamp data only');
                 }
 
                 // Create tag filter buttons
@@ -536,7 +609,7 @@
                 renderCards(allItems);
             } catch (error) {
                 console.error('Error loading data:', error);
-                document.getElementById('loading').innerHTML = 'Error loading music library.';
+                document.getElementById('loading').innerHTML = 'Error loading music library. Please check console for details.';
             }
         }
 
