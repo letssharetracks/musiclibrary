@@ -565,7 +565,7 @@
                 filteredItems.forEach((item, index) => {
                     const card = document.createElement('div');
                     card.className = 'card';
-                    card.onclick = () => openPlayer(item);
+                    card.onclick = () => window.open(item.url, '_blank');
 
                     const gradientClass = gradients[index % gradients.length];
                     const icon = item.source === 'youtube' ? '▶️' : (item.type === 'album' ? '💿' : '🎵');
