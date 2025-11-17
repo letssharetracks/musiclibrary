@@ -551,9 +551,12 @@
                 filteredItems = filteredItems.filter(item => item.source === currentFilter);
             }
 
-            // Filter by tag
-            if (currentTag) {
-                filteredItems = filteredItems.filter(item => item.tag === currentTag);
+            // Filter by tags (multiple tags = AND logic - must have all selected tags)
+            if (currentTags.size > 0) {
+                filteredItems = filteredItems.filter(item => {
+                    if (!item.tag) return false;
+                    return currentTags.has(item.tag);
+                });
             }
 
             grid.innerHTML = '';
