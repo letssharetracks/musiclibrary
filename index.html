@@ -715,8 +715,8 @@
                 embedUrl += `track=${item.bandcamp_id}`;
             }
             
-            // Add standard parameters
-            embedUrl += '/size=large/bgcol=333333/linkcol=0687f5/tracklist=false/artwork=small/transparent=true/';
+            // Add standard parameters with AUTOPLAY
+            embedUrl += '/size=large/bgcol=333333/linkcol=0687f5/tracklist=false/artwork=small/autoplay=true/transparent=true/';
             
             // Update iframe and show player
             iframe.src = embedUrl;
