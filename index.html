@@ -694,52 +694,62 @@
             const playerContainer = document.getElementById('bandcampPlayer');
             const iframe = document.getElementById('bandcampIframe');
             
+            console.log('Attempting to load Bandcamp track:', url);
+            
             try {
-                // For Bandcamp, we need to extract the page and find the embed ID
-                // The easiest way is to parse the page HTML or use their API
-                // For now, let's use a simpler approach: load the URL in an iframe with /embed
-                
+                // Extract the basic info from URL
                 const urlObj = new URL(url);
                 const pathParts = urlObj.pathname.split('/').filter(p => p);
                 
                 if (pathParts.length >= 2) {
                     const type = pathParts[0]; // 'album' or 'track'
+                    const slug = pathParts[1];
                     
-                    // Fetch the page to extract the embed ID
-                    const response = await fetch(url);
-                    const html = await response.text();
+                    console.log(`Type: ${type}, Slug: ${slug}`);
                     
-                    // Look for the embed player data in the HTML
-                    // Bandcamp pages contain: "album_id":123456 or "track_id":123456
-                    let embedId = null;
-                    
-                    if (type === 'album') {
-                        const albumMatch = html.match(/"album_id":(\d+)/);
-                        if (albumMatch) {
-                            embedId = albumMatch[1];
-                        }
-                    } else if (type === 'track') {
-                        const trackMatch = html.match(/"track_id":(\d+)/);
-                        if (trackMatch) {
-                            embedId = trackMatch[1];
-                        }
-                    }
-                    
-                    if (embedId) {
-                        // Build the embed URL
-                        const embedUrl = `https://bandcamp.com/EmbeddedPlayer/${type}=${embedId}/size=large/bgcol=333333/linkcol=0687f5/tracklist=false/artwork=small/transparent=true/`;
+                    // Try to fetch the page to extract the ID
+                    try {
+                        const response = await fetch(url, { mode: 'cors' });
+                        const html = await response.text();
                         
-                        iframe.src = embedUrl;
-                        playerContainer.style.display = 'block';
+                        // Look for the embed player data in the HTML
+                        let embedId = null;
                         
-                        console.log(`Playing ${type} with ID: ${embedId}`);
-                    } else {
-                        console.warn('Could not extract Bandcamp ID from page');
+                        if (type === 'album') {
+                            const albumMatch = html.match(/"album_id":(\d+)/);
+                            if (albumMatch) {
+                                embedId = albumMatch[1];
+                            }
+                        } else if (type === 'track') {
+                            const trackMatch = html.match(/"track_id":(\d+)/);
+                            if (trackMatch) {
+                                embedId = trackMatch[1];
+                            }
+                        }
+                        
+                        if (embedId) {
+                            // Build the embed URL
+                            const embedUrl = `https://bandcamp.com/EmbeddedPlayer/${type}=${embedId}/size=large/bgcol=333333/linkcol=0687f5/tracklist=false/artwork=small/transparent=true/`;
+                            
+                            iframe.src = embedUrl;
+                            playerContainer.style.display = 'block';
+                            
+                            console.log(`✓ Playing ${type} with ID: ${embedId}`);
+                            return; // Success!
+                        }
+                    } catch (fetchError) {
+                        console.warn('CORS blocked or fetch failed:', fetchError.message);
+                        console.log('Opening in new tab instead...');
                     }
                 }
+                
+                // If we couldn't load the player, open in new tab
+                window.open(url, '_blank');
+                
             } catch (e) {
                 console.error('Error updating Bandcamp player:', e);
-                console.log('Falling back to direct link');
+                // Fallback: open in new tab
+                window.open(url, '_blank');
             }
         }
 
@@ -956,13 +966,8 @@
                     const card = document.createElement('div');
                     card.className = 'card';
                     card.onclick = () => {
-                        // If it's a Bandcamp track, update the player
-                        if (item.source === 'bandcamp') {
-                            updateBandcampPlayer(item.url);
-                        } else {
-                            // For YouTube, open in new tab
-                            window.open(item.url, '_blank');
-                        }
+                        // Open all links in new tab
+                        window.open(item.url, '_blank');
                     };
 
                     const gradientClass = gradients[index % gradients.length];
