@@ -2351,18 +2351,10 @@
     "title": "Selah Collins Pick a sound",
     "artist": "Supapat Selectah Flavours Vol.7Supapat Selectah Flavours Vol.7\n            Supapat Selectah",
     "tags": [
-      {
-        "name": "double h de combat"
-      },
-      {
-        "name": "hip-hop/rap"
-      },
-      {
-        "name": "dans tous ses états"
-      },
-      {
-        "name": "Metz"
-      }
+      "double h de combat",
+      "hip-hop/rap",
+      "dans tous ses états",
+      "Metz"
     ],
     "release": "",
     "description": "",
@@ -2375,24 +2367,12 @@
     "title": "Round the Houses",
     "artist": "Folder 15Folder 15\n            Alexander Canwell",
     "tags": [
-      {
-        "name": "alternative"
-      },
-      {
-        "name": "electronic"
-      },
-      {
-        "name": "hip hop"
-      },
-      {
-        "name": "punk"
-      },
-      {
-        "name": "post-punk"
-      },
-      {
-        "name": "Bristol"
-      }
+      "alternative",
+      "electronic",
+      "hip hop",
+      "punk",
+      "post-punk",
+      "Bristol"
     ],
     "release": "",
     "description": "",
@@ -2405,15 +2385,9 @@
     "title": "Spare Change (Michael Hedges)",
     "artist": "Present Moment MusicPresent Moment Music\n            Curtis Thorpe & Friends",
     "tags": [
-      {
-        "name": "acoustic"
-      },
-      {
-        "name": "everything."
-      },
-      {
-        "name": "Montreal"
-      }
+      "acoustic",
+      "everything.",
+      "Montreal"
     ],
     "release": "",
     "description": "",
@@ -2426,9 +2400,7 @@
     "title": "Collocutor - Agama (Contours Remix)",
     "artist": "Versus IIVersus II\n            Various",
     "tags": [
-      {
-        "name": "London"
-      }
+      "London"
     ],
     "release": "",
     "description": "",
@@ -2441,12 +2413,8 @@
     "title": "Hiraeth",
     "artist": "Chapter III: We Return to LightChapter III: We Return to Light\n            Anoushka Shankar",
     "tags": [
-      {
-        "name": "world"
-      },
-      {
-        "name": "London"
-      }
+      "world",
+      "London"
     ],
     "release": "",
     "description": "",
@@ -2459,12 +2427,8 @@
     "title": "Beautiful Strangers",
     "artist": "Sad And Beautiful WorldSad And Beautiful World\n            Mavis Staples",
     "tags": [
-      {
-        "name": "r&b/soul"
-      },
-      {
-        "name": "Chicago"
-      }
+      "r&b/soul",
+      "Chicago"
     ],
     "release": "",
     "description": "",
@@ -2477,27 +2441,13 @@
     "title": "Zerfall",
     "artist": "ZerfallZerfall\n            Ellende",
     "tags": [
-      {
-        "name": "ambient"
-      },
-      {
-        "name": "ambient post black metal"
-      },
-      {
-        "name": "atmospheric black metal"
-      },
-      {
-        "name": "black metal"
-      },
-      {
-        "name": "metal"
-      },
-      {
-        "name": "post black metal"
-      },
-      {
-        "name": "Graz"
-      }
+      "ambient",
+      "ambient post black metal",
+      "atmospheric black metal",
+      "black metal",
+      "metal",
+      "post black metal",
+      "Graz"
     ],
     "release": "",
     "description": "",
@@ -2510,15 +2460,9 @@
     "title": "artwork sounds feat. bee bar & kabza de small - awesome god",
     "artist": "Township Tempo Sessions vol. 1Township Tempo Sessions vol. 1\n            Tefo Lerumo",
     "tags": [
-      {
-        "name": "deep house"
-      },
-      {
-        "name": "electronic"
-      },
-      {
-        "name": "Pretoria"
-      }
+      "deep house",
+      "electronic",
+      "Pretoria"
     ],
     "release": "",
     "description": "",
@@ -2531,21 +2475,11 @@
     "title": "The Rain",
     "artist": "The Sci-FilesThe Sci-Files\n            ASC",
     "tags": [
-      {
-        "name": "electronic"
-      },
-      {
-        "name": "experimental"
-      },
-      {
-        "name": "ambient"
-      },
-      {
-        "name": "techno"
-      },
-      {
-        "name": "Del Mar"
-      }
+      "electronic",
+      "experimental",
+      "ambient",
+      "techno",
+      "Del Mar"
     ],
     "release": "",
     "description": "",
@@ -2558,24 +2492,12 @@
     "title": "Clissold (2024 Remaster)",
     "artist": "Clissold / The Limit (2024 Reissue)Clissold / The Limit (2024 Reissue)\n            Fracture & Neptune",
     "tags": [
-      {
-        "name": "electronic"
-      },
-      {
-        "name": "astrophonica"
-      },
-      {
-        "name": "drum and bass"
-      },
-      {
-        "name": "footwork"
-      },
-      {
-        "name": "jungle"
-      },
-      {
-        "name": "London"
-      }
+      "electronic",
+      "astrophonica",
+      "drum and bass",
+      "footwork",
+      "jungle",
+      "London"
     ],
     "release": "",
     "description": "",
@@ -2588,27 +2510,13 @@
     "title": "Undisputed Truth - You + Me = Love (Discobar rare edit)",
     "artist": "Discobar",
     "tags": [
-      {
-        "name": "electronic"
-      },
-      {
-        "name": "soul"
-      },
-      {
-        "name": "afro house"
-      },
-      {
-        "name": "dance"
-      },
-      {
-        "name": "disco"
-      },
-      {
-        "name": "funk"
-      },
-      {
-        "name": "Reykjavík"
-      }
+      "electronic",
+      "soul",
+      "afro house",
+      "dance",
+      "disco",
+      "funk",
+      "Reykjavík"
     ],
     "release": "",
     "description": "",
@@ -2621,42 +2529,18 @@
     "title": "Azari & III - Hungry For The Power (Ryan Clover's Powder Room Remix)",
     "artist": "Ryan Clover",
     "tags": [
-      {
-        "name": "electronic"
-      },
-      {
-        "name": "house"
-      },
-      {
-        "name": "acid house"
-      },
-      {
-        "name": "bass"
-      },
-      {
-        "name": "breakbeat"
-      },
-      {
-        "name": "dance"
-      },
-      {
-        "name": "disco house"
-      },
-      {
-        "name": "electronic"
-      },
-      {
-        "name": "proto disco"
-      },
-      {
-        "name": "proto house"
-      },
-      {
-        "name": "techno"
-      },
-      {
-        "name": "New York"
-      }
+      "electronic",
+      "house",
+      "acid house",
+      "bass",
+      "breakbeat",
+      "dance",
+      "disco house",
+      "electronic",
+      "proto disco",
+      "proto house",
+      "techno",
+      "New York"
     ],
     "release": "",
     "description": "",
@@ -2669,27 +2553,13 @@
     "title": "Nazareth",
     "artist": "TwoTwo\n            Sleep Token",
     "tags": [
-      {
-        "name": "alternative"
-      },
-      {
-        "name": "post rock"
-      },
-      {
-        "name": "ambient"
-      },
-      {
-        "name": "grunge"
-      },
-      {
-        "name": "post metal"
-      },
-      {
-        "name": "progressive metal"
-      },
-      {
-        "name": "London"
-      }
+      "alternative",
+      "post rock",
+      "ambient",
+      "grunge",
+      "post metal",
+      "progressive metal",
+      "London"
     ],
     "release": "",
     "description": "",
@@ -2702,18 +2572,10 @@
     "title": "Sunset Village",
     "artist": "Keyboard FantasiesKeyboard Fantasies\n            Beverly Glenn-Copeland",
     "tags": [
-      {
-        "name": "jazz"
-      },
-      {
-        "name": "folk"
-      },
-      {
-        "name": "new age"
-      },
-      {
-        "name": "Hamilton"
-      }
+      "jazz",
+      "folk",
+      "new age",
+      "Hamilton"
     ],
     "release": "",
     "description": "",
@@ -2726,21 +2588,11 @@
     "title": "CHROMA 010 BRILLO",
     "artist": "CHROMA 000CHROMA 000\n            Bicep",
     "tags": [
-      {
-        "name": "disco"
-      },
-      {
-        "name": "electronic"
-      },
-      {
-        "name": "house"
-      },
-      {
-        "name": "techno"
-      },
-      {
-        "name": "London"
-      }
+      "disco",
+      "electronic",
+      "house",
+      "techno",
+      "London"
     ],
     "release": "",
     "description": "",
@@ -2753,21 +2605,11 @@
     "title": "Crockett Theme",
     "artist": "The Serpent's MouthThe Serpent's Mouth\n            Bacao Rhythm and Steel Band",
     "tags": [
-      {
-        "name": "funk"
-      },
-      {
-        "name": "hip hop"
-      },
-      {
-        "name": "soul"
-      },
-      {
-        "name": "steel funk"
-      },
-      {
-        "name": "Hamburg"
-      }
+      "funk",
+      "hip hop",
+      "soul",
+      "steel funk",
+      "Hamburg"
     ],
     "release": "",
     "description": "",
@@ -2780,24 +2622,12 @@
     "title": "Declare Independence",
     "artist": "VoltaVolta\n            Björk",
     "tags": [
-      {
-        "name": "alternative"
-      },
-      {
-        "name": "art pop"
-      },
-      {
-        "name": "avant-garde"
-      },
-      {
-        "name": "electronica"
-      },
-      {
-        "name": "experimental"
-      },
-      {
-        "name": "Iceland"
-      }
+      "alternative",
+      "art pop",
+      "avant-garde",
+      "electronica",
+      "experimental",
+      "Iceland"
     ],
     "release": "",
     "description": "",
@@ -2810,9 +2640,7 @@
     "title": "DJ PGZ - Shitkickers!",
     "artist": "Synergy Vol. 2Synergy Vol. 2\n            Black Artist Database",
     "tags": [
-      {
-        "name": "United Kingdom"
-      }
+      "United Kingdom"
     ],
     "release": "",
     "description": "",
@@ -2825,30 +2653,14 @@
     "title": "ITIIITIATIIHYLIHYL",
     "artist": "BLACKSHAPE",
     "tags": [
-      {
-        "name": "rock"
-      },
-      {
-        "name": "cinematic"
-      },
-      {
-        "name": "instrumental"
-      },
-      {
-        "name": "mathcore"
-      },
-      {
-        "name": "post-metal"
-      },
-      {
-        "name": "post-rock"
-      },
-      {
-        "name": "progressive metal"
-      },
-      {
-        "name": "Salt Lake City"
-      }
+      "rock",
+      "cinematic",
+      "instrumental",
+      "mathcore",
+      "post-metal",
+      "post-rock",
+      "progressive metal",
+      "Salt Lake City"
     ],
     "release": "",
     "description": "",
@@ -2861,18 +2673,10 @@
     "title": "Tugay Kerimoglu",
     "artist": "Eh?Eh?\n            Bill Shakes",
     "tags": [
-      {
-        "name": "hip hop"
-      },
-      {
-        "name": "hip-hop/rap"
-      },
-      {
-        "name": "rap"
-      },
-      {
-        "name": "Blackburn"
-      }
+      "hip hop",
+      "hip-hop/rap",
+      "rap",
+      "Blackburn"
     ],
     "release": "",
     "description": "",
@@ -2885,9 +2689,7 @@
     "title": "Cab Calloway - The Ghost of Smokey Joe",
     "artist": "Minnie The Moocher At The MorgueMinnie The Moocher At The Morgue\n            Various -  Spooky Jazz, Blues & Rock'n Roll classics..!",
     "tags": [
-      {
-        "name": "United Kingdom"
-      }
+      "United Kingdom"
     ],
     "release": "",
     "description": "",
@@ -2900,27 +2702,13 @@
     "title": "Everyday",
     "artist": "Celeste",
     "tags": [
-      {
-        "name": "jazz"
-      },
-      {
-        "name": "r&b/soul"
-      },
-      {
-        "name": "soul"
-      },
-      {
-        "name": "alternative"
-      },
-      {
-        "name": "alternative soul"
-      },
-      {
-        "name": "rock"
-      },
-      {
-        "name": "Culver City"
-      }
+      "jazz",
+      "r&b/soul",
+      "soul",
+      "alternative",
+      "alternative soul",
+      "rock",
+      "Culver City"
     ],
     "release": "",
     "description": "",
@@ -2933,27 +2721,13 @@
     "title": "Marianne Faithfull \"Broken English\" Club Bizarre Edit",
     "artist": "Club Bizarre",
     "tags": [
-      {
-        "name": "electronic"
-      },
-      {
-        "name": "house"
-      },
-      {
-        "name": "deep"
-      },
-      {
-        "name": "italo disco"
-      },
-      {
-        "name": "space disco"
-      },
-      {
-        "name": "techno"
-      },
-      {
-        "name": "Metz"
-      }
+      "electronic",
+      "house",
+      "deep",
+      "italo disco",
+      "space disco",
+      "techno",
+      "Metz"
     ],
     "release": "",
     "description": "",
@@ -2966,33 +2740,15 @@
     "title": "Jungle Funk",
     "artist": "Jungle FunkJungle Funk\n            Cihangir Eryıldız",
     "tags": [
-      {
-        "name": "deep house"
-      },
-      {
-        "name": "drum & bass"
-      },
-      {
-        "name": "electronic"
-      },
-      {
-        "name": "liquid drum and bass"
-      },
-      {
-        "name": "ambient jungle"
-      },
-      {
-        "name": "downtempo"
-      },
-      {
-        "name": "jungle"
-      },
-      {
-        "name": "nujazz"
-      },
-      {
-        "name": "Istanbul"
-      }
+      "deep house",
+      "drum & bass",
+      "electronic",
+      "liquid drum and bass",
+      "ambient jungle",
+      "downtempo",
+      "jungle",
+      "nujazz",
+      "Istanbul"
     ],
     "release": "",
     "description": "",
@@ -3005,12 +2761,8 @@
     "title": "The Big Music (2002 Remaster)",
     "artist": "A Pagan PlaceA Pagan Place\n            The Waterboys",
     "tags": [
-      {
-        "name": "rock"
-      },
-      {
-        "name": "London"
-      }
+      "rock",
+      "London"
     ],
     "release": "",
     "description": "",
@@ -3023,27 +2775,13 @@
     "title": "Clear Soul Forces - Get no better",
     "artist": "\"Good Ol' Brand New Mixtape\" Vol.4\"Good Ol' Brand New Mixtape\" Vol.4\n            DJ MAD HABITS",
     "tags": [
-      {
-        "name": "dj"
-      },
-      {
-        "name": "hip hop"
-      },
-      {
-        "name": "hip-hop/rap"
-      },
-      {
-        "name": "rap"
-      },
-      {
-        "name": "scratch"
-      },
-      {
-        "name": "mixtape"
-      },
-      {
-        "name": "Paris"
-      }
+      "dj",
+      "hip hop",
+      "hip-hop/rap",
+      "rap",
+      "scratch",
+      "mixtape",
+      "Paris"
     ],
     "release": "",
     "description": "",
@@ -3056,9 +2794,7 @@
     "title": "7am",
     "artist": "VOILA [CLIPP181]VOILA [CLIPP181]\n            Sam Hassib",
     "tags": [
-      {
-        "name": "Melbourne"
-      }
+      "Melbourne"
     ],
     "release": "",
     "description": "",
@@ -3071,27 +2807,13 @@
     "title": "Pimp",
     "artist": "Jazz, Funk, Soul ReworksJazz, Funk, Soul Reworks\n            Various",
     "tags": [
-      {
-        "name": "electronic"
-      },
-      {
-        "name": "afro"
-      },
-      {
-        "name": "broken"
-      },
-      {
-        "name": "disco"
-      },
-      {
-        "name": "house"
-      },
-      {
-        "name": "tropical"
-      },
-      {
-        "name": "London"
-      }
+      "electronic",
+      "afro",
+      "broken",
+      "disco",
+      "house",
+      "tropical",
+      "London"
     ],
     "release": "",
     "description": "",
@@ -3104,12 +2826,8 @@
     "title": "Down To The River To Pray (Allison Krauss)",
     "artist": "Mothers of GodMothers of God\n            Cadillac Hearse",
     "tags": [
-      {
-        "name": "rock"
-      },
-      {
-        "name": "Charlotte"
-      }
+      "rock",
+      "Charlotte"
     ],
     "release": "",
     "description": "",
@@ -3122,27 +2840,13 @@
     "title": "soap",
     "artist": "sunflowersunflower\n            Deem Spencer",
     "tags": [
-      {
-        "name": "hip hop"
-      },
-      {
-        "name": "hip-hop/rap"
-      },
-      {
-        "name": "new york"
-      },
-      {
-        "name": "queens"
-      },
-      {
-        "name": "bedroom"
-      },
-      {
-        "name": "pretty"
-      },
-      {
-        "name": "Queens"
-      }
+      "hip hop",
+      "hip-hop/rap",
+      "new york",
+      "queens",
+      "bedroom",
+      "pretty",
+      "Queens"
     ],
     "release": "",
     "description": "",
@@ -3155,24 +2859,12 @@
     "title": "Justin Martin-Don't Go (Justin Hartinger Remix) Feat. Noshogunz",
     "artist": "NoShoGunz",
     "tags": [
-      {
-        "name": "hip-hop/rap"
-      },
-      {
-        "name": "dance-pop"
-      },
-      {
-        "name": "dancehall"
-      },
-      {
-        "name": "electronic music"
-      },
-      {
-        "name": "reggae"
-      },
-      {
-        "name": "California"
-      }
+      "hip-hop/rap",
+      "dance-pop",
+      "dancehall",
+      "electronic music",
+      "reggae",
+      "California"
     ],
     "release": "",
     "description": "",
@@ -3185,30 +2877,14 @@
     "title": "Disclosure - Tondo (Egnever Amapiano Edit)",
     "artist": "Amapiano Edit Pack Vol.1Amapiano Edit Pack Vol.1\n            EGNEVER",
     "tags": [
-      {
-        "name": "r&b/soul"
-      },
-      {
-        "name": "afro"
-      },
-      {
-        "name": "amapiano"
-      },
-      {
-        "name": "baile funk"
-      },
-      {
-        "name": "disclosure amapiano"
-      },
-      {
-        "name": "egnever"
-      },
-      {
-        "name": "egnever amapiano"
-      },
-      {
-        "name": "Indonesia"
-      }
+      "r&b/soul",
+      "afro",
+      "amapiano",
+      "baile funk",
+      "disclosure amapiano",
+      "egnever",
+      "egnever amapiano",
+      "Indonesia"
     ],
     "release": "",
     "description": "",
@@ -3221,21 +2897,11 @@
     "title": "The Immortals - The Ultimate Warlord(Orchid edit))",
     "artist": "Orchid / Transcendent Experience",
     "tags": [
-      {
-        "name": "belgian new beat"
-      },
-      {
-        "name": "electronic"
-      },
-      {
-        "name": "house"
-      },
-      {
-        "name": "italo disco"
-      },
-      {
-        "name": "trance"
-      }
+      "belgian new beat",
+      "electronic",
+      "house",
+      "italo disco",
+      "trance"
     ],
     "release": "",
     "description": "",
@@ -3248,21 +2914,11 @@
     "title": "Art Department - Without You (DASH Remix)",
     "artist": "RemixesRemixes\n            DASH",
     "tags": [
-      {
-        "name": "electronic"
-      },
-      {
-        "name": "tech house"
-      },
-      {
-        "name": "dance music"
-      },
-      {
-        "name": "eletro house"
-      },
-      {
-        "name": "Melbourne"
-      }
+      "electronic",
+      "tech house",
+      "dance music",
+      "eletro house",
+      "Melbourne"
     ],
     "release": "",
     "description": "",
@@ -3275,27 +2931,13 @@
     "title": "DJ Lag, Djknator ft. Thobeka - WaWaWa",
     "artist": "Southside MixtapeSouthside Mixtape\n            DJ Lag",
     "tags": [
-      {
-        "name": "3 step"
-      },
-      {
-        "name": "afrotech"
-      },
-      {
-        "name": "amapiano"
-      },
-      {
-        "name": "electronic"
-      },
-      {
-        "name": "gqom"
-      },
-      {
-        "name": "world"
-      },
-      {
-        "name": "Johannesburg"
-      }
+      "3 step",
+      "afrotech",
+      "amapiano",
+      "electronic",
+      "gqom",
+      "world",
+      "Johannesburg"
     ],
     "release": "",
     "description": "",
@@ -3308,12 +2950,8 @@
     "title": "DJ Premier x Ransom - Amazing Graces",
     "artist": "Beast Mode x Volume 75Beast Mode x Volume 75\n            Brick City Ink",
     "tags": [
-      {
-        "name": "hip-hop/rap"
-      },
-      {
-        "name": "Atlanta"
-      }
+      "hip-hop/rap",
+      "Atlanta"
     ],
     "release": "",
     "description": "",
@@ -3326,24 +2964,12 @@
     "title": "Mona Lisa (DJ A-L DMX Rework)",
     "artist": "Thank You For Rocking With Us! (DJ A-L's Remix Grab Bag) [Compilation]Thank You For Rocking With Us! (DJ A-L's Remix Grab Bag) [Compilation]\n            DJ A-L",
     "tags": [
-      {
-        "name": "funk"
-      },
-      {
-        "name": "hip hop"
-      },
-      {
-        "name": "hip-hop/rap"
-      },
-      {
-        "name": "remix"
-      },
-      {
-        "name": "soul"
-      },
-      {
-        "name": "United States"
-      }
+      "funk",
+      "hip hop",
+      "hip-hop/rap",
+      "remix",
+      "soul",
+      "United States"
     ],
     "release": "",
     "description": "",
@@ -3356,9 +2982,7 @@
     "title": "Dorian Concept - Tropical Hands (The Clonious Remix)",
     "artist": "What A Fine Mess We MadeWhat A Fine Mess We Made\n            Various Artists",
     "tags": [
-      {
-        "name": "Wien"
-      }
+      "Wien"
     ],
     "release": "",
     "description": "",
@@ -3371,24 +2995,12 @@
     "title": "Rhythm & Sound - No Partial",
     "artist": "Back to Mine∶ Roots ManuvaBack to Mine∶ Roots Manuva\n            Roots Manuva",
     "tags": [
-      {
-        "name": "chicago-house"
-      },
-      {
-        "name": "chillout."
-      },
-      {
-        "name": "coffeehouse"
-      },
-      {
-        "name": "electronic"
-      },
-      {
-        "name": "house ghetto"
-      },
-      {
-        "name": "ravehouse"
-      }
+      "chicago-house",
+      "chillout.",
+      "coffeehouse",
+      "electronic",
+      "house ghetto",
+      "ravehouse"
     ],
     "release": "",
     "description": "",
@@ -3401,24 +3013,12 @@
     "title": "Alive",
     "artist": "Strike ItStrike It\n            Dub War",
     "tags": [
-      {
-        "name": "metal"
-      },
-      {
-        "name": "alternative metal"
-      },
-      {
-        "name": "funk metal"
-      },
-      {
-        "name": "rap metal"
-      },
-      {
-        "name": "reggae metal"
-      },
-      {
-        "name": "Newport"
-      }
+      "metal",
+      "alternative metal",
+      "funk metal",
+      "rap metal",
+      "reggae metal",
+      "Newport"
     ],
     "release": "",
     "description": "",
@@ -3431,27 +3031,13 @@
     "title": "I'd Rather be Burned as a Witch (Eartha Kitt)",
     "artist": "Dead in Studio 2023Dead in Studio 2023\n            The Coffin Fits",
     "tags": [
-      {
-        "name": "rock"
-      },
-      {
-        "name": "surf rock"
-      },
-      {
-        "name": "garage"
-      },
-      {
-        "name": "lo-fi"
-      },
-      {
-        "name": "no-fi"
-      },
-      {
-        "name": "psych"
-      },
-      {
-        "name": "Austin"
-      }
+      "rock",
+      "surf rock",
+      "garage",
+      "lo-fi",
+      "no-fi",
+      "psych",
+      "Austin"
     ],
     "release": "",
     "description": "",
@@ -3464,24 +3050,12 @@
     "title": "Robb London & The Rogues - Gloria",
     "artist": "Highs in the Mid Sixties, Volume 13∶ Texas Part 3Highs in the Mid Sixties, Volume 13∶ Texas Part 3\n            Various Artists",
     "tags": [
-      {
-        "name": "90s rock"
-      },
-      {
-        "name": "creek rock"
-      },
-      {
-        "name": "math-rock"
-      },
-      {
-        "name": "psychedelic cumbia"
-      },
-      {
-        "name": "rock"
-      },
-      {
-        "name": "rockbitch band"
-      }
+      "90s rock",
+      "creek rock",
+      "math-rock",
+      "psychedelic cumbia",
+      "rock",
+      "rockbitch band"
     ],
     "release": "",
     "description": "",
@@ -3494,9 +3068,7 @@
     "title": "Microdreaming",
     "artist": "MicrodreamingMicrodreaming\n            A Sagittariun",
     "tags": [
-      {
-        "name": "United Kingdom"
-      }
+      "United Kingdom"
     ],
     "release": "",
     "description": "",
@@ -3509,15 +3081,9 @@
     "title": "Fracture Ft. Dawn Day Night-Get Busy(DLXRMX)",
     "artist": "DLX",
     "tags": [
-      {
-        "name": "bass music"
-      },
-      {
-        "name": "electronic"
-      },
-      {
-        "name": "Asheville"
-      }
+      "bass music",
+      "electronic",
+      "Asheville"
     ],
     "release": "",
     "description": "",
@@ -3530,18 +3096,10 @@
     "title": "Shaking Body",
     "artist": "Dance, No One's WatchingDance, No One's Watching\n            Ezra Collective",
     "tags": [
-      {
-        "name": "jazz"
-      },
-      {
-        "name": "afrobeat"
-      },
-      {
-        "name": "hip-hop"
-      },
-      {
-        "name": "London"
-      }
+      "jazz",
+      "afrobeat",
+      "hip-hop",
+      "London"
     ],
     "release": "",
     "description": "",
@@ -3554,45 +3112,19 @@
     "title": "Space Donut",
     "artist": "Fanu",
     "tags": [
-      {
-        "name": "d&b"
-      },
-      {
-        "name": "dnb"
-      },
-      {
-        "name": "drum & bass"
-      },
-      {
-        "name": "electronic"
-      },
-      {
-        "name": "hip hop"
-      },
-      {
-        "name": "instrumental hip-hop"
-      },
-      {
-        "name": "breakbeat"
-      },
-      {
-        "name": "breakbeats"
-      },
-      {
-        "name": "breaks"
-      },
-      {
-        "name": "drum and bass"
-      },
-      {
-        "name": "electronic"
-      },
-      {
-        "name": "jungle"
-      },
-      {
-        "name": "Finland"
-      }
+      "d&b",
+      "dnb",
+      "drum & bass",
+      "electronic",
+      "hip hop",
+      "instrumental hip-hop",
+      "breakbeat",
+      "breakbeats",
+      "breaks",
+      "drum and bass",
+      "electronic",
+      "jungle",
+      "Finland"
     ],
     "release": "",
     "description": "",
@@ -3605,12 +3137,8 @@
     "title": "LAURENT GARNIER - WARNING + THE SOUND OF THE BIG BABOU (WYCZ REMIX)",
     "artist": "[UNTITLED//REWORX] Part.03[UNTITLED//REWORX] Part.03\n            Wycz",
     "tags": [
-      {
-        "name": "alternative"
-      },
-      {
-        "name": "France"
-      }
+      "alternative",
+      "France"
     ],
     "release": "",
     "description": "",
@@ -3623,27 +3151,13 @@
     "title": "What Is It We Need? (ft Alice Russell)",
     "artist": "Can You See Me Now?Can You See Me Now?\n            Amanda Whiting",
     "tags": [
-      {
-        "name": "jazz"
-      },
-      {
-        "name": "acoustic jazz trio"
-      },
-      {
-        "name": "cinematic music"
-      },
-      {
-        "name": "fusion"
-      },
-      {
-        "name": "harp"
-      },
-      {
-        "name": "jazz harp"
-      },
-      {
-        "name": "United Kingdom"
-      }
+      "jazz",
+      "acoustic jazz trio",
+      "cinematic music",
+      "fusion",
+      "harp",
+      "jazz harp",
+      "United Kingdom"
     ],
     "release": "",
     "description": "",
@@ -3656,36 +3170,16 @@
     "title": "Perpetuum Mobile Penguin Cafe Orchestra cover",
     "artist": "Questions Of You",
     "tags": [
-      {
-        "name": "alternative"
-      },
-      {
-        "name": "cover"
-      },
-      {
-        "name": "indie"
-      },
-      {
-        "name": "one man band"
-      },
-      {
-        "name": "penguin cafe orchestra"
-      },
-      {
-        "name": "perpetuum mobile"
-      },
-      {
-        "name": "piano"
-      },
-      {
-        "name": "rock"
-      },
-      {
-        "name": "strings"
-      },
-      {
-        "name": "Rancho Cucamonga"
-      }
+      "alternative",
+      "cover",
+      "indie",
+      "one man band",
+      "penguin cafe orchestra",
+      "perpetuum mobile",
+      "piano",
+      "rock",
+      "strings",
+      "Rancho Cucamonga"
     ],
     "release": "",
     "description": "",
@@ -3698,27 +3192,13 @@
     "title": "Cowboy Nudes",
     "artist": "3D Country3D Country\n            Geese",
     "tags": [
-      {
-        "name": "alternative"
-      },
-      {
-        "name": "rock"
-      },
-      {
-        "name": "art punk"
-      },
-      {
-        "name": "indie rock"
-      },
-      {
-        "name": "pop rock"
-      },
-      {
-        "name": "post-punk"
-      },
-      {
-        "name": "Brooklyn"
-      }
+      "alternative",
+      "rock",
+      "art punk",
+      "indie rock",
+      "pop rock",
+      "post-punk",
+      "Brooklyn"
     ],
     "release": "",
     "description": "",
@@ -3731,27 +3211,13 @@
     "title": "100 Horses",
     "artist": "Getting KilledGetting Killed\n            Geese",
     "tags": [
-      {
-        "name": "country"
-      },
-      {
-        "name": "pop"
-      },
-      {
-        "name": "rock"
-      },
-      {
-        "name": "folk"
-      },
-      {
-        "name": "indie"
-      },
-      {
-        "name": "jazz"
-      },
-      {
-        "name": "United States"
-      }
+      "country",
+      "pop",
+      "rock",
+      "folk",
+      "indie",
+      "jazz",
+      "United States"
     ],
     "release": "",
     "description": "",
@@ -3764,27 +3230,13 @@
     "title": "A SHOT IN THE DARK",
     "artist": "A SHOT IN THE DARKA SHOT IN THE DARK\n            GHOST COP",
     "tags": [
-      {
-        "name": "electronic"
-      },
-      {
-        "name": "coldwave"
-      },
-      {
-        "name": "cyberpunk"
-      },
-      {
-        "name": "dance"
-      },
-      {
-        "name": "darkwave"
-      },
-      {
-        "name": "synth"
-      },
-      {
-        "name": "New York"
-      }
+      "electronic",
+      "coldwave",
+      "cyberpunk",
+      "dance",
+      "darkwave",
+      "synth",
+      "New York"
     ],
     "release": "",
     "description": "",
@@ -3797,24 +3249,12 @@
     "title": "Johnny Clarke - None Shall Escape the Judgement",
     "artist": "Reggae, Roots & Culture Vol. 2Reggae, Roots & Culture Vol. 2\n            Various Artists",
     "tags": [
-      {
-        "name": "dub"
-      },
-      {
-        "name": "hip hop"
-      },
-      {
-        "name": "reggae"
-      },
-      {
-        "name": "roots"
-      },
-      {
-        "name": "world"
-      },
-      {
-        "name": "Brighton"
-      }
+      "dub",
+      "hip hop",
+      "reggae",
+      "roots",
+      "world",
+      "Brighton"
     ],
     "release": "",
     "description": "",
@@ -3827,9 +3267,7 @@
     "title": "Subjective (Goldie & James Davidson) - Inkolelo",
     "artist": "Beating Heart - South AfricaBeating Heart - South Africa\n            Various Artists",
     "tags": [
-      {
-        "name": "London"
-      }
+      "London"
     ],
     "release": "",
     "description": "",
@@ -3842,27 +3280,13 @@
     "title": "Rhi'N'B - He's Just Bluffing",
     "artist": "Magugu",
     "tags": [
-      {
-        "name": "140"
-      },
-      {
-        "name": "uk garage"
-      },
-      {
-        "name": "world"
-      },
-      {
-        "name": "bass music"
-      },
-      {
-        "name": "dubstep"
-      },
-      {
-        "name": "grime"
-      },
-      {
-        "name": "Cardiff"
-      }
+      "140",
+      "uk garage",
+      "world",
+      "bass music",
+      "dubstep",
+      "grime",
+      "Cardiff"
     ],
     "release": "",
     "description": "",
@@ -3875,12 +3299,8 @@
     "title": "(Best Alternative Music Album Mashup) Halsey - i am not a woman, i'm a god X Sam Smith - So Serious",
     "artist": "2021 GRAMMY® Nominees (Mashup Edition)2021 GRAMMY® Nominees (Mashup Edition)\n            Bennys Mashups",
     "tags": [
-      {
-        "name": "pop"
-      },
-      {
-        "name": "California"
-      }
+      "pop",
+      "California"
     ],
     "release": "",
     "description": "",
@@ -3893,24 +3313,12 @@
     "title": "Mesa Redonda",
     "artist": "Hijos del SolHijos del Sol\n            Hermanos Gutiérrez",
     "tags": [
-      {
-        "name": "soundtrack"
-      },
-      {
-        "name": "instrumental"
-      },
-      {
-        "name": "instrumental western sound"
-      },
-      {
-        "name": "latin"
-      },
-      {
-        "name": "southwestern"
-      },
-      {
-        "name": "United States"
-      }
+      "soundtrack",
+      "instrumental",
+      "instrumental western sound",
+      "latin",
+      "southwestern",
+      "United States"
     ],
     "release": "",
     "description": "",
@@ -3923,27 +3331,13 @@
     "title": "Hellhound On My Trail (Originally by Robert Johnson)",
     "artist": "Messa",
     "tags": [
-      {
-        "name": "metal"
-      },
-      {
-        "name": "rock"
-      },
-      {
-        "name": "dark ambient"
-      },
-      {
-        "name": "doom metal"
-      },
-      {
-        "name": "drones"
-      },
-      {
-        "name": "stoner"
-      },
-      {
-        "name": "Italy"
-      }
+      "metal",
+      "rock",
+      "dark ambient",
+      "doom metal",
+      "drones",
+      "stoner",
+      "Italy"
     ],
     "release": "",
     "description": "",
@@ -3956,27 +3350,13 @@
     "title": "Hot Natured - Benediction (Guido Santiago Remix)",
     "artist": "Guido Santiago",
     "tags": [
-      {
-        "name": "deep house"
-      },
-      {
-        "name": "electronic"
-      },
-      {
-        "name": "tech house"
-      },
-      {
-        "name": "house"
-      },
-      {
-        "name": "minimal"
-      },
-      {
-        "name": "tech house"
-      },
-      {
-        "name": "Buenos Aires"
-      }
+      "deep house",
+      "electronic",
+      "tech house",
+      "house",
+      "minimal",
+      "tech house",
+      "Buenos Aires"
     ],
     "release": "",
     "description": "",
@@ -3989,27 +3369,13 @@
     "title": "Bricky T Mortar - Salford John - [Dub Phizix Remix]",
     "artist": "The Senka AnthologyThe Senka Anthology\n            Dub Phizix",
     "tags": [
-      {
-        "name": "drum & bass"
-      },
-      {
-        "name": "electronic"
-      },
-      {
-        "name": "stuff and shit"
-      },
-      {
-        "name": "drum and bass"
-      },
-      {
-        "name": "drum n bass"
-      },
-      {
-        "name": "jungle"
-      },
-      {
-        "name": "Manchester"
-      }
+      "drum & bass",
+      "electronic",
+      "stuff and shit",
+      "drum and bass",
+      "drum n bass",
+      "jungle",
+      "Manchester"
     ],
     "release": "",
     "description": "",
@@ -4022,12 +3388,8 @@
     "title": "International Jet Set (2002 Remaster)",
     "artist": "More Specials (2002 Remaster)More Specials (2002 Remaster)\n            The Specials",
     "tags": [
-      {
-        "name": "pop"
-      },
-      {
-        "name": "London"
-      }
+      "pop",
+      "London"
     ],
     "release": "",
     "description": "",
@@ -4040,27 +3402,13 @@
     "title": "Transmission",
     "artist": "MagnetsMagnets\n            Crypticz",
     "tags": [
-      {
-        "name": "160bpm"
-      },
-      {
-        "name": "electronic"
-      },
-      {
-        "name": "dnb"
-      },
-      {
-        "name": "drum n bass"
-      },
-      {
-        "name": "footwork"
-      },
-      {
-        "name": "trap"
-      },
-      {
-        "name": "Bristol"
-      }
+      "160bpm",
+      "electronic",
+      "dnb",
+      "drum n bass",
+      "footwork",
+      "trap",
+      "Bristol"
     ],
     "release": "",
     "description": "",
@@ -4073,39 +3421,17 @@
     "title": "IVORIAN DOLL - Rumours (Tommy Kid UKG Edit)",
     "artist": "Tommy Kid",
     "tags": [
-      {
-        "name": "bass music"
-      },
-      {
-        "name": "electronic"
-      },
-      {
-        "name": "grime"
-      },
-      {
-        "name": "uk funky"
-      },
-      {
-        "name": "uk garage"
-      },
-      {
-        "name": "dancehall"
-      },
-      {
-        "name": "dubz"
-      },
-      {
-        "name": "grime"
-      },
-      {
-        "name": "resources"
-      },
-      {
-        "name": "uk drill"
-      },
-      {
-        "name": "Paris"
-      }
+      "bass music",
+      "electronic",
+      "grime",
+      "uk funky",
+      "uk garage",
+      "dancehall",
+      "dubz",
+      "grime",
+      "resources",
+      "uk drill",
+      "Paris"
     ],
     "release": "",
     "description": "",
@@ -4118,42 +3444,18 @@
     "title": "James Blake - CMYK (EYCEE Edit)",
     "artist": "EYCEE",
     "tags": [
-      {
-        "name": "bass"
-      },
-      {
-        "name": "drill"
-      },
-      {
-        "name": "eycee"
-      },
-      {
-        "name": "electronic"
-      },
-      {
-        "name": "grime"
-      },
-      {
-        "name": "james blake"
-      },
-      {
-        "name": "jersey club"
-      },
-      {
-        "name": "uk drill"
-      },
-      {
-        "name": "uk funky"
-      },
-      {
-        "name": "club"
-      },
-      {
-        "name": "club music"
-      },
-      {
-        "name": "Amsterdam"
-      }
+      "bass",
+      "drill",
+      "eycee",
+      "electronic",
+      "grime",
+      "james blake",
+      "jersey club",
+      "uk drill",
+      "uk funky",
+      "club",
+      "club music",
+      "Amsterdam"
     ],
     "release": "",
     "description": "",
@@ -4166,21 +3468,11 @@
     "title": "JENNIE - Like Jennie (Mosimann Remix)",
     "artist": "MOSIMANN",
     "tags": [
-      {
-        "name": "electronic"
-      },
-      {
-        "name": "tech house"
-      },
-      {
-        "name": "bass house"
-      },
-      {
-        "name": "mosimann"
-      },
-      {
-        "name": "Paris"
-      }
+      "electronic",
+      "tech house",
+      "bass house",
+      "mosimann",
+      "Paris"
     ],
     "release": "",
     "description": "",
@@ -4193,12 +3485,8 @@
     "title": "Wevie Stonder \"Ton Wah\" aka The Bollard track (Jerome Hill Remix)",
     "artist": "Wevie Stonder \"Ton Wah\" [The Bollard track] (Jerome Hill Remix)Wevie Stonder \"Ton Wah\" [The Bollard track] (Jerome Hill Remix)\n            Wevie Stonder / Jerome Hill",
     "tags": [
-      {
-        "name": "electronic"
-      },
-      {
-        "name": "United Kingdom"
-      }
+      "electronic",
+      "United Kingdom"
     ],
     "release": "",
     "description": "",
@@ -4211,27 +3499,13 @@
     "title": "James and the Cold Gun (Kate Bush cover)",
     "artist": "Demo (mastered)Demo (mastered)\n            Ariel",
     "tags": [
-      {
-        "name": "acoustic"
-      },
-      {
-        "name": "art rock"
-      },
-      {
-        "name": "blues"
-      },
-      {
-        "name": "pop"
-      },
-      {
-        "name": "punk"
-      },
-      {
-        "name": "rocknroll"
-      },
-      {
-        "name": "Brisbane"
-      }
+      "acoustic",
+      "art rock",
+      "blues",
+      "pop",
+      "punk",
+      "rocknroll",
+      "Brisbane"
     ],
     "release": "",
     "description": "",
@@ -4244,12 +3518,8 @@
     "title": "Joy Orbison feat. Lil Yachty, Future, Playboi Carti - flex fm (freddit)",
     "artist": "flex fm (freddit)flex fm (freddit)\n            Joy Orbison",
     "tags": [
-      {
-        "name": "electronic"
-      },
-      {
-        "name": "London"
-      }
+      "electronic",
+      "London"
     ],
     "release": "",
     "description": "",
@@ -4262,54 +3532,22 @@
     "title": "Julio Bashmore - Au Seve (Roy C 4x4 Remix)",
     "artist": "Julio Bashmore - Au Seve (Mixes)Julio Bashmore - Au Seve (Mixes)\n            Roy C Music",
     "tags": [
-      {
-        "name": "2 step"
-      },
-      {
-        "name": "2-step"
-      },
-      {
-        "name": "4x4"
-      },
-      {
-        "name": "bass"
-      },
-      {
-        "name": "bassline"
-      },
-      {
-        "name": "dance"
-      },
-      {
-        "name": "electronic"
-      },
-      {
-        "name": "garage"
-      },
-      {
-        "name": "house"
-      },
-      {
-        "name": "uk garage"
-      },
-      {
-        "name": "ukg"
-      },
-      {
-        "name": "vocal"
-      },
-      {
-        "name": "bassline"
-      },
-      {
-        "name": "dubstep & electronic"
-      },
-      {
-        "name": "electro"
-      },
-      {
-        "name": "United Kingdom"
-      }
+      "2 step",
+      "2-step",
+      "4x4",
+      "bass",
+      "bassline",
+      "dance",
+      "electronic",
+      "garage",
+      "house",
+      "uk garage",
+      "ukg",
+      "vocal",
+      "bassline",
+      "dubstep & electronic",
+      "electro",
+      "United Kingdom"
     ],
     "release": "",
     "description": "",
@@ -4322,45 +3560,19 @@
     "title": "KAMAUU - MANGO ft. Adi Oasis",
     "artist": "The Valentine's Day Mixtape Volume 16: Quiet StormThe Valentine's Day Mixtape Volume 16: Quiet Storm\n            The Movement Fam",
     "tags": [
-      {
-        "name": "adi oasis"
-      },
-      {
-        "name": "hip hop"
-      },
-      {
-        "name": "hip-hop/rap"
-      },
-      {
-        "name": "kamauu"
-      },
-      {
-        "name": "neo soul"
-      },
-      {
-        "name": "r&b"
-      },
-      {
-        "name": "soul"
-      },
-      {
-        "name": "valentine's day"
-      },
-      {
-        "name": "valentine's day mixtape"
-      },
-      {
-        "name": "alt r&b"
-      },
-      {
-        "name": "indie"
-      },
-      {
-        "name": "r&b"
-      },
-      {
-        "name": "Montreal"
-      }
+      "adi oasis",
+      "hip hop",
+      "hip-hop/rap",
+      "kamauu",
+      "neo soul",
+      "r&b",
+      "soul",
+      "valentine's day",
+      "valentine's day mixtape",
+      "alt r&b",
+      "indie",
+      "r&b",
+      "Montreal"
     ],
     "release": "",
     "description": "",
@@ -4373,27 +3585,13 @@
     "title": "Lady Gaga - The Dead Dance (The Agent Pop Mix)",
     "artist": "Lady Gaga - The Dead Dance (The Agent Pop Mix)Lady Gaga - The Dead Dance (The Agent Pop Mix)\n            THE AGENT POP",
     "tags": [
-      {
-        "name": "electronic"
-      },
-      {
-        "name": "mashup's"
-      },
-      {
-        "name": "reggaeton"
-      },
-      {
-        "name": "dj club"
-      },
-      {
-        "name": "electropop"
-      },
-      {
-        "name": "transition"
-      },
-      {
-        "name": "Mexico"
-      }
+      "electronic",
+      "mashup's",
+      "reggaeton",
+      "dj club",
+      "electropop",
+      "transition",
+      "Mexico"
     ],
     "release": "",
     "description": "",
@@ -4406,24 +3604,12 @@
     "title": "Vinyl • Bebu Silvetti - Spring Rain, Disco Mix 1976",
     "artist": "Vinyl Collection #2Vinyl Collection #2\n            vibratingorgans",
     "tags": [
-      {
-        "name": "funk"
-      },
-      {
-        "name": "house"
-      },
-      {
-        "name": "r&b"
-      },
-      {
-        "name": "r&b/soul"
-      },
-      {
-        "name": "soul"
-      },
-      {
-        "name": "Los Angeles"
-      }
+      "funk",
+      "house",
+      "r&b",
+      "r&b/soul",
+      "soul",
+      "Los Angeles"
     ],
     "release": "",
     "description": "",
@@ -4436,27 +3622,13 @@
     "title": "Aquarius Love",
     "artist": "Aquarius LoveAquarius Love\n            Lay-Far Dance Orchestra Feat. Seven Davis Jr.",
     "tags": [
-      {
-        "name": "breakbeat"
-      },
-      {
-        "name": "deep house"
-      },
-      {
-        "name": "electronic"
-      },
-      {
-        "name": "jungle"
-      },
-      {
-        "name": "lofi"
-      },
-      {
-        "name": "techno"
-      },
-      {
-        "name": "Moscow"
-      }
+      "breakbeat",
+      "deep house",
+      "electronic",
+      "jungle",
+      "lofi",
+      "techno",
+      "Moscow"
     ],
     "release": "",
     "description": "",
@@ -4469,21 +3641,11 @@
     "title": "oh baby / tonite (lcd soundsystem)",
     "artist": "bedroom recordingsbedroom recordings\n            The VT Experiments",
     "tags": [
-      {
-        "name": "experimental"
-      },
-      {
-        "name": "garage"
-      },
-      {
-        "name": "noise"
-      },
-      {
-        "name": "psychedelic"
-      },
-      {
-        "name": "London"
-      }
+      "experimental",
+      "garage",
+      "noise",
+      "psychedelic",
+      "London"
     ],
     "release": "",
     "description": "",
@@ -4496,21 +3658,11 @@
     "title": "42ND ST (feat. Lord Sko)",
     "artist": "DRIVING BLINDDRIVING BLIND\n            LIFEOFTHOM, Plain Pat",
     "tags": [
-      {
-        "name": "alternative"
-      },
-      {
-        "name": "hip-hop"
-      },
-      {
-        "name": "hip-hop/rap"
-      },
-      {
-        "name": "rap"
-      },
-      {
-        "name": "New York"
-      }
+      "alternative",
+      "hip-hop",
+      "hip-hop/rap",
+      "rap",
+      "New York"
     ],
     "release": "",
     "description": "",
@@ -4523,27 +3675,13 @@
     "title": "The Wind Doesn't Blow This Far Right",
     "artist": "The Wind Doesn't Blow This Far RightThe Wind Doesn't Blow This Far Right\n            Lisa O'Neill",
     "tags": [
-      {
-        "name": "alternative"
-      },
-      {
-        "name": "folk"
-      },
-      {
-        "name": "guitar"
-      },
-      {
-        "name": "indie folk"
-      },
-      {
-        "name": "irish folk"
-      },
-      {
-        "name": "singer-songwriter"
-      },
-      {
-        "name": "traditional folk"
-      }
+      "alternative",
+      "folk",
+      "guitar",
+      "indie folk",
+      "irish folk",
+      "singer-songwriter",
+      "traditional folk"
     ],
     "release": "",
     "description": "",
@@ -4556,12 +3694,8 @@
     "title": "Inkisición (Remaster)",
     "artist": "Me Gusta Ser Una Zorra (Remaster)Me Gusta Ser Una Zorra (Remaster)\n            Vulpess",
     "tags": [
-      {
-        "name": "alternative"
-      },
-      {
-        "name": "Madrid"
-      }
+      "alternative",
+      "Madrid"
     ],
     "release": "",
     "description": "",
@@ -4574,21 +3708,11 @@
     "title": "London Grammar - Nightcall (Micaele edit)",
     "artist": "Micaele",
     "tags": [
-      {
-        "name": "electronic"
-      },
-      {
-        "name": "melodic house & techno"
-      },
-      {
-        "name": "nu disco"
-      },
-      {
-        "name": "italo disco"
-      },
-      {
-        "name": "Moscow"
-      }
+      "electronic",
+      "melodic house & techno",
+      "nu disco",
+      "italo disco",
+      "Moscow"
     ],
     "release": "",
     "description": "",
@@ -4601,27 +3725,13 @@
     "title": "Girl With All The Flowers",
     "artist": "Love Remain",
     "tags": [
-      {
-        "name": "breaks"
-      },
-      {
-        "name": "electronic"
-      },
-      {
-        "name": "house"
-      },
-      {
-        "name": "jungle"
-      },
-      {
-        "name": "rave"
-      },
-      {
-        "name": "techno"
-      },
-      {
-        "name": "London"
-      }
+      "breaks",
+      "electronic",
+      "house",
+      "jungle",
+      "rave",
+      "techno",
+      "London"
     ],
     "release": "",
     "description": "",
@@ -4634,12 +3744,8 @@
     "title": "hasta el final",
     "artist": "A Danger to OurselvesA Danger to Ourselves\n            Lucrecia Dalt",
     "tags": [
-      {
-        "name": "electronic"
-      },
-      {
-        "name": "United States"
-      }
+      "electronic",
+      "United States"
     ],
     "release": "",
     "description": "",
@@ -4652,39 +3758,17 @@
     "title": "Alicia Myers - I Want to Thank You (Souldynamic Re-edit)",
     "artist": "Souldynamic",
     "tags": [
-      {
-        "name": "deep disco"
-      },
-      {
-        "name": "deep house"
-      },
-      {
-        "name": "electronic"
-      },
-      {
-        "name": "house"
-      },
-      {
-        "name": "nu disco"
-      },
-      {
-        "name": "dance"
-      },
-      {
-        "name": "edit"
-      },
-      {
-        "name": "re-edits"
-      },
-      {
-        "name": "remix"
-      },
-      {
-        "name": "remixes"
-      },
-      {
-        "name": "Italy"
-      }
+      "deep disco",
+      "deep house",
+      "electronic",
+      "house",
+      "nu disco",
+      "dance",
+      "edit",
+      "re-edits",
+      "remix",
+      "remixes",
+      "Italy"
     ],
     "release": "",
     "description": "",
@@ -4697,27 +3781,13 @@
     "title": "Jerusalem",
     "artist": "Learning To Cope With CowardiceLearning To Cope With Cowardice\n            Mark Stewart and The Maffia",
     "tags": [
-      {
-        "name": "experimental"
-      },
-      {
-        "name": "hip hop"
-      },
-      {
-        "name": "dub"
-      },
-      {
-        "name": "electronics"
-      },
-      {
-        "name": "industrial"
-      },
-      {
-        "name": "postpunk"
-      },
-      {
-        "name": "Bristol"
-      }
+      "experimental",
+      "hip hop",
+      "dub",
+      "electronics",
+      "industrial",
+      "postpunk",
+      "Bristol"
     ],
     "release": "",
     "description": "",
@@ -4730,9 +3800,7 @@
     "title": "Alex Reece - Pulp Fiction (Benny L Remix)",
     "artist": "30 Years of Metalheadz VIP - Part 230 Years of Metalheadz VIP - Part 2\n            Goldie / Alex Reece (Benny L Remix)",
     "tags": [
-      {
-        "name": "London"
-      }
+      "London"
     ],
     "release": "",
     "description": "",
@@ -4745,39 +3813,17 @@
     "title": "Owner of a Boogaloo Heart",
     "artist": "IF THIS IS LOVE (Ep)IF THIS IS LOVE (Ep)\n            MINIMATIC",
     "tags": [
-      {
-        "name": "electro swing"
-      },
-      {
-        "name": "electronic"
-      },
-      {
-        "name": "yes"
-      },
-      {
-        "name": "boogaloo"
-      },
-      {
-        "name": "breaks"
-      },
-      {
-        "name": "latin"
-      },
-      {
-        "name": "mashup"
-      },
-      {
-        "name": "nusoul"
-      },
-      {
-        "name": "remix"
-      },
-      {
-        "name": "soul"
-      },
-      {
-        "name": "France"
-      }
+      "electro swing",
+      "electronic",
+      "yes",
+      "boogaloo",
+      "breaks",
+      "latin",
+      "mashup",
+      "nusoul",
+      "remix",
+      "soul",
+      "France"
     ],
     "release": "",
     "description": "",
@@ -4790,33 +3836,15 @@
     "title": "Bene Vixit Iuvenis (Selections from the Incomplete AMF/Brunswick Project)",
     "artist": "Angus McFadden",
     "tags": [
-      {
-        "name": "electronic"
-      },
-      {
-        "name": "acid"
-      },
-      {
-        "name": "ambient"
-      },
-      {
-        "name": "experimental"
-      },
-      {
-        "name": "folk"
-      },
-      {
-        "name": "indescribable"
-      },
-      {
-        "name": "soundscapes"
-      },
-      {
-        "name": "ukulele"
-      },
-      {
-        "name": "Antelope"
-      }
+      "electronic",
+      "acid",
+      "ambient",
+      "experimental",
+      "folk",
+      "indescribable",
+      "soundscapes",
+      "ukulele",
+      "Antelope"
     ],
     "release": "",
     "description": "",
@@ -4829,21 +3857,11 @@
     "title": "Red Astaire - Follow Me",
     "artist": "Re:Compositional BlendsRe:Compositional Blends\n            DJ Mza",
     "tags": [
-      {
-        "name": "alternative"
-      },
-      {
-        "name": "funky soul"
-      },
-      {
-        "name": "electronica ambient experimental"
-      },
-      {
-        "name": "jazzy hiphop"
-      },
-      {
-        "name": "Los Angeles"
-      }
+      "alternative",
+      "funky soul",
+      "electronica ambient experimental",
+      "jazzy hiphop",
+      "Los Angeles"
     ],
     "release": "",
     "description": "",
@@ -4856,27 +3874,13 @@
     "title": "Last of the Mohicans",
     "artist": "Bird Sound PowerBird Sound Power\n            Equiknoxx",
     "tags": [
-      {
-        "name": "electronic"
-      },
-      {
-        "name": "bashment"
-      },
-      {
-        "name": "club"
-      },
-      {
-        "name": "dancehall"
-      },
-      {
-        "name": "dembow"
-      },
-      {
-        "name": "experimental-electronic"
-      },
-      {
-        "name": "Jamaica"
-      }
+      "electronic",
+      "bashment",
+      "club",
+      "dancehall",
+      "dembow",
+      "experimental-electronic",
+      "Jamaica"
     ],
     "release": "",
     "description": "",
@@ -4889,12 +3893,8 @@
     "title": "Under BOAC",
     "artist": "LP5LP5\n            Autechre",
     "tags": [
-      {
-        "name": "electronic"
-      },
-      {
-        "name": "United Kingdom"
-      }
+      "electronic",
+      "United Kingdom"
     ],
     "release": "",
     "description": "",
@@ -4907,27 +3907,13 @@
     "title": "Magic and Ecstasy (1977)",
     "artist": "David Furtado Plays Ennio MorriconeDavid Furtado Plays Ennio Morricone\n            David Furtado",
     "tags": [
-      {
-        "name": "rock"
-      },
-      {
-        "name": "covers"
-      },
-      {
-        "name": "film music"
-      },
-      {
-        "name": "original music"
-      },
-      {
-        "name": "rock"
-      },
-      {
-        "name": "soundtrack"
-      },
-      {
-        "name": "Porto"
-      }
+      "rock",
+      "covers",
+      "film music",
+      "original music",
+      "rock",
+      "soundtrack",
+      "Porto"
     ],
     "release": "",
     "description": "",
@@ -4940,33 +3926,15 @@
     "title": "It's another - Instrumental",
     "artist": "Neon Phusion",
     "tags": [
-      {
-        "name": "broken beat"
-      },
-      {
-        "name": "electronic"
-      },
-      {
-        "name": "breaks"
-      },
-      {
-        "name": "broken beat"
-      },
-      {
-        "name": "broken beats"
-      },
-      {
-        "name": "experimental electronic"
-      },
-      {
-        "name": "jazz"
-      },
-      {
-        "name": "latin"
-      },
-      {
-        "name": "London"
-      }
+      "broken beat",
+      "electronic",
+      "breaks",
+      "broken beat",
+      "broken beats",
+      "experimental electronic",
+      "jazz",
+      "latin",
+      "London"
     ],
     "release": "",
     "description": "",
@@ -4979,12 +3947,8 @@
     "title": "Handsup",
     "artist": "Curve +1Curve +1\n            Mura Masa",
     "tags": [
-      {
-        "name": "electronic"
-      },
-      {
-        "name": "London"
-      }
+      "electronic",
+      "London"
     ],
     "release": "",
     "description": "",
@@ -4997,15 +3961,9 @@
     "title": "D'Angelo - Untitled (How does It feel?) (L-Vis 1990 Edit) [2012]",
     "artist": "L-VIS 1990",
     "tags": [
-      {
-        "name": "electronic"
-      },
-      {
-        "name": "d'angelo"
-      },
-      {
-        "name": "London"
-      }
+      "electronic",
+      "d'angelo",
+      "London"
     ],
     "release": "",
     "description": "",
@@ -5018,21 +3976,11 @@
     "title": "Joan Bibiloni - The Boogie (Ray Mang Edit)",
     "artist": "Joan Bibiloni - Ray Mang EditsJoan Bibiloni - Ray Mang Edits\n            Ray Mang",
     "tags": [
-      {
-        "name": "electronic"
-      },
-      {
-        "name": "house"
-      },
-      {
-        "name": "nu disco"
-      },
-      {
-        "name": "disco"
-      },
-      {
-        "name": "New York"
-      }
+      "electronic",
+      "house",
+      "nu disco",
+      "disco",
+      "New York"
     ],
     "release": "",
     "description": "",
@@ -5045,27 +3993,13 @@
     "title": "Long Distance Song",
     "artist": "Fly by NightFly by Night\n            Vision the Kid",
     "tags": [
-      {
-        "name": "funk"
-      },
-      {
-        "name": "hip-hop"
-      },
-      {
-        "name": "hip-hop/rap"
-      },
-      {
-        "name": "indie"
-      },
-      {
-        "name": "rap"
-      },
-      {
-        "name": "soul"
-      },
-      {
-        "name": "Minneapolis"
-      }
+      "funk",
+      "hip-hop",
+      "hip-hop/rap",
+      "indie",
+      "rap",
+      "soul",
+      "Minneapolis"
     ],
     "release": "",
     "description": "",
@@ -5078,42 +4012,18 @@
     "title": "paralyze paradise (b2)",
     "artist": "woke ep [uu002]woke ep [uu002]\n            Nachtbraker",
     "tags": [
-      {
-        "name": "deep house"
-      },
-      {
-        "name": "dub"
-      },
-      {
-        "name": "electronic"
-      },
-      {
-        "name": "house"
-      },
-      {
-        "name": "techno"
-      },
-      {
-        "name": "breakbeat"
-      },
-      {
-        "name": "breaks"
-      },
-      {
-        "name": "emotive"
-      },
-      {
-        "name": "leftfield"
-      },
-      {
-        "name": "minimal"
-      },
-      {
-        "name": "sound design"
-      },
-      {
-        "name": "Amsterdam"
-      }
+      "deep house",
+      "dub",
+      "electronic",
+      "house",
+      "techno",
+      "breakbeat",
+      "breaks",
+      "emotive",
+      "leftfield",
+      "minimal",
+      "sound design",
+      "Amsterdam"
     ],
     "release": "",
     "description": "",
@@ -5126,15 +4036,9 @@
     "title": "RESISTENCIA Y BAILADERA  NEGRA SANTA",
     "artist": "COMPILADO VOL 6 FMDELROCK ARGENTINACOMPILADO VOL 6 FMDELROCK ARGENTINA\n            FMDELROCK ARG",
     "tags": [
-      {
-        "name": "rock"
-      },
-      {
-        "name": "rock reggae ska funk alternativo"
-      },
-      {
-        "name": "Buenos Aires"
-      }
+      "rock",
+      "rock reggae ska funk alternativo",
+      "Buenos Aires"
     ],
     "release": "",
     "description": "",
@@ -5147,27 +4051,13 @@
     "title": "Twilight",
     "artist": "KarmaKarma\n            Delerium",
     "tags": [
-      {
-        "name": "alternative"
-      },
-      {
-        "name": "ambient"
-      },
-      {
-        "name": "chillout"
-      },
-      {
-        "name": "downtempo"
-      },
-      {
-        "name": "electronica"
-      },
-      {
-        "name": "female vocals"
-      },
-      {
-        "name": "Vancouver"
-      }
+      "alternative",
+      "ambient",
+      "chillout",
+      "downtempo",
+      "electronica",
+      "female vocals",
+      "Vancouver"
     ],
     "release": "",
     "description": "",
@@ -5180,21 +4070,11 @@
     "title": "Treason",
     "artist": "Dancing ShoesDancing Shoes\n            Nilufer Yanya",
     "tags": [
-      {
-        "name": "alternative"
-      },
-      {
-        "name": "folk"
-      },
-      {
-        "name": "indie"
-      },
-      {
-        "name": "soulful"
-      },
-      {
-        "name": "London"
-      }
+      "alternative",
+      "folk",
+      "indie",
+      "soulful",
+      "London"
     ],
     "release": "",
     "description": "",
@@ -5207,36 +4087,16 @@
     "title": "Nina Simone - Sinnerman (ND Touch)",
     "artist": "Nikos Diamantopoulos",
     "tags": [
-      {
-        "name": "afro"
-      },
-      {
-        "name": "deep"
-      },
-      {
-        "name": "electronic"
-      },
-      {
-        "name": "electronica"
-      },
-      {
-        "name": "house"
-      },
-      {
-        "name": "remix"
-      },
-      {
-        "name": "soulful"
-      },
-      {
-        "name": "classic"
-      },
-      {
-        "name": "electronica"
-      },
-      {
-        "name": "Greece"
-      }
+      "afro",
+      "deep",
+      "electronic",
+      "electronica",
+      "house",
+      "remix",
+      "soulful",
+      "classic",
+      "electronica",
+      "Greece"
     ],
     "release": "",
     "description": "",
@@ -5249,21 +4109,11 @@
     "title": "Wayne Smith - Under Me Sleng Teng",
     "artist": "Dj Sugai - Everybody Loves Reggae Vol. 1Dj Sugai - Everybody Loves Reggae Vol. 1\n            DJ Sugai",
     "tags": [
-      {
-        "name": "hip hop"
-      },
-      {
-        "name": "hip-hop/rap"
-      },
-      {
-        "name": "instrumental hip-hop"
-      },
-      {
-        "name": "turntablism"
-      },
-      {
-        "name": "London"
-      }
+      "hip hop",
+      "hip-hop/rap",
+      "instrumental hip-hop",
+      "turntablism",
+      "London"
     ],
     "release": "",
     "description": "",
@@ -5276,51 +4126,21 @@
     "title": "Odymel - My Favourite Game",
     "artist": "Odymel - My Favourite GameOdymel - My Favourite Game\n            Odymel",
     "tags": [
-      {
-        "name": "dj"
-      },
-      {
-        "name": "electro"
-      },
-      {
-        "name": "electronic"
-      },
-      {
-        "name": "electronic music"
-      },
-      {
-        "name": "hardtrance"
-      },
-      {
-        "name": "remix"
-      },
-      {
-        "name": "rock techno"
-      },
-      {
-        "name": "techno"
-      },
-      {
-        "name": "techno remix"
-      },
-      {
-        "name": "trance"
-      },
-      {
-        "name": "trance electro techno"
-      },
-      {
-        "name": "techno"
-      },
-      {
-        "name": "techno house"
-      },
-      {
-        "name": "trance"
-      },
-      {
-        "name": "Brussels"
-      }
+      "dj",
+      "electro",
+      "electronic",
+      "electronic music",
+      "hardtrance",
+      "remix",
+      "rock techno",
+      "techno",
+      "techno remix",
+      "trance",
+      "trance electro techno",
+      "techno",
+      "techno house",
+      "trance",
+      "Brussels"
     ],
     "release": "",
     "description": "",
@@ -5333,15 +4153,9 @@
     "title": "BUMBA ft. DRS (produced by Chimpo)",
     "artist": "BUMBA EPBUMBA EP\n            Skittles",
     "tags": [
-      {
-        "name": "hip-hop/rap"
-      },
-      {
-        "name": "rap"
-      },
-      {
-        "name": "Manchester"
-      }
+      "hip-hop/rap",
+      "rap",
+      "Manchester"
     ],
     "release": "",
     "description": "",
@@ -5354,21 +4168,11 @@
     "title": "Oms en série - Who Do You Think You Are",
     "artist": "September 2023: Saint EtienneSeptember 2023: Saint Etienne\n            PRF Monthly Tribute Series",
     "tags": [
-      {
-        "name": "diy"
-      },
-      {
-        "name": "prf"
-      },
-      {
-        "name": "rock"
-      },
-      {
-        "name": "prf"
-      },
-      {
-        "name": "Chicago"
-      }
+      "diy",
+      "prf",
+      "rock",
+      "prf",
+      "Chicago"
     ],
     "release": "",
     "description": "",
@@ -5381,24 +4185,12 @@
     "title": "Sounds Of Blackness - Optimistic (disgo remix)",
     "artist": "Disgo Is Dead - Part 1: BootlegsDisgo Is Dead - Part 1: Bootlegs\n            Christopher 'Coolout' Davis",
     "tags": [
-      {
-        "name": "electronic"
-      },
-      {
-        "name": "hip-hop"
-      },
-      {
-        "name": "house"
-      },
-      {
-        "name": "rap"
-      },
-      {
-        "name": "soul"
-      },
-      {
-        "name": "Philadelphia"
-      }
+      "electronic",
+      "hip-hop",
+      "house",
+      "rap",
+      "soul",
+      "Philadelphia"
     ],
     "release": "",
     "description": "",
@@ -5411,21 +4203,11 @@
     "title": "Saa Magni (Acoustic)",
     "artist": "AcousticAcoustic\n            Oumou Sangaré",
     "tags": [
-      {
-        "name": "world"
-      },
-      {
-        "name": "mali"
-      },
-      {
-        "name": "world circuit records"
-      },
-      {
-        "name": "world music"
-      },
-      {
-        "name": "Mali"
-      }
+      "world",
+      "mali",
+      "world circuit records",
+      "world music",
+      "Mali"
     ],
     "release": "",
     "description": "",
@@ -5438,24 +4220,12 @@
     "title": "If We Ever (Extended)",
     "artist": "If We EverIf We Ever\n            Overmono & High Contrast",
     "tags": [
-      {
-        "name": "electronic"
-      },
-      {
-        "name": "ambient"
-      },
-      {
-        "name": "breakbeat"
-      },
-      {
-        "name": "hardcore"
-      },
-      {
-        "name": "techno"
-      },
-      {
-        "name": "London"
-      }
+      "electronic",
+      "ambient",
+      "breakbeat",
+      "hardcore",
+      "techno",
+      "London"
     ],
     "release": "",
     "description": "",
@@ -5468,27 +4238,13 @@
     "title": "Under The Magnolia Tree",
     "artist": "The Celestial SuiteThe Celestial Suite\n            Pale Jay",
     "tags": [
-      {
-        "name": "neo-soul"
-      },
-      {
-        "name": "r&b/soul"
-      },
-      {
-        "name": "falsetto"
-      },
-      {
-        "name": "r&b"
-      },
-      {
-        "name": "retro soul"
-      },
-      {
-        "name": "soul"
-      },
-      {
-        "name": "Los Angeles"
-      }
+      "neo-soul",
+      "r&b/soul",
+      "falsetto",
+      "r&b",
+      "retro soul",
+      "soul",
+      "Los Angeles"
     ],
     "release": "",
     "description": "",
@@ -5501,27 +4257,13 @@
     "title": "Cold Family",
     "artist": "Immortal MirthImmortal Mirth\n            enereph",
     "tags": [
-      {
-        "name": "broken beat"
-      },
-      {
-        "name": "canadian"
-      },
-      {
-        "name": "electronic"
-      },
-      {
-        "name": "experimental"
-      },
-      {
-        "name": "idm"
-      },
-      {
-        "name": "ambient"
-      },
-      {
-        "name": "Vancouver"
-      }
+      "broken beat",
+      "canadian",
+      "electronic",
+      "experimental",
+      "idm",
+      "ambient",
+      "Vancouver"
     ],
     "release": "",
     "description": "",
@@ -5534,21 +4276,11 @@
     "title": "Mr Magic",
     "artist": "There Goes Concorde AgainThere Goes Concorde Again\n            ...and the Native Hipsters",
     "tags": [
-      {
-        "name": "alternative"
-      },
-      {
-        "name": "cutups"
-      },
-      {
-        "name": "experimental"
-      },
-      {
-        "name": "poppunk"
-      },
-      {
-        "name": "United Kingdom"
-      }
+      "alternative",
+      "cutups",
+      "experimental",
+      "poppunk",
+      "United Kingdom"
     ],
     "release": "",
     "description": "",
@@ -5561,24 +4293,12 @@
     "title": "Donny Hathaway - The Ghetto (Disco Edit)",
     "artist": "Soul Edits Vol.7Soul Edits Vol.7\n            Sonic Funk Foundry",
     "tags": [
-      {
-        "name": "funk"
-      },
-      {
-        "name": "afrofunk"
-      },
-      {
-        "name": "brazilian"
-      },
-      {
-        "name": "deep funk"
-      },
-      {
-        "name": "edits"
-      },
-      {
-        "name": "rare groove"
-      }
+      "funk",
+      "afrofunk",
+      "brazilian",
+      "deep funk",
+      "edits",
+      "rare groove"
     ],
     "release": "",
     "description": "",
@@ -5591,27 +4311,13 @@
     "title": "Minnie Riperton - Inside My Love (Opal Edit)",
     "artist": "OPAL",
     "tags": [
-      {
-        "name": "electronic"
-      },
-      {
-        "name": "soul"
-      },
-      {
-        "name": "afro"
-      },
-      {
-        "name": "dance"
-      },
-      {
-        "name": "disco"
-      },
-      {
-        "name": "funk"
-      },
-      {
-        "name": "Finland"
-      }
+      "electronic",
+      "soul",
+      "afro",
+      "dance",
+      "disco",
+      "funk",
+      "Finland"
     ],
     "release": "",
     "description": "",
@@ -5624,9 +4330,7 @@
     "title": "of Montreal - Gronlandic Edit",
     "artist": "Before You GoBefore You Go\n            Polyvinyl Records",
     "tags": [
-      {
-        "name": "Champaign"
-      }
+      "Champaign"
     ],
     "release": "",
     "description": "",
@@ -5639,27 +4343,13 @@
     "title": "The Caravan",
     "artist": "The Prose Of Clark Ashton Smith (Full Audiobook)The Prose Of Clark Ashton Smith (Full Audiobook)\n            Clark Ashton Smith",
     "tags": [
-      {
-        "name": "audiobooks"
-      },
-      {
-        "name": "audiobooks"
-      },
-      {
-        "name": "dark ambient"
-      },
-      {
-        "name": "dungeon synth"
-      },
-      {
-        "name": "meditation"
-      },
-      {
-        "name": "occult"
-      },
-      {
-        "name": "Milwaukee"
-      }
+      "audiobooks",
+      "audiobooks",
+      "dark ambient",
+      "dungeon synth",
+      "meditation",
+      "occult",
+      "Milwaukee"
     ],
     "release": "",
     "description": "",
@@ -5672,12 +4362,8 @@
     "title": "Panda",
     "artist": "Ta det lugntTa det lugnt\n            Dungen",
     "tags": [
-      {
-        "name": "rock"
-      },
-      {
-        "name": "Sweden"
-      }
+      "rock",
+      "Sweden"
     ],
     "release": "",
     "description": "",
@@ -5690,18 +4376,10 @@
     "title": "Who Colt the Game",
     "artist": "KayaKaya\n            Bob Marley & The Wailers",
     "tags": [
-      {
-        "name": "reggae"
-      },
-      {
-        "name": "dub"
-      },
-      {
-        "name": "roots"
-      },
-      {
-        "name": "Kingston"
-      }
+      "reggae",
+      "dub",
+      "roots",
+      "Kingston"
     ],
     "release": "",
     "description": "",
@@ -5714,24 +4392,12 @@
     "title": "Hi-lar - Back On Trip - LXC Remix",
     "artist": "ConnewoodzConnewoodz\n            LXC",
     "tags": [
-      {
-        "name": "electronic"
-      },
-      {
-        "name": "drumnbass"
-      },
-      {
-        "name": "dubber"
-      },
-      {
-        "name": "fakecore"
-      },
-      {
-        "name": "jungle"
-      },
-      {
-        "name": "Leipzig"
-      }
+      "electronic",
+      "drumnbass",
+      "dubber",
+      "fakecore",
+      "jungle",
+      "Leipzig"
     ],
     "release": "",
     "description": "",
@@ -5744,15 +4410,9 @@
     "title": "Wild Sign I Choose You",
     "artist": "We Will Annihilate Our EnemiesWe Will Annihilate Our Enemies\n            Real Lies",
     "tags": [
-      {
-        "name": "electronic"
-      },
-      {
-        "name": "london uk"
-      },
-      {
-        "name": "London"
-      }
+      "electronic",
+      "london uk",
+      "London"
     ],
     "release": "",
     "description": "",
@@ -5765,12 +4425,8 @@
     "title": "Unlearning",
     "artist": "Evidence",
     "tags": [
-      {
-        "name": "hip-hop/rap"
-      },
-      {
-        "name": "Los Angeles"
-      }
+      "hip-hop/rap",
+      "Los Angeles"
     ],
     "release": "",
     "description": "",
@@ -5783,12 +4439,8 @@
     "title": "Higher Rock",
     "artist": "Saving GraceSaving Grace\n            Robert Plant",
     "tags": [
-      {
-        "name": "rock"
-      },
-      {
-        "name": "London"
-      }
+      "rock",
+      "London"
     ],
     "release": "",
     "description": "",
@@ -5801,21 +4453,11 @@
     "title": "Twilight Language",
     "artist": "Twilight LanguageTwilight Language\n            Rodriguez Jr.",
     "tags": [
-      {
-        "name": "deep house"
-      },
-      {
-        "name": "electronic"
-      },
-      {
-        "name": "melodic house & techno"
-      },
-      {
-        "name": "organic house"
-      },
-      {
-        "name": "Miami"
-      }
+      "deep house",
+      "electronic",
+      "melodic house & techno",
+      "organic house",
+      "Miami"
     ],
     "release": "",
     "description": "",
@@ -5828,39 +4470,17 @@
     "title": "Rusowski ft. Las Ketchup - Jhonny Glamour (deuve Latin House remix)",
     "artist": "deuve dj",
     "tags": [
-      {
-        "name": "deep house"
-      },
-      {
-        "name": "electronic"
-      },
-      {
-        "name": "house"
-      },
-      {
-        "name": "indie"
-      },
-      {
-        "name": "urban"
-      },
-      {
-        "name": "indie dance"
-      },
-      {
-        "name": "indie pop"
-      },
-      {
-        "name": "latin house"
-      },
-      {
-        "name": "remix"
-      },
-      {
-        "name": "remixed"
-      },
-      {
-        "name": "Orihuela"
-      }
+      "deep house",
+      "electronic",
+      "house",
+      "indie",
+      "urban",
+      "indie dance",
+      "indie pop",
+      "latin house",
+      "remix",
+      "remixed",
+      "Orihuela"
     ],
     "release": "",
     "description": "",
@@ -5873,12 +4493,8 @@
     "title": "After Light",
     "artist": "Glass SwordsGlass Swords\n            Rustie",
     "tags": [
-      {
-        "name": "electronic"
-      },
-      {
-        "name": "United Kingdom"
-      }
+      "electronic",
+      "United Kingdom"
     ],
     "release": "",
     "description": "",
@@ -5891,27 +4507,13 @@
     "title": "Hoover Street (Chopped & Screwed)",
     "artist": "Oxymoron (Chopped & Screwed)Oxymoron (Chopped & Screwed)\n            schoolboy q + dj purpberry",
     "tags": [
-      {
-        "name": "chopped & screwed"
-      },
-      {
-        "name": "hip-hop/rap"
-      },
-      {
-        "name": "chopped and screwed"
-      },
-      {
-        "name": "slowed"
-      },
-      {
-        "name": "slowed down"
-      },
-      {
-        "name": "slowed reverb"
-      },
-      {
-        "name": "Houston"
-      }
+      "chopped & screwed",
+      "hip-hop/rap",
+      "chopped and screwed",
+      "slowed",
+      "slowed down",
+      "slowed reverb",
+      "Houston"
     ],
     "release": "",
     "description": "",
@@ -5924,12 +4526,8 @@
     "title": "ScHoolboy Q - Yay Yay (Raspy Bootleg)",
     "artist": "Remixes Vol. 1Remixes Vol. 1\n            Raspy",
     "tags": [
-      {
-        "name": "electronic"
-      },
-      {
-        "name": "Lafayette"
-      }
+      "electronic",
+      "Lafayette"
     ],
     "release": "",
     "description": "",
@@ -5942,24 +4540,12 @@
     "title": "Vinyl • Man Parrish - Hip-Hop, Be Bop, Don't Stop 1982",
     "artist": "Vinyl Collection #5Vinyl Collection #5\n            vibratingorgans",
     "tags": [
-      {
-        "name": "funk"
-      },
-      {
-        "name": "house"
-      },
-      {
-        "name": "r&b"
-      },
-      {
-        "name": "r&b/soul"
-      },
-      {
-        "name": "soul"
-      },
-      {
-        "name": "Los Angeles"
-      }
+      "funk",
+      "house",
+      "r&b",
+      "r&b/soul",
+      "soul",
+      "Los Angeles"
     ],
     "release": "",
     "description": "",
@@ -5972,9 +4558,7 @@
     "title": "Cumbia Algarrobera featuring Chico Trujillo",
     "artist": "BatucoBatuco\n            Son Rompe Pera",
     "tags": [
-      {
-        "name": "Los Angeles"
-      }
+      "Los Angeles"
     ],
     "release": "",
     "description": "",
@@ -5987,27 +4571,13 @@
     "title": "Ulls Verds - Joana Lluna",
     "artist": "Selected Works 1982 to 1989Selected Works 1982 to 1989\n            Joan Bibiloni",
     "tags": [
-      {
-        "name": "world"
-      },
-      {
-        "name": "ambience"
-      },
-      {
-        "name": "ambiguous"
-      },
-      {
-        "name": "funk"
-      },
-      {
-        "name": "guitar"
-      },
-      {
-        "name": "mediterranean"
-      },
-      {
-        "name": "Spain"
-      }
+      "world",
+      "ambience",
+      "ambiguous",
+      "funk",
+      "guitar",
+      "mediterranean",
+      "Spain"
     ],
     "release": "",
     "description": "",
@@ -6020,27 +4590,13 @@
     "title": "SPICE GIRLS - WHO DO YOU THINK YOU ARE (STRDA EXTENDED)",
     "artist": "STRDA",
     "tags": [
-      {
-        "name": "funk"
-      },
-      {
-        "name": "funk."
-      },
-      {
-        "name": "nu disco"
-      },
-      {
-        "name": "r&b"
-      },
-      {
-        "name": "soul"
-      },
-      {
-        "name": "disco"
-      },
-      {
-        "name": "Chile"
-      }
+      "funk",
+      "funk.",
+      "nu disco",
+      "r&b",
+      "soul",
+      "disco",
+      "Chile"
     ],
     "release": "",
     "description": "",
@@ -6053,12 +4609,8 @@
     "title": "Everything Hits At Once",
     "artist": "Girls Can TellGirls Can Tell\n            Spoon",
     "tags": [
-      {
-        "name": "alternative"
-      },
-      {
-        "name": "Austin"
-      }
+      "alternative",
+      "Austin"
     ],
     "release": "",
     "description": "",
@@ -6071,21 +4623,11 @@
     "title": "Mr Big Stuff (Jean Knight)",
     "artist": "Demo 2018Demo 2018\n            Meelee Shake",
     "tags": [
-      {
-        "name": "r&b"
-      },
-      {
-        "name": "r&b/soul"
-      },
-      {
-        "name": "soul"
-      },
-      {
-        "name": "funk"
-      },
-      {
-        "name": "Reunion"
-      }
+      "r&b",
+      "r&b/soul",
+      "soul",
+      "funk",
+      "Reunion"
     ],
     "release": "",
     "description": "",
@@ -6098,15 +4640,9 @@
     "title": "East St Louis Toodle-Oo",
     "artist": "Limehouse Jazzband",
     "tags": [
-      {
-        "name": "classic new orleans"
-      },
-      {
-        "name": "jazz"
-      },
-      {
-        "name": "Amersfoort"
-      }
+      "classic new orleans",
+      "jazz",
+      "Amersfoort"
     ],
     "release": "",
     "description": "",
@@ -6119,54 +4655,22 @@
     "title": "Bonus Track: Guthrie Govan / Steven Wilson -  Drive Home backing track",
     "artist": "Artmant Studios Backing Tracks Collection Vol.01Artmant Studios Backing Tracks Collection Vol.01\n            Artmant Studios",
     "tags": [
-      {
-        "name": "blues"
-      },
-      {
-        "name": "backing track"
-      },
-      {
-        "name": "backing track for gutar"
-      },
-      {
-        "name": "blues"
-      },
-      {
-        "name": "funk"
-      },
-      {
-        "name": "guitar backing track"
-      },
-      {
-        "name": "guitar instrumental"
-      },
-      {
-        "name": "guitar jam track"
-      },
-      {
-        "name": "hard rock jam track"
-      },
-      {
-        "name": "instrumental shred guitar"
-      },
-      {
-        "name": "jam tracks"
-      },
-      {
-        "name": "rock"
-      },
-      {
-        "name": "rock backing track"
-      },
-      {
-        "name": "rock jam"
-      },
-      {
-        "name": "shred guitar"
-      },
-      {
-        "name": "United States"
-      }
+      "blues",
+      "backing track",
+      "backing track for gutar",
+      "blues",
+      "funk",
+      "guitar backing track",
+      "guitar instrumental",
+      "guitar jam track",
+      "hard rock jam track",
+      "instrumental shred guitar",
+      "jam tracks",
+      "rock",
+      "rock backing track",
+      "rock jam",
+      "shred guitar",
+      "United States"
     ],
     "release": "",
     "description": "",
@@ -6179,12 +4683,8 @@
     "title": "Karlaplan (Remix)",
     "artist": "KarlaplanKarlaplan\n            Off The Meds",
     "tags": [
-      {
-        "name": "electronic"
-      },
-      {
-        "name": "Stockholm"
-      }
+      "electronic",
+      "Stockholm"
     ],
     "release": "",
     "description": "",
@@ -6197,18 +4697,10 @@
     "title": "Dethrone (INSOMATIC Cover)",
     "artist": "Bad Omens",
     "tags": [
-      {
-        "name": "metal"
-      },
-      {
-        "name": "ambient electronic"
-      },
-      {
-        "name": "space"
-      },
-      {
-        "name": "Arizona"
-      }
+      "metal",
+      "ambient electronic",
+      "space",
+      "Arizona"
     ],
     "release": "",
     "description": "",
@@ -6221,9 +4713,7 @@
     "title": "NOWHERE TO GO [LIVE 2024]",
     "artist": "Concrete Jungle [THE OST]Concrete Jungle [THE OST]\n            Bad Omens",
     "tags": [
-      {
-        "name": "Los Angeles"
-      }
+      "Los Angeles"
     ],
     "release": "",
     "description": "",
@@ -6236,33 +4726,15 @@
     "title": "Raise the Chalice",
     "artist": "Eternity's Pillars b/w Raise the Chalice & ReverentialEternity's Pillars b/w Raise the Chalice & Reverential\n            SUNN O)))",
     "tags": [
-      {
-        "name": "metal"
-      },
-      {
-        "name": "doom"
-      },
-      {
-        "name": "drone"
-      },
-      {
-        "name": "experiemental"
-      },
-      {
-        "name": "minimal"
-      },
-      {
-        "name": "psychedelic"
-      },
-      {
-        "name": "spectral"
-      },
-      {
-        "name": "sub pop"
-      },
-      {
-        "name": "Seattle"
-      }
+      "metal",
+      "doom",
+      "drone",
+      "experiemental",
+      "minimal",
+      "psychedelic",
+      "spectral",
+      "sub pop",
+      "Seattle"
     ],
     "release": "",
     "description": "",
@@ -6275,9 +4747,7 @@
     "title": "Prisms",
     "artist": "Wild LightWild Light\n            65daysofstatic",
     "tags": [
-      {
-        "name": "London"
-      }
+      "London"
     ],
     "release": "",
     "description": "",
@@ -6290,21 +4760,11 @@
     "title": "Fool's Overture (Supertramp Cover)",
     "artist": "Light In Darkness EP (2019)Light In Darkness EP (2019)\n            Nephilim",
     "tags": [
-      {
-        "name": "melodic metal"
-      },
-      {
-        "name": "metal"
-      },
-      {
-        "name": "nephilim"
-      },
-      {
-        "name": "instrumental"
-      },
-      {
-        "name": "Cornwall"
-      }
+      "melodic metal",
+      "metal",
+      "nephilim",
+      "instrumental",
+      "Cornwall"
     ],
     "release": "",
     "description": "",
@@ -6317,36 +4777,16 @@
     "title": "Stoneface",
     "artist": "Bill Bryson, slade Lewis, Bill Perry Jr., Kit Kohner, Tom Queyja, Mike Stakelum, and Kevin Smith",
     "tags": [
-      {
-        "name": "bill bryson"
-      },
-      {
-        "name": "hip hop"
-      },
-      {
-        "name": "hip hop/rap"
-      },
-      {
-        "name": "bill perry"
-      },
-      {
-        "name": "kevin smith"
-      },
-      {
-        "name": "kit kohner"
-      },
-      {
-        "name": "mike stakelum"
-      },
-      {
-        "name": "slade lewis"
-      },
-      {
-        "name": "tom queyja"
-      },
-      {
-        "name": "Tennessee"
-      }
+      "bill bryson",
+      "hip hop",
+      "hip hop/rap",
+      "bill perry",
+      "kevin smith",
+      "kit kohner",
+      "mike stakelum",
+      "slade lewis",
+      "tom queyja",
+      "Tennessee"
     ],
     "release": "",
     "description": "",
@@ -6359,27 +4799,13 @@
     "title": "Sylvan Esso - Ferris Wheel Giraffe Lookout DJ Edit",
     "artist": "Giraffe Lookout",
     "tags": [
-      {
-        "name": "electronic"
-      },
-      {
-        "name": "breaks"
-      },
-      {
-        "name": "crunk"
-      },
-      {
-        "name": "dj edits"
-      },
-      {
-        "name": "house"
-      },
-      {
-        "name": "scratching"
-      },
-      {
-        "name": "Eden"
-      }
+      "electronic",
+      "breaks",
+      "crunk",
+      "dj edits",
+      "house",
+      "scratching",
+      "Eden"
     ],
     "release": "",
     "description": "",
@@ -6392,9 +4818,7 @@
     "title": "Dual Tone - Reign Dub",
     "artist": "DJ-Kicks: Thievery CorporationDJ-Kicks: Thievery Corporation\n            Thievery Corporation",
     "tags": [
-      {
-        "name": "Berlin"
-      }
+      "Berlin"
     ],
     "release": "",
     "description": "",
@@ -6407,21 +4831,11 @@
     "title": "Present-Voice",
     "artist": "Past-Present-Future Vol. IPast-Present-Future Vol. I\n            SOFTWARE",
     "tags": [
-      {
-        "name": "ambient"
-      },
-      {
-        "name": "berlin school"
-      },
-      {
-        "name": "new age"
-      },
-      {
-        "name": "vaporwave"
-      },
-      {
-        "name": "Bremen"
-      }
+      "ambient",
+      "berlin school",
+      "new age",
+      "vaporwave",
+      "Bremen"
     ],
     "release": "",
     "description": "",
@@ -6434,24 +4848,12 @@
     "title": "Tame Impala - My Old Ways (Eject.no.name HARD Edit)",
     "artist": "Eject.no.name",
     "tags": [
-      {
-        "name": "140bpm"
-      },
-      {
-        "name": "electronic"
-      },
-      {
-        "name": "breaks"
-      },
-      {
-        "name": "techno"
-      },
-      {
-        "name": "techno house"
-      },
-      {
-        "name": "Gold Coast"
-      }
+      "140bpm",
+      "electronic",
+      "breaks",
+      "techno",
+      "techno house",
+      "Gold Coast"
     ],
     "release": "",
     "description": "",
@@ -6464,15 +4866,9 @@
     "title": "Blawan \"Getting Me Down (Hour Attract 100 Mix)\"",
     "artist": "36 Mixes For Fun36 Mixes For Fun\n            VIIRGIILE",
     "tags": [
-      {
-        "name": "devotional"
-      },
-      {
-        "name": "electro experimental soundtrack"
-      },
-      {
-        "name": "Angoulême"
-      }
+      "devotional",
+      "electro experimental soundtrack",
+      "Angoulême"
     ],
     "release": "",
     "description": "",
@@ -6485,33 +4881,15 @@
     "title": "KAS PRODUCT - NEVER COME BACK - MaPublicTherapy remix",
     "artist": "MaPublicTherapy",
     "tags": [
-      {
-        "name": "electronic"
-      },
-      {
-        "name": "hip-hop"
-      },
-      {
-        "name": "rap"
-      },
-      {
-        "name": "coldwave"
-      },
-      {
-        "name": "electropop"
-      },
-      {
-        "name": "house"
-      },
-      {
-        "name": "remix"
-      },
-      {
-        "name": "techno"
-      },
-      {
-        "name": "Paris"
-      }
+      "electronic",
+      "hip-hop",
+      "rap",
+      "coldwave",
+      "electropop",
+      "house",
+      "remix",
+      "techno",
+      "Paris"
     ],
     "release": "",
     "description": "",
@@ -6524,12 +4902,8 @@
     "title": "ariel",
     "artist": "akaaka\n            tennyson",
     "tags": [
-      {
-        "name": "electronic"
-      },
-      {
-        "name": "Canada"
-      }
+      "electronic",
+      "Canada"
     ],
     "release": "",
     "description": "",
@@ -6542,18 +4916,10 @@
     "title": "Doubt:Hope",
     "artist": "HeartcoreHeartcore\n            Wildbirds & Peacedrums",
     "tags": [
-      {
-        "name": "alternative"
-      },
-      {
-        "name": "drums"
-      },
-      {
-        "name": "the leaf label"
-      },
-      {
-        "name": "Stockholm"
-      }
+      "alternative",
+      "drums",
+      "the leaf label",
+      "Stockholm"
     ],
     "release": "",
     "description": "",
@@ -6566,27 +4932,13 @@
     "title": "Shak Out feat. Sparkz",
     "artist": "Escape MusicEscape Music\n            The Mouse Outfit",
     "tags": [
-      {
-        "name": "hip-hop"
-      },
-      {
-        "name": "hip-hop/rap"
-      },
-      {
-        "name": "soul"
-      },
-      {
-        "name": "funk"
-      },
-      {
-        "name": "jazz"
-      },
-      {
-        "name": "reggae"
-      },
-      {
-        "name": "Manchester"
-      }
+      "hip-hop",
+      "hip-hop/rap",
+      "soul",
+      "funk",
+      "jazz",
+      "reggae",
+      "Manchester"
     ],
     "release": "",
     "description": "",
@@ -6599,18 +4951,10 @@
     "title": "Something Ain't Right",
     "artist": "City In The SkyCity In The Sky\n            The Staple Singers",
     "tags": [
-      {
-        "name": "r&b/soul"
-      },
-      {
-        "name": "soul"
-      },
-      {
-        "name": "funk"
-      },
-      {
-        "name": "Chicago"
-      }
+      "r&b/soul",
+      "soul",
+      "funk",
+      "Chicago"
     ],
     "release": "",
     "description": "",
@@ -6623,18 +4967,10 @@
     "title": "Future Lover",
     "artist": "Thee Sacred SoulsThee Sacred Souls\n            Thee Sacred Souls",
     "tags": [
-      {
-        "name": "r&b/soul"
-      },
-      {
-        "name": "souldies"
-      },
-      {
-        "name": "sweet soul"
-      },
-      {
-        "name": "San Diego"
-      }
+      "r&b/soul",
+      "souldies",
+      "sweet soul",
+      "San Diego"
     ],
     "release": "",
     "description": "",
@@ -6647,9 +4983,7 @@
     "title": "Tuesdays Hot Hit",
     "artist": "RepeatsRepeats\n            Repeat",
     "tags": [
-      {
-        "name": "Amsterdam"
-      }
+      "Amsterdam"
     ],
     "release": "",
     "description": "",
@@ -6662,21 +4996,11 @@
     "title": "D Double E - Street fighter Riddim",
     "artist": "Street Fighter MixtapeStreet Fighter Mixtape\n            DJ Sugai",
     "tags": [
-      {
-        "name": "hip hop"
-      },
-      {
-        "name": "hip-hop/rap"
-      },
-      {
-        "name": "instrumental hip-hop"
-      },
-      {
-        "name": "turntablism"
-      },
-      {
-        "name": "London"
-      }
+      "hip hop",
+      "hip-hop/rap",
+      "instrumental hip-hop",
+      "turntablism",
+      "London"
     ],
     "release": "",
     "description": "",
@@ -6689,12 +5013,8 @@
     "title": "Sponsored By Destiny",
     "artist": "Boss For Leader!Boss For Leader!\n            Slagsmålsklubben",
     "tags": [
-      {
-        "name": "swedish modern keyboard"
-      },
-      {
-        "name": "Sweden"
-      }
+      "swedish modern keyboard",
+      "Sweden"
     ],
     "release": "",
     "description": "",
@@ -6707,24 +5027,12 @@
     "title": "Flick It Up (Remix) Ft. REASON & Ab-Soul",
     "artist": "Throw Away Bars 3Throw Away Bars 3\n            King Legend",
     "tags": [
-      {
-        "name": "down south"
-      },
-      {
-        "name": "hip hop"
-      },
-      {
-        "name": "hip-hop/rap"
-      },
-      {
-        "name": "new school"
-      },
-      {
-        "name": "rap"
-      },
-      {
-        "name": "North Carolina"
-      }
+      "down south",
+      "hip hop",
+      "hip-hop/rap",
+      "new school",
+      "rap",
+      "North Carolina"
     ],
     "release": "",
     "description": "",
@@ -6737,9 +5045,7 @@
     "title": "Omar & Zed Bias - Dancing feat. Fox",
     "artist": "Tru Thoughts 15th AnniversaryTru Thoughts 15th Anniversary\n            V/A",
     "tags": [
-      {
-        "name": "Brighton"
-      }
+      "Brighton"
     ],
     "release": "",
     "description": "",
@@ -6752,27 +5058,13 @@
     "title": "You Will Return feat. Alice Russell",
     "artist": "MagneticaMagnetica\n            Quantic",
     "tags": [
-      {
-        "name": "electronic"
-      },
-      {
-        "name": "funk"
-      },
-      {
-        "name": "soul"
-      },
-      {
-        "name": "cumbia"
-      },
-      {
-        "name": "jazz"
-      },
-      {
-        "name": "reggae"
-      },
-      {
-        "name": "London"
-      }
+      "electronic",
+      "funk",
+      "soul",
+      "cumbia",
+      "jazz",
+      "reggae",
+      "London"
     ],
     "release": "",
     "description": "",
@@ -6785,21 +5077,11 @@
     "title": "Love is in your eyes",
     "artist": "Mined 014/N4 010Mined 014/N4 010\n            T-Cuts and Pete Cannon",
     "tags": [
-      {
-        "name": "140bpm"
-      },
-      {
-        "name": "electronic"
-      },
-      {
-        "name": "jungle"
-      },
-      {
-        "name": "rave"
-      },
-      {
-        "name": "Brighton"
-      }
+      "140bpm",
+      "electronic",
+      "jungle",
+      "rave",
+      "Brighton"
     ],
     "release": "",
     "description": "",
@@ -6812,15 +5094,9 @@
     "title": "Silicon Chip - Basil Kirchin;",
     "artist": "A Perfect Combination: Fairview Studios 1973 - 1993A Perfect Combination: Fairview Studios 1973 - 1993\n            Various",
     "tags": [
-      {
-        "name": "alternative"
-      },
-      {
-        "name": "left field"
-      },
-      {
-        "name": "Hull"
-      }
+      "alternative",
+      "left field",
+      "Hull"
     ],
     "release": "",
     "description": "",
@@ -6833,27 +5109,13 @@
     "title": "Twin Tribes - Monolith (Qual Remix)",
     "artist": "Qual",
     "tags": [
-      {
-        "name": "e.b.m"
-      },
-      {
-        "name": "electronic"
-      },
-      {
-        "name": "darkwave"
-      },
-      {
-        "name": "industrial"
-      },
-      {
-        "name": "minimal synth"
-      },
-      {
-        "name": "techno"
-      },
-      {
-        "name": "United Kingdom"
-      }
+      "e.b.m",
+      "electronic",
+      "darkwave",
+      "industrial",
+      "minimal synth",
+      "techno",
+      "United Kingdom"
     ],
     "release": "",
     "description": "",
@@ -6866,24 +5128,12 @@
     "title": "Tyler the Creator - SUGAR ON MY TONGUE (CUZNA FLIP)",
     "artist": "Cuzna",
     "tags": [
-      {
-        "name": "electronic"
-      },
-      {
-        "name": "hyperpop"
-      },
-      {
-        "name": "jersey club"
-      },
-      {
-        "name": "trap"
-      },
-      {
-        "name": "ukg"
-      },
-      {
-        "name": "Florence"
-      }
+      "electronic",
+      "hyperpop",
+      "jersey club",
+      "trap",
+      "ukg",
+      "Florence"
     ],
     "release": "",
     "description": "",
@@ -6896,12 +5146,8 @@
     "title": "I'll Show You How",
     "artist": "Cinnamon Soulettes",
     "tags": [
-      {
-        "name": "soul"
-      },
-      {
-        "name": "London"
-      }
+      "soul",
+      "London"
     ],
     "release": "",
     "description": "",
@@ -6914,36 +5160,16 @@
     "title": "Jungle Brothers - Beyond This World (Beat By Gee-O)",
     "artist": "RebelRebel\n            Gee-O",
     "tags": [
-      {
-        "name": "gee-o"
-      },
-      {
-        "name": "hip-hop/rap"
-      },
-      {
-        "name": "jungle brothers"
-      },
-      {
-        "name": "native tongues"
-      },
-      {
-        "name": "beats"
-      },
-      {
-        "name": "house"
-      },
-      {
-        "name": "instrumental hip-hop"
-      },
-      {
-        "name": "instrumentals"
-      },
-      {
-        "name": "underground hip-hop"
-      },
-      {
-        "name": "Fort Lauderdale"
-      }
+      "gee-o",
+      "hip-hop/rap",
+      "jungle brothers",
+      "native tongues",
+      "beats",
+      "house",
+      "instrumental hip-hop",
+      "instrumentals",
+      "underground hip-hop",
+      "Fort Lauderdale"
     ],
     "release": "",
     "description": "",
@@ -6956,27 +5182,13 @@
     "title": "Pump Me Up",
     "artist": "Pump Me Up  b/w Let's Get SmallPump Me Up  b/w Let's Get Small\n            Trouble Funk",
     "tags": [
-      {
-        "name": "hip hop"
-      },
-      {
-        "name": "hip-hop/rap"
-      },
-      {
-        "name": "blues"
-      },
-      {
-        "name": "funk"
-      },
-      {
-        "name": "jazz"
-      },
-      {
-        "name": "soul"
-      },
-      {
-        "name": "New York"
-      }
+      "hip hop",
+      "hip-hop/rap",
+      "blues",
+      "funk",
+      "jazz",
+      "soul",
+      "New York"
     ],
     "release": "",
     "description": "",
@@ -6989,27 +5201,13 @@
     "title": "C.J. & CO. - Devil's Gun (Discobar rare edit)",
     "artist": "Discobar",
     "tags": [
-      {
-        "name": "electronic"
-      },
-      {
-        "name": "soul"
-      },
-      {
-        "name": "afro house"
-      },
-      {
-        "name": "dance"
-      },
-      {
-        "name": "disco"
-      },
-      {
-        "name": "funk"
-      },
-      {
-        "name": "Reykjavík"
-      }
+      "electronic",
+      "soul",
+      "afro house",
+      "dance",
+      "disco",
+      "funk",
+      "Reykjavík"
     ],
     "release": "",
     "description": "",
@@ -7022,27 +5220,13 @@
     "title": "Rock It Tonight - Seven Dub",
     "artist": "IVC Lounge Volume 7 - Mixed by lil' daveIVC Lounge Volume 7 - Mixed by lil' dave\n            Illvibe Collective",
     "tags": [
-      {
-        "name": "broken beat"
-      },
-      {
-        "name": "funk"
-      },
-      {
-        "name": "future soul"
-      },
-      {
-        "name": "hip hop"
-      },
-      {
-        "name": "hip-hop/rap"
-      },
-      {
-        "name": "house"
-      },
-      {
-        "name": "Philadelphia"
-      }
+      "broken beat",
+      "funk",
+      "future soul",
+      "hip hop",
+      "hip-hop/rap",
+      "house",
+      "Philadelphia"
     ],
     "release": "",
     "description": "",
@@ -7055,24 +5239,12 @@
     "title": "Was (Not Was) - Out Come the Freaks (12″ mix)",
     "artist": "12″⁄80s⁄Dance12″⁄80s⁄Dance\n            Various Artists",
     "tags": [
-      {
-        "name": "electronic"
-      },
-      {
-        "name": "electronic hiphop"
-      },
-      {
-        "name": "kpop remix"
-      },
-      {
-        "name": "newromantic"
-      },
-      {
-        "name": "soul disco"
-      },
-      {
-        "name": "sundance"
-      }
+      "electronic",
+      "electronic hiphop",
+      "kpop remix",
+      "newromantic",
+      "soul disco",
+      "sundance"
     ],
     "release": "",
     "description": "",
@@ -7085,24 +5257,12 @@
     "title": "MOVEMENT",
     "artist": "CHOROPHOBIACHOROPHOBIA\n            Weval",
     "tags": [
-      {
-        "name": "amsterdam"
-      },
-      {
-        "name": "dance"
-      },
-      {
-        "name": "electronic"
-      },
-      {
-        "name": "the netherlands"
-      },
-      {
-        "name": "pop"
-      },
-      {
-        "name": "Amsterdam"
-      }
+      "amsterdam",
+      "dance",
+      "electronic",
+      "the netherlands",
+      "pop",
+      "Amsterdam"
     ],
     "release": "",
     "description": "",
@@ -7115,24 +5275,12 @@
     "title": "Weval & KILIMANJARO - OPEN UP THAT DOOR",
     "artist": "CHOROPHOBIACHOROPHOBIA\n            Weval",
     "tags": [
-      {
-        "name": "amsterdam"
-      },
-      {
-        "name": "dance"
-      },
-      {
-        "name": "electronic"
-      },
-      {
-        "name": "the netherlands"
-      },
-      {
-        "name": "pop"
-      },
-      {
-        "name": "Amsterdam"
-      }
+      "amsterdam",
+      "dance",
+      "electronic",
+      "the netherlands",
+      "pop",
+      "Amsterdam"
     ],
     "release": "",
     "description": "",
@@ -7145,27 +5293,13 @@
     "title": "spin cycle",
     "artist": "do it afraiddo it afraid\n            yaya bey",
     "tags": [
-      {
-        "name": "hip hop"
-      },
-      {
-        "name": "hip-hop"
-      },
-      {
-        "name": "r&b"
-      },
-      {
-        "name": "r&b/soul"
-      },
-      {
-        "name": "rap"
-      },
-      {
-        "name": "soul"
-      },
-      {
-        "name": "Brooklyn"
-      }
+      "hip hop",
+      "hip-hop",
+      "r&b",
+      "r&b/soul",
+      "rap",
+      "soul",
+      "Brooklyn"
     ],
     "release": "",
     "description": "",
@@ -7178,15 +5312,9 @@
     "title": "Yeasayer - Sunrise",
     "artist": "The Indio Sessions: Day OneThe Indio Sessions: Day One\n            The KickDrums",
     "tags": [
-      {
-        "name": "dj"
-      },
-      {
-        "name": "indie rock"
-      },
-      {
-        "name": "New York"
-      }
+      "dj",
+      "indie rock",
+      "New York"
     ],
     "release": "",
     "description": "",
@@ -7199,39 +5327,17 @@
     "title": "Yes - Owner Of A Lonely Heart (Miura Edit)",
     "artist": "Miura",
     "tags": [
-      {
-        "name": "80's"
-      },
-      {
-        "name": "deep house"
-      },
-      {
-        "name": "electronic"
-      },
-      {
-        "name": "house"
-      },
-      {
-        "name": "nu disco"
-      },
-      {
-        "name": "deep disco"
-      },
-      {
-        "name": "disco"
-      },
-      {
-        "name": "edits"
-      },
-      {
-        "name": "pop rock"
-      },
-      {
-        "name": "re-edits"
-      },
-      {
-        "name": "Barcelona"
-      }
+      "80's",
+      "deep house",
+      "electronic",
+      "house",
+      "nu disco",
+      "deep disco",
+      "disco",
+      "edits",
+      "pop rock",
+      "re-edits",
+      "Barcelona"
     ],
     "release": "",
     "description": "",
@@ -7244,9 +5350,7 @@
     "title": "The Durutti Column-Otis",
     "artist": "A Crushing Glow-Compiled By Matt SewellA Crushing Glow-Compiled By Matt Sewell\n            CTR",
     "tags": [
-      {
-        "name": "United Kingdom"
-      }
+      "United Kingdom"
     ],
     "release": "",
     "description": "",
@@ -7259,24 +5363,12 @@
     "title": "Pind De Gerhe (Sick Of The Chatter) - Rupinder Handa & Zero - UK Garage",
     "artist": "FUTURE RECORDINGS",
     "tags": [
-      {
-        "name": "dance"
-      },
-      {
-        "name": "drum & bass"
-      },
-      {
-        "name": "electronic"
-      },
-      {
-        "name": "punjabi"
-      },
-      {
-        "name": "uk garage"
-      },
-      {
-        "name": "Leicester"
-      }
+      "dance",
+      "drum & bass",
+      "electronic",
+      "punjabi",
+      "uk garage",
+      "Leicester"
     ],
     "release": "",
     "description": "",
