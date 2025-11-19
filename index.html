@@ -833,7 +833,9 @@
                     // Collect ALL tags
                     if (item.tags && item.tags.length > 0) {
                         item.tags.forEach(tag => {
-                            allTags.add(tag.toLowerCase());
+                            if (tag && typeof tag === 'string') {
+                                allTags.add(tag.toLowerCase());
+                            }
                         });
                     }
                 });
@@ -845,7 +847,7 @@
                     // Add metadata if available - store ALL tags and Bandcamp IDs
                     if (metaMap[url]) {
                         item.tags = metaMap[url].tags && metaMap[url].tags.length > 0 
-                            ? metaMap[url].tags.map(t => t.toLowerCase())
+                            ? metaMap[url].tags.filter(t => t && typeof t === 'string').map(t => t.toLowerCase())
                             : [];
                         // Add Bandcamp ID and type for embedded player
                         item.bandcamp_id = metaMap[url].bandcamp_id || null;
