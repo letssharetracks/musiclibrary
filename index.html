@@ -80,11 +80,11 @@
             max-width: 100%;
             padding: 15px 20px;
             display: none;
-            background: linear-gradient(to top, rgba(0, 0, 0, 0.95), rgba(0, 0, 0, 0.85));
-            backdrop-filter: blur(10px);
+            background: linear-gradient(to top, rgba(20, 20, 30, 0.95), rgba(20, 20, 30, 0.88));
+            backdrop-filter: blur(15px);
             z-index: 1000;
             border-top: 2px solid rgba(0, 212, 255, 0.3);
-            box-shadow: 0 -5px 30px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 -5px 30px rgba(0, 0, 0, 0.3);
         }
 
         .bandcamp-player.visible {
@@ -101,6 +101,12 @@
             background: rgba(0, 0, 0, 0.3);
             margin: 0 auto;
             display: block;
+            transition: height 0.3s ease;
+        }
+
+        .bandcamp-player iframe.album-player {
+            height: 400px;
+            max-width: 400px;
         }
 
         .player-label {
@@ -189,11 +195,12 @@
         .tags-container {
             display: none;
             justify-content: center;
-            gap: 6px;
-            margin: 15px auto;
-            max-width: 1200px;
+            gap: 8px;
+            margin: 15px auto 30px;
+            max-width: 100%;
             flex-wrap: wrap;
             padding: 0 20px;
+            line-height: 1.8;
         }
 
         .tags-container.visible {
@@ -201,14 +208,15 @@
         }
 
         .tag-btn {
-            padding: 4px 12px;
+            padding: 6px 14px;
             border: 1px solid rgba(255, 255, 255, 0.15);
-            border-radius: 15px;
+            border-radius: 18px;
             background: rgba(255, 255, 255, 0.03);
             color: #999;
-            font-size: 0.75em;
+            font-size: 0.8em;
             cursor: pointer;
             transition: all 0.2s;
+            white-space: nowrap;
         }
 
         .tag-btn:hover {
@@ -729,24 +737,36 @@
             }
             
             let embedUrl = `https://${embedHost}/EmbeddedPlayer/`;
+            let isAlbumView = false;
             
-            // UPDATED: Handle tracks that are part of albums (need both album_id and track_id)
+            // UPDATED: If track has an album_id, show the full album tracklist
             if (item.bandcamp_album_id && item.bandcamp_type === 'track') {
-                // Track is part of an album - use both IDs
-                embedUrl += `album=${item.bandcamp_album_id}/track=${item.bandcamp_id}`;
+                // Show full album tracklist with this track highlighted
+                embedUrl += `album=${item.bandcamp_album_id}/`;
+                embedUrl += 'size=large/bgcol=ffffff/linkcol=0687f5/tracklist=true/artwork=small/transparent=true/';
+                isAlbumView = true;
             } else if (item.bandcamp_type === 'album') {
-                // Standalone album
-                embedUrl += `album=${item.bandcamp_id}`;
+                // Standalone album with full tracklist
+                embedUrl += `album=${item.bandcamp_id}/`;
+                embedUrl += 'size=large/bgcol=ffffff/linkcol=0687f5/tracklist=true/artwork=small/transparent=true/';
+                isAlbumView = true;
             } else if (item.bandcamp_type === 'track') {
-                // Standalone track (not part of an album)
-                embedUrl += `track=${item.bandcamp_id}`;
+                // Standalone track (not part of an album) - compact view
+                embedUrl += `track=${item.bandcamp_id}/`;
+                embedUrl += 'size=large/bgcol=333333/linkcol=0687f5/tracklist=false/artwork=small/transparent=true/';
+                isAlbumView = false;
             }
-            
-            // Add standard parameters
-            embedUrl += '/size=large/bgcol=333333/linkcol=0687f5/tracklist=false/artwork=small/transparent=true/';
             
             // Update iframe and show player
             iframe.src = embedUrl;
+            
+            // Apply appropriate styling based on whether it's an album view
+            if (isAlbumView) {
+                iframe.classList.add('album-player');
+            } else {
+                iframe.classList.remove('album-player');
+            }
+            
             playerContainer.classList.add('visible');
             
             // Scroll to player smoothly
