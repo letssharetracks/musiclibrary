@@ -434,7 +434,7 @@
                 <span>Change Theme</span>
             </button>
             <h1>🎵 Lets Share Tracks</h1>
-            <p class="subtitle">Discover and explore music from Bandcamp & YouTube</p>
+            <p class="subtitle">Discover and explore music from Bandcamp &amp; YouTube</p>
         </header>
 
         <div class="bandcamp-player" id="bandcampPlayer">
@@ -486,12 +486,12 @@
     <script>
         const gradients = ['gradient-1', 'gradient-2', 'gradient-3', 'gradient-4', 'gradient-5', 'gradient-6', 'gradient-7', 'gradient-8'];
 
-        // Generate 365 dramatically different color themes
+        // Generate 365 dramatically different colour themes
         function generateThemes() {
             const themes = [];
             
-            // Predefined dramatic color schemes
-            const colorPalettes = [
+            // Predefined dramatic colour schemes
+            const colourPalettes = [
                 // Deep contrasts
                 ['#0a0e27', '#1a1f4d'], // Deep Navy
                 ['#2d1b00', '#5c3a00'], // Deep Brown
@@ -543,32 +543,32 @@
             
             // Generate 365 themes by combining and varying the palettes
             for (let i = 0; i < 365; i++) {
-                let color1, color2;
+                let colour1, colour2;
                 
-                if (i < colorPalettes.length) {
+                if (i < colourPalettes.length) {
                     // Use predefined palettes first
-                    [color1, color2] = colorPalettes[i];
+                    [colour1, colour2] = colourPalettes[i];
                 } else {
                     // Generate additional unique themes
-                    const paletteIndex = i % colorPalettes.length;
-                    const [baseColor1, baseColor2] = colorPalettes[paletteIndex];
+                    const paletteIndex = i % colourPalettes.length;
+                    const [baseColour1, baseColour2] = colourPalettes[paletteIndex];
                     
                     // Create variations by adjusting hue dramatically
-                    const variation = Math.floor(i / colorPalettes.length);
+                    const variation = Math.floor(i / colourPalettes.length);
                     const hueShift = (variation * 90) % 360; // Large hue shifts
                     
                     // Convert hex to HSL, shift hue dramatically, convert back
-                    color1 = shiftHue(baseColor1, hueShift);
-                    color2 = shiftHue(baseColor2, hueShift);
+                    colour1 = shiftHue(baseColour1, hueShift);
+                    colour2 = shiftHue(baseColour2, hueShift);
                 }
                 
-                themes.push({ color1, color2 });
+                themes.push({ colour1, colour2 });
             }
             
             return themes;
         }
         
-        // Helper function to shift hue of a hex color
+        // Helper function to shift hue of a hex colour
         function shiftHue(hex, degrees) {
             // Convert hex to RGB
             const r = parseInt(hex.slice(1, 3), 16) / 255;
@@ -647,7 +647,7 @@
 
         function applyTheme(themeIndex) {
             const theme = allThemes[themeIndex % 365];
-            document.body.style.background = `linear-gradient(135deg, ${theme.color1} 0%, ${theme.color2} 100%)`;
+            document.body.style.background = `linear-gradient(135deg, ${theme.colour1} 0%, ${theme.colour2} 100%)`;
             
             // Store the current theme in sessionStorage (so it persists during the session)
             sessionStorage.setItem('currentThemeIndex', themeIndex);
@@ -718,8 +718,17 @@
             console.log('Loading Bandcamp player for:', item.title);
             console.log('Type:', item.bandcamp_type, 'ID:', item.bandcamp_id);
             
-            // Build the embed URL based on type
-            let embedUrl = 'https://bandcamp.com/EmbeddedPlayer/';
+            // Build the embed URL based on type, using the same host as the original Bandcamp URL
+            let embedHost;
+            try {
+                const parsed = new URL(item.url);
+                embedHost = parsed.hostname || 'bandcamp.com';
+            } catch (e) {
+                console.warn('Failed to parse Bandcamp URL, falling back to bandcamp.com', e);
+                embedHost = 'bandcamp.com';
+            }
+            
+            let embedUrl = `https://${embedHost}/EmbeddedPlayer/`;
             
             if (item.bandcamp_type === 'album') {
                 embedUrl += `album=${item.bandcamp_id}`;
@@ -1011,34 +1020,33 @@
                     }
                 });
             }
+
+            updateTagsVisibility();
         }
 
-        const searchInput = document.getElementById('searchInput');
-        searchInput.addEventListener('input', (e) => {
-            const searchTerm = e.target.value.toLowerCase();
-            
-            if (searchTerm === '') {
-                renderCards(allItems);
-            } else {
-                const filtered = allItems.filter(item => 
-                    item.artist.toLowerCase().includes(searchTerm) ||
-                    item.title.toLowerCase().includes(searchTerm)
-                );
-                renderCards(filtered);
-            }
-        });
-
-        // Source filter buttons
+        // Filter buttons
         document.querySelectorAll('.filter-btn').forEach(btn => {
-            btn.addEventListener('click', (e) => {
+            btn.addEventListener('click', () => {
                 document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-                e.currentTarget.classList.add('active');
-                currentFilter = e.currentTarget.dataset.filter;
-                updateTagsVisibility();
+                btn.classList.add('active');
+                currentFilter = btn.getAttribute('data-filter');
                 renderCards(allItems);
             });
         });
 
+        // Search functionality
+        document.getElementById('searchInput').addEventListener('input', (e) => {
+            const query = e.target.value.toLowerCase();
+            
+            const filtered = allItems.filter(item => {
+                const searchable = `${item.title} ${item.artist} ${(item.tags || []).join(' ')}`.toLowerCase();
+                return searchable.includes(query);
+            });
+            
+            renderCards(filtered);
+        });
+
+        // Load data when page loads
         loadData();
     </script>
 </body>
