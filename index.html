@@ -72,6 +72,47 @@
             box-shadow: 0 5px 15px rgba(0, 212, 255, 0.3);
         }
 
+        .player-mode-selector {
+            position: absolute;
+            top: 20px;
+            right: 180px;
+            display: flex;
+            gap: 0;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            padding: 3px;
+            overflow: hidden;
+        }
+
+        .player-mode-btn {
+            padding: 6px 14px;
+            border: none;
+            background: transparent;
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.8em;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            white-space: nowrap;
+            border-radius: 16px;
+        }
+
+        .player-mode-btn:hover {
+            color: rgba(255, 255, 255, 0.9);
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .player-mode-btn.active {
+            background: linear-gradient(135deg, #00d4ff, #7b2ff7);
+            color: #fff;
+            font-weight: 600;
+            box-shadow: 0 2px 8px rgba(0, 212, 255, 0.4);
+        }
+
         .bandcamp-player {
             position: fixed;
             bottom: 0;
@@ -428,6 +469,17 @@
                 padding: 6px 12px;
             }
 
+            .player-mode-selector {
+                position: static;
+                margin: 0 auto 10px;
+                width: fit-content;
+            }
+
+            .player-mode-btn {
+                font-size: 0.75em;
+                padding: 5px 10px;
+            }
+
             header {
                 padding: 20px 20px 20px;
             }
@@ -437,6 +489,16 @@
 <body>
     <div class="container">
         <header>
+            <div class="player-mode-selector">
+                <button class="player-mode-btn active" data-mode="tracks">
+                    <span>🎵</span>
+                    <span>Tracks Only</span>
+                </button>
+                <button class="player-mode-btn" data-mode="tracklist">
+                    <span>💿</span>
+                    <span>Album Tracklist</span>
+                </button>
+            </div>
             <button class="theme-toggle" id="themeToggle">
                 <span>🎨</span>
                 <span>Change Theme</span>
@@ -687,6 +749,7 @@
         let currentTags = new Set();
         let allTags = new Set();
         let tagsVisible = false;
+        let showTracklist = false; // Default to tracks only mode
 
         // Function to extract Bandcamp album/track ID from URL
         function extractBandcampId(url) {
@@ -739,22 +802,43 @@
             let embedUrl = `https://${embedHost}/EmbeddedPlayer/`;
             let isAlbumView = false;
             
-            // UPDATED: If track has an album_id, show the full album tracklist
-            if (item.bandcamp_album_id && item.bandcamp_type === 'track') {
-                // Show full album tracklist with this track highlighted
-                embedUrl += `album=${item.bandcamp_album_id}/`;
-                embedUrl += 'size=large/bgcol=ffffff/linkcol=0687f5/tracklist=true/artwork=small/transparent=true/';
-                isAlbumView = true;
-            } else if (item.bandcamp_type === 'album') {
-                // Standalone album with full tracklist
-                embedUrl += `album=${item.bandcamp_id}/`;
-                embedUrl += 'size=large/bgcol=ffffff/linkcol=0687f5/tracklist=true/artwork=small/transparent=true/';
-                isAlbumView = true;
-            } else if (item.bandcamp_type === 'track') {
-                // Standalone track (not part of an album) - compact view
-                embedUrl += `track=${item.bandcamp_id}/`;
-                embedUrl += 'size=large/bgcol=333333/linkcol=0687f5/tracklist=false/artwork=small/transparent=true/';
-                isAlbumView = false;
+            // Check if tracklist mode is enabled and if this item has album info
+            if (showTracklist) {
+                // Tracklist mode enabled - show full albums when available
+                if (item.bandcamp_album_id && item.bandcamp_type === 'track') {
+                    // Show full album tracklist with this track highlighted
+                    embedUrl += `album=${item.bandcamp_album_id}/`;
+                    embedUrl += 'size=large/bgcol=ffffff/linkcol=0687f5/tracklist=true/artwork=small/transparent=true/';
+                    isAlbumView = true;
+                } else if (item.bandcamp_type === 'album') {
+                    // Standalone album with full tracklist
+                    embedUrl += `album=${item.bandcamp_id}/`;
+                    embedUrl += 'size=large/bgcol=ffffff/linkcol=0687f5/tracklist=true/artwork=small/transparent=true/';
+                    isAlbumView = true;
+                } else if (item.bandcamp_type === 'track') {
+                    // Standalone track (not part of an album) - compact view
+                    embedUrl += `track=${item.bandcamp_id}/`;
+                    embedUrl += 'size=large/bgcol=333333/linkcol=0687f5/tracklist=false/artwork=small/transparent=true/';
+                    isAlbumView = false;
+                }
+            } else {
+                // Tracks only mode - always show compact single track view
+                if (item.bandcamp_album_id && item.bandcamp_type === 'track') {
+                    // Track from album - show just this track with album context
+                    embedUrl += `album=${item.bandcamp_album_id}/track=${item.bandcamp_id}/`;
+                    embedUrl += 'size=large/bgcol=333333/linkcol=0687f5/tracklist=false/artwork=small/transparent=true/';
+                    isAlbumView = false;
+                } else if (item.bandcamp_type === 'album') {
+                    // Album clicked - show compact without tracklist
+                    embedUrl += `album=${item.bandcamp_id}/`;
+                    embedUrl += 'size=large/bgcol=333333/linkcol=0687f5/tracklist=false/artwork=small/transparent=true/';
+                    isAlbumView = false;
+                } else if (item.bandcamp_type === 'track') {
+                    // Standalone track - compact view
+                    embedUrl += `track=${item.bandcamp_id}/`;
+                    embedUrl += 'size=large/bgcol=333333/linkcol=0687f5/tracklist=false/artwork=small/transparent=true/';
+                    isAlbumView = false;
+                }
             }
             
             // Update iframe and show player
@@ -862,6 +946,20 @@
 
         // Tags toggle button
         document.getElementById('tagsToggleBtn').addEventListener('click', toggleTags);
+
+        // Player mode selector - segmented control
+        document.querySelectorAll('.player-mode-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const mode = btn.getAttribute('data-mode');
+                showTracklist = (mode === 'tracklist');
+                
+                // Update active states
+                document.querySelectorAll('.player-mode-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                
+                console.log('Player mode changed to:', showTracklist ? 'Album Tracklist' : 'Tracks Only');
+            });
+        });
 
         async function loadData() {
             try {
