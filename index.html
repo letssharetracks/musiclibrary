@@ -842,10 +842,14 @@
                 const metaMap = {};
                 metaDataArray.forEach(item => {
                     metaMap[item.url] = item;
-                    // Collect ALL tags
+                    // Collect ALL tags (handle both strings and objects)
                     if (item.tags && item.tags.length > 0) {
                         item.tags.forEach(tag => {
-                            allTags.add(tag.toLowerCase());
+                            // Handle if tag is an object or string
+                            const tagStr = typeof tag === 'string' ? tag : (tag.name || String(tag));
+                            if (tagStr) {
+                                allTags.add(tagStr.toLowerCase());
+                            }
                         });
                     }
                 });
@@ -857,7 +861,10 @@
                     // Add metadata if available - store ALL tags and Bandcamp IDs
                     if (metaMap[url]) {
                         item.tags = metaMap[url].tags && metaMap[url].tags.length > 0 
-                            ? metaMap[url].tags.map(t => t.toLowerCase())
+                            ? metaMap[url].tags.map(t => {
+                                const tagStr = typeof t === 'string' ? t : (t.name || String(t));
+                                return tagStr.toLowerCase();
+                              }).filter(t => t && t !== 'null' && t !== 'undefined')
                             : [];
                         // Add Bandcamp ID and type for embedded player
                         item.bandcamp_id = metaMap[url].bandcamp_id || null;
