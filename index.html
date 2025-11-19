@@ -715,21 +715,15 @@
                 embedUrl += `track=${item.bandcamp_id}`;
             }
             
-            // Add standard parameters with AUTOPLAY
+            // Add standard parameters
             embedUrl += '/size=large/bgcol=333333/linkcol=0687f5/tracklist=false/artwork=small/transparent=true/';
             
-            // Force reload by clearing src first, then setting new one
-            iframe.src = '';
+            // Update iframe and show player
+            iframe.src = embedUrl;
+            playerContainer.classList.add('visible');
             
-            // Small delay to ensure clean reload
-            setTimeout(() => {
-                // Add timestamp to force fresh load and append autoplay as URL parameter
-                iframe.src = embedUrl + '?autoplay=1&t=' + Date.now();
-                playerContainer.classList.add('visible');
-                
-                // Scroll to player smoothly
-                playerContainer.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-            }, 50);
+            // Scroll to player smoothly
+            playerContainer.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
             
             console.log('Embed URL:', embedUrl);
         }
@@ -890,26 +884,16 @@
                         console.warn(`Filtered out ${ytData.length - validYtData.length} invalid YouTube entries`);
                     }
                     
-                    // Filter out YouTube videos that have Bandcamp matches
-                    const ytDataFiltered = validYtData.filter(video => {
-                        // Only show if there's NO bandcamp_url (or it's null/empty)
-                        return !video.bandcamp_url;
-                    });
-                    
-                    const hiddenCount = validYtData.length - ytDataFiltered.length;
-                    console.log(`YouTube videos with Bandcamp matches (hidden): ${hiddenCount}`);
-                    console.log(`YouTube-only videos (showing): ${ytDataFiltered.length}`);
-                    
                     // Sort YouTube videos alphabetically
-                    ytDataFiltered.sort((a, b) => {
+                    validYtData.sort((a, b) => {
                         const artistCompare = a.artist.localeCompare(b.artist);
                         if (artistCompare !== 0) return artistCompare;
                         return a.title.localeCompare(b.title);
                     });
                     
-                    allItems = allItems.concat(ytDataFiltered);
+                    allItems = allItems.concat(validYtData);
                     
-                    console.log(`Total items loaded: ${allItems.length} (Bandcamp: ${Object.keys(imageData).length}, YouTube: ${ytDataFiltered.length})`);
+                    console.log(`Total items loaded: ${allItems.length} (Bandcamp: ${Object.keys(imageData).length}, YouTube: ${validYtData.length})`);
                     
                 } catch (e) {
                     console.error('Error loading YouTube data:', e);
