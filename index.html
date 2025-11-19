@@ -73,10 +73,18 @@
         }
 
         .bandcamp-player {
-            margin: 20px auto;
-            max-width: 700px;
-            padding: 0 20px;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            max-width: 100%;
+            padding: 15px 20px;
             display: none;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.95), rgba(0, 0, 0, 0.85));
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            border-top: 2px solid rgba(0, 212, 255, 0.3);
+            box-shadow: 0 -5px 30px rgba(0, 0, 0, 0.5);
         }
 
         .bandcamp-player.visible {
@@ -86,10 +94,13 @@
         .bandcamp-player iframe {
             border: 0;
             width: 100%;
+            max-width: 700px;
             height: 120px;
             border-radius: 10px;
             box-shadow: 0 4px 15px rgba(0, 212, 255, 0.3);
             background: rgba(0, 0, 0, 0.3);
+            margin: 0 auto;
+            display: block;
         }
 
         .player-label {
@@ -261,6 +272,7 @@
             grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
             gap: 15px;
             margin-top: 30px;
+            padding-bottom: 160px; /* Space for floating player */
         }
 
         .card {
@@ -833,9 +845,7 @@
                     // Collect ALL tags
                     if (item.tags && item.tags.length > 0) {
                         item.tags.forEach(tag => {
-                            if (tag && typeof tag === 'string') {
-                                allTags.add(tag.toLowerCase());
-                            }
+                            allTags.add(tag.toLowerCase());
                         });
                     }
                 });
@@ -847,7 +857,7 @@
                     // Add metadata if available - store ALL tags and Bandcamp IDs
                     if (metaMap[url]) {
                         item.tags = metaMap[url].tags && metaMap[url].tags.length > 0 
-                            ? metaMap[url].tags.filter(t => t && typeof t === 'string').map(t => t.toLowerCase())
+                            ? metaMap[url].tags.map(t => t.toLowerCase())
                             : [];
                         // Add Bandcamp ID and type for embedded player
                         item.bandcamp_id = metaMap[url].bandcamp_id || null;
@@ -933,6 +943,13 @@
                     return item.tags.some(tag => currentTags.has(tag));
                 });
             }
+
+            // Sort alphabetically by artist, then by title
+            filteredItems.sort((a, b) => {
+                const artistCompare = a.artist.localeCompare(b.artist);
+                if (artistCompare !== 0) return artistCompare;
+                return a.title.localeCompare(b.title);
+            });
 
             grid.innerHTML = '';
             resultCount.textContent = filteredItems.length;
