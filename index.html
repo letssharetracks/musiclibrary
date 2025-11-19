@@ -716,7 +716,7 @@
             const iframe = document.getElementById('bandcampIframe');
             
             console.log('Loading Bandcamp player for:', item.title);
-            console.log('Type:', item.bandcamp_type, 'ID:', item.bandcamp_id);
+            console.log('Type:', item.bandcamp_type, 'ID:', item.bandcamp_id, 'Album ID:', item.bandcamp_album_id);
             
             // Build the embed URL based on type, using the same host as the original Bandcamp URL
             let embedHost;
@@ -730,9 +730,15 @@
             
             let embedUrl = `https://${embedHost}/EmbeddedPlayer/`;
             
-            if (item.bandcamp_type === 'album') {
+            // UPDATED: Handle tracks that are part of albums (need both album_id and track_id)
+            if (item.bandcamp_album_id && item.bandcamp_type === 'track') {
+                // Track is part of an album - use both IDs
+                embedUrl += `album=${item.bandcamp_album_id}/track=${item.bandcamp_id}`;
+            } else if (item.bandcamp_type === 'album') {
+                // Standalone album
                 embedUrl += `album=${item.bandcamp_id}`;
             } else if (item.bandcamp_type === 'track') {
+                // Standalone track (not part of an album)
                 embedUrl += `track=${item.bandcamp_id}`;
             }
             
@@ -875,12 +881,14 @@
                                 return tagStr.toLowerCase();
                               }).filter(t => t && t !== 'null' && t !== 'undefined')
                             : [];
-                        // Add Bandcamp ID and type for embedded player
+                        // Add Bandcamp IDs and type for embedded player
                         item.bandcamp_id = metaMap[url].bandcamp_id || null;
+                        item.bandcamp_album_id = metaMap[url].bandcamp_album_id || null;  // NEW: album ID
                         item.bandcamp_type = metaMap[url].bandcamp_type || null;
                     } else {
                         item.tags = [];
                         item.bandcamp_id = null;
+                        item.bandcamp_album_id = null;  // NEW: album ID
                         item.bandcamp_type = null;
                     }
                     
