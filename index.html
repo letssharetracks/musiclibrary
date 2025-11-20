@@ -910,8 +910,8 @@
             if (showTracklist) {
                 // Tracklist mode enabled - show full albums when available
                 if (item.bandcamp_album_id && item.bandcamp_type === 'track') {
-                    // Show full album tracklist with this track highlighted
-                    embedUrl += `album=${item.bandcamp_album_id}/`;
+                    // Show full album tracklist with this track highlighted and playing
+                    embedUrl += `album=${item.bandcamp_album_id}/track=${item.bandcamp_id}/`;
                     embedUrl += 'size=large/bgcol=ffffff/linkcol=0687f5/tracklist=true/artwork=small/transparent=true/';
                     isAlbumView = true;
                 } else if (item.bandcamp_type === 'album') {
@@ -971,14 +971,37 @@
             console.log('Embed URL:', embedUrl);
         }
 
+        function formatArtistName(name) {
+            // First, replace hyphens and underscores with spaces
+            let formatted = name.replace(/[-_]/g, ' ');
+            
+            // If the name is all lowercase with no spaces (like 'annieandthecaldwells'),
+            // try to add spaces before 'and', 'the', and other common words
+            if (!formatted.includes(' ')) {
+                // Add space before common words
+                formatted = formatted
+                    .replace(/and/gi, ' and ')
+                    .replace(/the/gi, ' the ')
+                    .replace(/of/gi, ' of ')
+                    .replace(/\s+/g, ' ') // Clean up multiple spaces
+                    .trim();
+            }
+            
+            // Capitalize each word
+            return formatted.split(' ')
+                .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+                .join(' ');
+        }
+
         function parseUrl(url) {
             const urlParts = url.replace('https://', '').split('/');
-            const artist = urlParts[0].replace('.bandcamp.com', '').replace(/-/g, ' ');
+            const artistSlug = urlParts[0].replace('.bandcamp.com', '');
+            const artist = formatArtistName(artistSlug);
             const type = urlParts[1] || 'artist';
             const item = urlParts[2] ? decodeURIComponent(urlParts[2]).replace(/-/g, ' ').split('?')[0] : 'Artist Page';
             
             return {
-                artist: artist.charAt(0).toUpperCase() + artist.slice(1),
+                artist: artist,
                 title: item.charAt(0).toUpperCase() + item.slice(1),
                 type: type,
                 url: url,
@@ -1115,6 +1138,14 @@
                     
                     // Add metadata if available - store ALL tags and Bandcamp IDs
                     if (metaMap[url]) {
+                        // Use metadata artist and title if available (they're properly formatted)
+                        if (metaMap[url].artist) {
+                            item.artist = metaMap[url].artist;
+                        }
+                        if (metaMap[url].title) {
+                            item.title = metaMap[url].title;
+                        }
+                        
                         item.tags = metaMap[url].tags && metaMap[url].tags.length > 0 
                             ? metaMap[url].tags.map(t => {
                                 const tagStr = typeof t === 'string' ? t : (t.name || String(t));
