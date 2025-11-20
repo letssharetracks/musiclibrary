@@ -73,22 +73,21 @@
         }
 
         .random-track-btn {
-            width: 100%;
-            padding: 12px 16px;
-            margin-bottom: 15px;
-            border: 1px solid rgba(0, 212, 255, 0.4);
-            border-radius: 12px;
-            background: linear-gradient(135deg, rgba(0, 212, 255, 0.1), rgba(123, 47, 247, 0.1));
+            position: absolute;
+            top: 60px;
+            right: 20px;
+            padding: 8px 16px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.1);
             color: #fff;
-            font-size: 0.9em;
-            font-weight: 600;
+            font-size: 0.85em;
             cursor: pointer;
             transition: all 0.3s ease;
             backdrop-filter: blur(10px);
             display: none;
             align-items: center;
-            justify-content: center;
-            gap: 8px;
+            gap: 6px;
         }
 
         .random-track-btn.visible {
@@ -838,10 +837,6 @@
                 🎵 Now Playing
                 <button class="player-close" id="playerClose" title="Close player">×</button>
             </div>
-            <button class="random-track-btn" id="randomTrackBtn">
-                <span>🎲</span>
-                <span>Random Track</span>
-            </button>
             <iframe id="bandcampIframe" src="" seamless></iframe>
             <iframe
                 id="youtubeIframe"
