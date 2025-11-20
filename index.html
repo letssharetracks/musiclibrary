@@ -905,26 +905,37 @@
     <script src="https://www.youtube.com/iframe_api"></script>
     <script>
         let youtubePlayer = null;
+        let youtubeAPIReady = false;
 
         function onYouTubeIframeAPIReady() {
-            youtubePlayer = new YT.Player('youtubeIframe', {
-                height: '120',
-                width: '100%',
-                playerVars: {
-                    rel: 0,
-                    modestbranding: 1
-                },
-                events: {
-                    'onStateChange': onYouTubePlayerStateChange
-                }
-            });
+            try {
+                youtubePlayer = new YT.Player('youtubeIframe', {
+                    height: '120',
+                    width: '100%',
+                    playerVars: {
+                        rel: 0,
+                        modestbranding: 1
+                    },
+                    events: {
+                        'onStateChange': onYouTubePlayerStateChange
+                    }
+                });
+                youtubeAPIReady = true;
+                console.log('YouTube API ready');
+            } catch (e) {
+                console.warn('YouTube API initialization failed:', e);
+            }
         }
 
         function onYouTubePlayerStateChange(event) {
-            // YT.PlayerState.ENDED = 0
-            if (event.data === 0) {
-                console.log('YouTube video ended, playing next...');
-                playNextTrack();
+            try {
+                // YT.PlayerState.ENDED = 0
+                if (event.data === 0) {
+                    console.log('YouTube video ended, playing next...');
+                    playNextTrack();
+                }
+            } catch (e) {
+                console.warn('YouTube state change error:', e);
             }
         }
 
@@ -1388,10 +1399,15 @@
             // Show player
             playerContainer.classList.add('visible');
 
-            if (youtubePlayer && youtubePlayer.loadVideoById) {
-                youtubePlayer.loadVideoById(videoId);
-            } else {
-                // Fallback if API not ready yet
+            try {
+                if (youtubePlayer && youtubeAPIReady && youtubePlayer.loadVideoById) {
+                    youtubePlayer.loadVideoById(videoId);
+                } else {
+                    // Fallback if API not ready yet
+                    youtubeIframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0&modestbranding=1`;
+                }
+            } catch (e) {
+                console.warn('YouTube player error, using fallback:', e);
                 youtubeIframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0&modestbranding=1`;
             }
         }
