@@ -75,7 +75,7 @@
         .player-mode-selector {
             position: absolute;
             top: 20px;
-            right: 180px;
+            left: 20px;
             display: flex;
             gap: 0;
             border: 1px solid rgba(255, 255, 255, 0.3);
@@ -126,6 +126,31 @@
             z-index: 1000;
             border-top: 2px solid rgba(0, 212, 255, 0.3);
             box-shadow: 0 -5px 30px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        /* Sidebar layout for tracklist mode */
+        .bandcamp-player.sidebar-mode {
+            bottom: auto;
+            top: 0;
+            left: auto;
+            right: 0;
+            width: 420px;
+            height: 100vh;
+            padding: 20px;
+            border-top: none;
+            border-left: 2px solid rgba(0, 212, 255, 0.3);
+            box-shadow: -5px 0 30px rgba(0, 0, 0, 0.3);
+            overflow-y: auto;
+        }
+
+        /* Adjust content margin when sidebar is visible */
+        body.sidebar-active {
+            margin-right: 420px;
+        }
+
+        body.sidebar-active .container {
+            transition: margin-right 0.3s ease;
         }
 
         .bandcamp-player.visible {
@@ -150,6 +175,23 @@
             max-width: 400px;
         }
 
+        /* Sidebar mode iframe adjustments */
+        .bandcamp-player.sidebar-mode iframe {
+            max-width: 100%;
+            margin: 0;
+        }
+
+        .bandcamp-player.sidebar-mode iframe.album-player {
+            height: 450px;
+            max-width: 100%;
+        }
+
+        .bandcamp-player.sidebar-mode .player-label {
+            text-align: left;
+            font-size: 1em;
+            margin-bottom: 15px;
+        }
+
         .player-label {
             text-align: center;
             color: #00d4ff;
@@ -158,6 +200,37 @@
             font-weight: 600;
             text-transform: uppercase;
             letter-spacing: 1px;
+            position: relative;
+        }
+
+        .player-close {
+            position: absolute;
+            top: -5px;
+            right: 0;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            width: 28px;
+            height: 28px;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: rgba(255, 255, 255, 0.6);
+            transition: all 0.3s;
+            font-size: 18px;
+            line-height: 1;
+        }
+
+        .player-close:hover {
+            background: rgba(255, 77, 77, 0.3);
+            border-color: rgba(255, 77, 77, 0.5);
+            color: #ff4d4d;
+            transform: scale(1.1);
+        }
+
+        .bandcamp-player.sidebar-mode .player-close {
+            display: flex;
         }
 
         .filter-section {
@@ -480,6 +553,34 @@
                 padding: 5px 10px;
             }
 
+            /* Disable sidebar mode on mobile - always use bottom player */
+            .bandcamp-player.sidebar-mode {
+                position: fixed;
+                bottom: 0;
+                top: auto;
+                left: 0;
+                right: 0;
+                width: 100%;
+                height: auto;
+                border-left: none;
+                border-top: 2px solid rgba(0, 212, 255, 0.3);
+                box-shadow: 0 -5px 30px rgba(0, 0, 0, 0.3);
+                padding: 15px 20px;
+            }
+
+            body.sidebar-active {
+                margin-right: 0;
+            }
+
+            .bandcamp-player.sidebar-mode iframe.album-player {
+                max-width: 100%;
+                height: 400px;
+            }
+
+            .bandcamp-player.sidebar-mode .player-label {
+                text-align: center;
+            }
+
             header {
                 padding: 20px 20px 20px;
             }
@@ -508,7 +609,10 @@
         </header>
 
         <div class="bandcamp-player" id="bandcampPlayer">
-            <div class="player-label">🎵 Now Playing</div>
+            <div class="player-label">
+                🎵 Now Playing
+                <button class="player-close" id="playerClose" title="Close player">×</button>
+            </div>
             <iframe id="bandcampIframe" src="" seamless></iframe>
         </div>
 
@@ -844,17 +948,25 @@
             // Update iframe and show player
             iframe.src = embedUrl;
             
-            // Apply appropriate styling based on whether it's an album view
+            // Apply appropriate styling based on whether it's an album view AND player mode
             if (isAlbumView) {
                 iframe.classList.add('album-player');
+                // Use sidebar layout for album tracklist view
+                playerContainer.classList.add('sidebar-mode');
+                document.body.classList.add('sidebar-active');
             } else {
                 iframe.classList.remove('album-player');
+                // Use bottom bar for single tracks
+                playerContainer.classList.remove('sidebar-mode');
+                document.body.classList.remove('sidebar-active');
             }
             
             playerContainer.classList.add('visible');
             
-            // Scroll to player smoothly
-            playerContainer.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            // Only scroll to player if it's at the bottom (not sidebar)
+            if (!isAlbumView) {
+                playerContainer.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }
             
             console.log('Embed URL:', embedUrl);
         }
@@ -959,6 +1071,16 @@
                 
                 console.log('Player mode changed to:', showTracklist ? 'Album Tracklist' : 'Tracks Only');
             });
+        });
+
+        // Close button for player
+        document.getElementById('playerClose').addEventListener('click', (e) => {
+            e.stopPropagation();
+            const playerContainer = document.getElementById('bandcampPlayer');
+            playerContainer.classList.remove('visible', 'sidebar-mode');
+            document.body.classList.remove('sidebar-active');
+            // Clear the iframe
+            document.getElementById('bandcampIframe').src = '';
         });
 
         async function loadData() {
