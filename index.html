@@ -1138,13 +1138,9 @@
                     
                     // Add metadata if available - store ALL tags and Bandcamp IDs
                     if (metaMap[url]) {
-                        // Use metadata artist and title if available (they're properly formatted)
-                        if (metaMap[url].artist) {
-                            item.artist = metaMap[url].artist;
-                        }
-                        if (metaMap[url].title) {
-                            item.title = metaMap[url].title;
-                        }
+                        // Don't use metadata artist/title as it's often incorrect
+                        // (shows album name as artist for tracks)
+                        // Just use the URL-parsed values which are more reliable
                         
                         item.tags = metaMap[url].tags && metaMap[url].tags.length > 0 
                             ? metaMap[url].tags.map(t => {
@@ -1154,12 +1150,12 @@
                             : [];
                         // Add Bandcamp IDs and type for embedded player
                         item.bandcamp_id = metaMap[url].bandcamp_id || null;
-                        item.bandcamp_album_id = metaMap[url].bandcamp_album_id || null;  // NEW: album ID
+                        item.bandcamp_album_id = metaMap[url].bandcamp_album_id || null;
                         item.bandcamp_type = metaMap[url].bandcamp_type || null;
                     } else {
                         item.tags = [];
                         item.bandcamp_id = null;
-                        item.bandcamp_album_id = null;  // NEW: album ID
+                        item.bandcamp_album_id = null;
                         item.bandcamp_type = null;
                     }
                     
