@@ -83,7 +83,7 @@
             color: #fff;
             font-size: 0.85em;
             cursor: pointer;
-            transition: all 0.3s;
+            transition: all 0.3s ease;
             backdrop-filter: blur(10px);
             display: none;
             align-items: center;
@@ -92,6 +92,12 @@
 
         .random-track-btn.visible {
             display: flex;
+        }
+
+        /* Adjust random button position when sidebar is active */
+        body.sidebar-active .random-track-btn {
+            right: 440px; /* 420px sidebar + 20px padding */
+            transition: right 0.3s ease;
         }
 
         .random-track-btn:hover {
@@ -792,6 +798,11 @@
                 margin-right: 0;
             }
 
+            /* Reset random button position on mobile */
+            body.sidebar-active .random-track-btn {
+                right: 20px;
+            }
+
             .bandcamp-player.sidebar-mode iframe.album-player {
                 max-width: 100%;
                 height: 400px;
@@ -1406,12 +1417,28 @@
 
         // Random track button
         document.getElementById('randomTrackBtn').addEventListener('click', () => {
-            // Only show Bandcamp tracks
-            const bandcampTracks = allItems.filter(item => 
+            // Filter Bandcamp tracks
+            let bandcampTracks = allItems.filter(item => 
                 item.source === 'bandcamp' && 
                 item.bandcamp_id && 
                 item.bandcamp_type
             );
+            
+            // Apply tag filter if tags are selected
+            if (currentTags.size > 0) {
+                const tagFilteredTracks = bandcampTracks.filter(item => {
+                    if (!item.tags || item.tags.length === 0) return false;
+                    return item.tags.some(tag => currentTags.has(tag));
+                });
+                
+                // Use filtered tracks if any match, otherwise fall back to all
+                if (tagFilteredTracks.length > 0) {
+                    bandcampTracks = tagFilteredTracks;
+                    console.log(`Random from ${tagFilteredTracks.length} tag-filtered tracks`);
+                } else {
+                    console.log('No tracks match tags, using all Bandcamp tracks');
+                }
+            }
             
             if (bandcampTracks.length === 0) {
                 console.log('No Bandcamp tracks available');
@@ -1583,9 +1610,24 @@
                         return a.title.localeCompare(b.title);
                     });
                     
-                    allItems = allItems.concat(validYtData);
+                    // Filter out YouTube duplicates - prioritize Bandcamp
+                    // Create a set of normalized Bandcamp track identifiers
+                    const bandcampTracks = new Set(allItems.map(item => 
+                        `${item.artist.toLowerCase().trim()}-${item.title.toLowerCase().trim()}`
+                    ));
                     
-                    console.log(`Total items loaded: ${allItems.length} (Bandcamp: ${Object.keys(imageData).length}, YouTube: ${validYtData.length})`);
+                    const uniqueYtData = validYtData.filter(ytItem => {
+                        const ytIdentifier = `${ytItem.artist.toLowerCase().trim()}-${ytItem.title.toLowerCase().trim()}`;
+                        return !bandcampTracks.has(ytIdentifier);
+                    });
+                    
+                    if (uniqueYtData.length < validYtData.length) {
+                        console.log(`Filtered out ${validYtData.length - uniqueYtData.length} duplicate YouTube tracks (available on Bandcamp)`);
+                    }
+                    
+                    allItems = allItems.concat(uniqueYtData);
+                    
+                    console.log(`Total items loaded: ${allItems.length} (Bandcamp: ${Object.keys(imageData).length}, YouTube: ${uniqueYtData.length})`);
                     
                 } catch (e) {
                     console.error('Error loading YouTube data:', e);
