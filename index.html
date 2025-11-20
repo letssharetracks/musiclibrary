@@ -1345,15 +1345,31 @@
                 if (youtubePlayer && youtubeAPIReady && youtubePlayer.loadVideoById) {
                     youtubePlayer.loadVideoById(videoId);
                 } else {
-                    youtubeIframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0&modestbranding=1`;
+                    youtubeIframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0&modestbranding=1&enablejsapi=1`;
                 }
             } catch (e) {
                 console.warn('YouTube player error:', e);
-                youtubeIframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0&modestbranding=1`;
+                youtubeIframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0&modestbranding=1&enablejsapi=1`;
             }
 
             playerContainer.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
         }
+
+        // Listen for YouTube iframe messages
+        window.addEventListener('message', function(event) {
+            if (event.origin !== 'https://www.youtube.com') return;
+            
+            try {
+                const data = JSON.parse(event.data);
+                // State 0 = ended
+                if (data.event === 'onStateChange' && data.info === 0) {
+                    console.log('YouTube video ended (via postMessage), playing next...');
+                    playNextTrack();
+                }
+            } catch (e) {
+                // Ignore parse errors
+            }
+        });
 
         function playNextTrack() {
             let source = currentFilter;
