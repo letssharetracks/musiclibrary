@@ -339,6 +339,77 @@
             color: #00d4ff;
         }
 
+        /* Active tags display */
+        .active-tags-display {
+            display: none;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+            margin: 15px auto;
+            flex-wrap: wrap;
+            max-width: 1200px;
+        }
+
+        .active-tags-display.visible {
+            display: flex;
+        }
+
+        .active-tags-label {
+            color: #00d4ff;
+            font-size: 0.85em;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        .active-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 12px;
+            background: rgba(0, 212, 255, 0.2);
+            border: 1px solid #00d4ff;
+            border-radius: 15px;
+            color: #00d4ff;
+            font-size: 0.85em;
+            transition: all 0.2s;
+        }
+
+        .active-tag:hover {
+            background: rgba(0, 212, 255, 0.3);
+            transform: translateY(-1px);
+        }
+
+        .active-tag-remove {
+            cursor: pointer;
+            font-weight: bold;
+            opacity: 0.7;
+            transition: opacity 0.2s;
+        }
+
+        .active-tag-remove:hover {
+            opacity: 1;
+            color: #ff4d4d;
+        }
+
+        .clear-all-tags {
+            padding: 6px 14px;
+            background: rgba(255, 77, 77, 0.15);
+            border: 1px solid rgba(255, 77, 77, 0.3);
+            border-radius: 15px;
+            color: rgba(255, 77, 77, 0.9);
+            font-size: 0.85em;
+            cursor: pointer;
+            transition: all 0.2s;
+            white-space: nowrap;
+        }
+
+        .clear-all-tags:hover {
+            background: rgba(255, 77, 77, 0.25);
+            border-color: #ff4d4d;
+            color: #ff4d4d;
+            transform: translateY(-1px);
+        }
+
         .tags-container {
             display: none;
             position: fixed;
@@ -682,6 +753,26 @@
                 font-size: 1em;
             }
 
+            /* Active tags display mobile */
+            .active-tags-display {
+                padding: 0 10px;
+                gap: 6px;
+            }
+
+            .active-tags-label {
+                font-size: 0.75em;
+            }
+
+            .active-tag {
+                font-size: 0.75em;
+                padding: 5px 10px;
+            }
+
+            .clear-all-tags {
+                font-size: 0.75em;
+                padding: 5px 10px;
+            }
+
             /* Disable sidebar mode on mobile - always use bottom player */
             .bandcamp-player.sidebar-mode {
                 position: fixed;
@@ -769,6 +860,12 @@
                 <button class="tags-toggle-btn" id="tagsToggleBtn">
                     🏷️ Show Tags
                 </button>
+            </div>
+
+            <div class="active-tags-display" id="activeTagsDisplay">
+                <span class="active-tags-label">Active filters:</span>
+                <div id="activeTagsList"></div>
+                <button class="clear-all-tags" id="clearAllTags">✕ Clear all</button>
             </div>
 
             <div class="tags-overlay" id="tagsOverlay"></div>
@@ -1229,6 +1326,62 @@
                 toggleBtn.classList.remove('active');
                 toggleBtn.textContent = '🏷️ Show Tags';
             }
+            updateActiveTagsDisplay();
+        }
+
+        function updateActiveTagsDisplay() {
+            const activeTagsDisplay = document.getElementById('activeTagsDisplay');
+            const activeTagsList = document.getElementById('activeTagsList');
+            
+            if (currentTags.size > 0) {
+                activeTagsDisplay.classList.add('visible');
+                
+                // Clear and rebuild active tags
+                activeTagsList.innerHTML = '';
+                
+                Array.from(currentTags).sort().forEach(tag => {
+                    const tagElement = document.createElement('div');
+                    tagElement.className = 'active-tag';
+                    tagElement.innerHTML = `
+                        <span>${tag}</span>
+                        <span class="active-tag-remove" data-tag="${tag}">×</span>
+                    `;
+                    
+                    // Add click handler to remove button
+                    tagElement.querySelector('.active-tag-remove').addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        removeTag(tag);
+                    });
+                    
+                    activeTagsList.appendChild(tagElement);
+                });
+            } else {
+                activeTagsDisplay.classList.remove('visible');
+            }
+        }
+
+        function removeTag(tag) {
+            currentTags.delete(tag);
+            renderCards(allItems);
+            updateTagsToggleButton();
+            
+            // Update the tag button in the modal if it's open
+            const tagButtons = document.querySelectorAll('.tag-btn');
+            tagButtons.forEach(btn => {
+                if (btn.textContent === tag) {
+                    btn.classList.remove('active');
+                }
+            });
+        }
+
+        function clearAllTags() {
+            currentTags.clear();
+            renderCards(allItems);
+            updateTagsToggleButton();
+            
+            // Update all tag buttons in the modal
+            const tagButtons = document.querySelectorAll('.tag-btn');
+            tagButtons.forEach(btn => btn.classList.remove('active'));
         }
 
         function closeTags() {
@@ -1247,6 +1400,9 @@
 
         // Close tags when clicking overlay
         document.getElementById('tagsOverlay').addEventListener('click', closeTags);
+
+        // Clear all tags button
+        document.getElementById('clearAllTags').addEventListener('click', clearAllTags);
 
         // Random track button
         document.getElementById('randomTrackBtn').addEventListener('click', () => {
