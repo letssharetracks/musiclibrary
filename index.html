@@ -913,8 +913,76 @@
                 playerVars: {
                     rel: 0,
                     modestbranding: 1
+                },
+                events: {
+                    'onStateChange': onYouTubePlayerStateChange
                 }
             });
+        }
+
+        function onYouTubePlayerStateChange(event) {
+            // YT.PlayerState.ENDED = 0
+            if (event.data === 0) {
+                console.log('YouTube video ended, playing next...');
+                playNextTrack();
+            }
+        }
+
+        function playNextTrack() {
+            // Get current pool based on filter
+            let source = currentFilter;
+            let pool = [];
+
+            if (source === 'all') {
+                const bandcampPool = allItems.filter(item =>
+                    item.source === 'bandcamp' &&
+                    item.bandcamp_id &&
+                    item.bandcamp_type
+                );
+                const youtubePool = allItems.filter(item => item.source === 'youtube');
+                pool = [...bandcampPool, ...youtubePool];
+            } else if (source === 'bandcamp') {
+                pool = allItems.filter(item =>
+                    item.source === 'bandcamp' &&
+                    item.bandcamp_id &&
+                    item.bandcamp_type
+                );
+            } else if (source === 'youtube') {
+                pool = allItems.filter(item => item.source === 'youtube');
+            }
+
+            // Apply tag filter if active
+            if (currentTags.size > 0 && pool.length > 0) {
+                const tagFiltered = pool.filter(item => {
+                    if (!item.tags || item.tags.length === 0) return false;
+                    return item.tags.some(tag => currentTags.has(tag));
+                });
+                if (tagFiltered.length > 0) {
+                    pool = tagFiltered;
+                }
+            }
+
+            // Remove last played to avoid repeat
+            if (lastPlayedTrack && pool.length > 1) {
+                pool = pool.filter(item => item.url !== lastPlayedTrack.url);
+            }
+
+            if (pool.length === 0) {
+                console.log('No more tracks to play');
+                return;
+            }
+
+            // Play random next track
+            const nextTrack = pool[Math.floor(Math.random() * pool.length)];
+            lastPlayedTrack = nextTrack;
+
+            if (nextTrack.source === 'bandcamp') {
+                updateBandcampPlayer(nextTrack);
+            } else {
+                updateYouTubePlayer(nextTrack);
+            }
+
+            console.log('Auto-playing next:', nextTrack.artist, '-', nextTrack.title);
         }
 
         function getYouTubeVideoId(url) {
@@ -1132,6 +1200,7 @@
         let allItems = [];
         let currentFilter = 'all';
         let currentTags = new Set();
+        let lastPlayedTrack = null; // Track last played item to avoid repeats
         let allTags = new Set();
         let tagsVisible = false;
         let showTracklist = false; // Default to tracks only mode
@@ -1292,15 +1361,15 @@
             bandcampIframe.style.display = 'none';
             youtubeIframe.style.display = 'block';
 
-            // Always bottom bar for YouTube
-            playerContainer.classList.remove('sidebar-mode');
-            document.body.classList.remove('sidebar-active');
+            // Use sidebar layout for YouTube
+            playerContainer.classList.add('sidebar-mode');
+            document.body.classList.add('sidebar-active');
             bandcampIframe.classList.remove('album-player');
             youtubeIframe.classList.remove('album-player');
 
             // Update label
             label.innerHTML = `
-                ▶️ Now Playing: ${item.artist} – ${item.title}
+                ▶️ Now Playing
                 <button class="player-close" id="playerClose" title="Close player">×</button>
             `;
 
@@ -1528,11 +1597,19 @@
         // Random track button
         document.getElementById('randomTrackBtn').addEventListener('click', () => {
             let source = currentFilter;
-            if (source === 'all') source = 'bandcamp';
 
             let pool = [];
 
-            if (source === 'bandcamp') {
+            if (source === 'all') {
+                // Mix both Bandcamp and YouTube
+                const bandcampPool = allItems.filter(item =>
+                    item.source === 'bandcamp' &&
+                    item.bandcamp_id &&
+                    item.bandcamp_type
+                );
+                const youtubePool = allItems.filter(item => item.source === 'youtube');
+                pool = [...bandcampPool, ...youtubePool];
+            } else if (source === 'bandcamp') {
                 pool = allItems.filter(item =>
                     item.source === 'bandcamp' &&
                     item.bandcamp_id &&
@@ -1551,20 +1628,28 @@
                 
                 if (tagFiltered.length > 0) {
                     pool = tagFiltered;
-                    console.log(`Random from ${tagFiltered.length} tag-filtered ${source} tracks`);
+                    console.log(`Random from ${tagFiltered.length} tag-filtered tracks`);
                 } else {
-                    console.log(`No ${source} tracks match tags, using all ${source} tracks`);
+                    console.log(`No tracks match tags, using all tracks`);
                 }
             }
 
             if (pool.length === 0) {
-                console.log(`No ${source} tracks available`);
+                console.log('No tracks available');
                 return;
             }
 
-            const randomItem = pool[Math.floor(Math.random() * pool.length)];
+            // Remove last played track from pool to avoid immediate repeat
+            if (lastPlayedTrack && pool.length > 1) {
+                pool = pool.filter(item => item.url !== lastPlayedTrack.url);
+            }
 
-            if (source === 'bandcamp') {
+            // Pick random track
+            const randomItem = pool[Math.floor(Math.random() * pool.length)];
+            lastPlayedTrack = randomItem;
+
+            // Play based on source
+            if (randomItem.source === 'bandcamp') {
                 updateBandcampPlayer(randomItem);
             } else {
                 updateYouTubePlayer(randomItem);
@@ -1576,8 +1661,12 @@
         // Update random button visibility based on filter
         function updateRandomButtonVisibility() {
             const randomBtn = document.getElementById('randomTrackBtn');
-            if (currentFilter === 'bandcamp' || currentFilter === 'youtube') {
+            if (currentFilter === 'all' || currentFilter === 'bandcamp' || currentFilter === 'youtube') {
                 randomBtn.classList.add('visible');
+            } else {
+                randomBtn.classList.remove('visible');
+            }
+        }
             } else {
                 randomBtn.classList.remove('visible');
             }
