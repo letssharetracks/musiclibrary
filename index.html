@@ -840,10 +840,9 @@
             <iframe id="bandcampIframe" src="" seamless></iframe>
             <iframe
                 id="youtubeIframe"
-                src=""
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowfullscreen
-                style="display:none;">
+                style="visibility:hidden; opacity:0; height:0; width:100%; pointer-events:none;">
             </iframe>
         </div>
 
@@ -1205,10 +1204,13 @@
             
             // Show Bandcamp iframe, hide YouTube
             bandcampIframe.style.display = 'block';
-            youtubeIframe.style.display = 'none';
             
-            // IMPORTANT: Stop and clear YouTube to prevent playing in background
-            youtubeIframe.src = '';
+            youtubeIframe.style.visibility = 'hidden';
+            youtubeIframe.style.opacity = '0';
+            youtubeIframe.style.height = '0';
+            youtubeIframe.style.pointerEvents = 'none';
+            
+            // Stop YouTube player
             if (youtubePlayer && youtubePlayer.stopVideo) {
                 try { 
                     youtubePlayer.stopVideo();
@@ -1330,10 +1332,13 @@
 
             // Hide Bandcamp, show YouTube
             bandcampIframe.style.display = 'none';
-            youtubeIframe.style.display = 'block';
-            
-            // Stop Bandcamp player by clearing iframe
             bandcampIframe.src = '';
+            
+            youtubeIframe.style.visibility = 'visible';
+            youtubeIframe.style.opacity = '1';
+            youtubeIframe.style.height = '120px';
+            youtubeIframe.style.pointerEvents = 'auto';
+            
             console.log('Stopped Bandcamp player');
 
             // YouTube uses BOTTOM BAR (not sidebar)
