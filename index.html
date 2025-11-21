@@ -905,6 +905,8 @@
     <script>
         let youtubePlayer = null;
         let youtubeAPIReady = false;
+        const YOUTUBE_PLAYLIST_ID = 'PLapBjnjxE544UhqAe21EDiSWF61rVvzLK';
+        let youtubeVideoIndexMap = {}; // Maps video URL to playlist index
 
         function onYouTubeIframeAPIReady() {
             try {
@@ -913,17 +915,24 @@
                     width: '100%',
                     playerVars: {
                         rel: 0,
-                        modestbranding: 1
+                        modestbranding: 1,
+                        listType: 'playlist',
+                        list: YOUTUBE_PLAYLIST_ID
                     },
                     events: {
+                        'onReady': onYouTubePlayerReady,
                         'onStateChange': onYouTubePlayerStateChange
                     }
                 });
-                youtubeAPIReady = true;
-                console.log('YouTube API ready');
+                console.log('YouTube API initializing with playlist...');
             } catch (e) {
                 console.warn('YouTube API initialization failed:', e);
             }
+        }
+
+        function onYouTubePlayerReady(event) {
+            youtubeAPIReady = true;
+            console.log('YouTube player ready with playlist!');
         }
 
         function onYouTubePlayerStateChange(event) {
@@ -1311,9 +1320,10 @@
             const youtubeIframe = document.getElementById('youtubeIframe');
             const label = document.getElementById('playerLabel');
 
-            const videoId = getYouTubeVideoId(item.url);
-            if (!videoId) {
-                console.warn('No videoId found, opening in new tab');
+            // Get the playlist index for this video
+            const playlistIndex = youtubeVideoIndexMap[item.url];
+            if (playlistIndex === undefined) {
+                console.warn('Video not found in playlist map:', item.url);
                 window.open(item.url, '_blank');
                 return;
             }
@@ -1344,7 +1354,6 @@
                 playerContainer.classList.remove('visible', 'sidebar-mode');
                 document.body.classList.remove('sidebar-active');
                 bandcampIframe.src = '';
-                youtubeIframe.src = '';
                 if (youtubePlayer && youtubePlayer.stopVideo) {
                     try { youtubePlayer.stopVideo(); } catch(e) {}
                 }
@@ -1353,36 +1362,28 @@
             // Show player
             playerContainer.classList.add('visible');
 
-            // Load video
-            try {
-                if (youtubePlayer && youtubeAPIReady && youtubePlayer.loadVideoById) {
-                    youtubePlayer.loadVideoById(videoId);
-                } else {
-                    youtubeIframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0&modestbranding=1&enablejsapi=1`;
-                }
-            } catch (e) {
-                console.warn('YouTube player error:', e);
-                youtubeIframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0&modestbranding=1&enablejsapi=1`;
+            // Play video from playlist at specific index
+            if (youtubePlayer && youtubeAPIReady && youtubePlayer.playVideoAt) {
+                console.log(`Playing video at playlist index ${playlistIndex}`);
+                youtubePlayer.playVideoAt(playlistIndex);
+            } else {
+                console.warn('YouTube API not ready, waiting...');
+                // Wait for API to be ready
+                const checkReady = setInterval(() => {
+                    if (youtubePlayer && youtubeAPIReady && youtubePlayer.playVideoAt) {
+                        clearInterval(checkReady);
+                        console.log(`Playing video at playlist index ${playlistIndex}`);
+                        youtubePlayer.playVideoAt(playlistIndex);
+                    }
+                }, 100);
+                
+                // Timeout after 5 seconds
+                setTimeout(() => clearInterval(checkReady), 5000);
             }
 
             playerContainer.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
         }
 
-        // Listen for YouTube iframe messages
-        window.addEventListener('message', function(event) {
-            if (event.origin !== 'https://www.youtube.com') return;
-            
-            try {
-                const data = JSON.parse(event.data);
-                // State 0 = ended
-                if (data.event === 'onStateChange' && data.info === 0) {
-                    console.log('YouTube video ended (via postMessage), playing next...');
-                    playNextTrack();
-                }
-            } catch (e) {
-                // Ignore parse errors
-            }
-        });
 
         function playNextTrack() {
             let source = currentFilter;
@@ -1841,6 +1842,12 @@
                     }
                     
                     allItems = allItems.concat(uniqueYtData);
+                    
+                    // Build index map for playlist - map each video URL to its position
+                    uniqueYtData.forEach((video, index) => {
+                        youtubeVideoIndexMap[video.url] = index;
+                    });
+                    console.log(`Built YouTube playlist index map with ${Object.keys(youtubeVideoIndexMap).length} videos`);
                     
                     console.log(`Total items loaded: ${allItems.length} (Bandcamp: ${Object.keys(imageData).length}, YouTube: ${uniqueYtData.length})`);
                     
