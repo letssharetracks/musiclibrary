@@ -1361,20 +1361,19 @@
             // Show player
             playerContainer.classList.add('visible');
 
-            // TESTING: First confirm video ID works WITHOUT shuffle
-            // Once confirmed, we can add shuffle=1 back
+            // Use playlist INDEX (not video ID) - this is what worked for Rosemaria!
             let embedUrl;
-            if (videoId) {
-                // Use video ID + playlist (NO SHUFFLE for now - testing!)
-                embedUrl = `https://www.youtube.com/embed/${videoId}?list=${YOUTUBE_PLAYLIST_ID}&autoplay=1&rel=0&modestbranding=1`;
-                console.log(`✅ Playing video ${videoId} with playlist (NO SHUFFLE - testing)`);
-                console.log(`   Artist: ${item.artist}, Title: ${item.title}`);
-            } else if (playlistIndex) {
-                // Fallback to index if no video ID
+            if (playlistIndex) {
+                // PRIMARY: Use exact playlist index from URL
                 embedUrl = `https://www.youtube.com/embed?list=${YOUTUBE_PLAYLIST_ID}&index=${playlistIndex}&autoplay=1&rel=0&modestbranding=1`;
-                console.log(`⚠️ Using playlist index ${playlistIndex} as fallback`);
+                console.log(`✅ Playing playlist index ${playlistIndex}`);
+                console.log(`   Artist: ${item.artist}, Title: ${item.title}`);
+            } else if (videoId) {
+                // FALLBACK: Use video ID standalone (no playlist)
+                embedUrl = `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0&modestbranding=1`;
+                console.log(`⚠️ No index found, playing standalone video ${videoId}`);
             } else {
-                console.warn('❌ No video ID or index found, opening in new tab');
+                console.warn('❌ No index or video ID found, opening in new tab');
                 window.open(item.url, '_blank');
                 return;
             }
