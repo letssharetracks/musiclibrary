@@ -840,9 +840,10 @@
             <iframe id="bandcampIframe" src="" seamless></iframe>
             <iframe
                 id="youtubeIframe"
+                src=""
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowfullscreen
-                style="visibility:hidden; opacity:0; height:0; width:100%; pointer-events:none;">
+                style="display:none;">
             </iframe>
         </div>
 
@@ -900,51 +901,9 @@
         </div>
     </div>
 
-    <script src="https://www.youtube.com/iframe_api"></script>
     <script>
-        let youtubePlayer = null;
-        let youtubeAPIReady = false;
-        const YOUTUBE_PLAYLIST_ID = 'PLapBjnjxE544UhqAe21EDiSWF61rVvzLK';
-        let youtubeVideoIndexMap = {}; // Maps video URL to playlist index
-
-        function onYouTubeIframeAPIReady() {
-            try {
-                youtubePlayer = new YT.Player('youtubeIframe', {
-                    height: '120',
-                    width: '100%',
-                    playerVars: {
-                        rel: 0,
-                        modestbranding: 1,
-                        listType: 'playlist',
-                        list: YOUTUBE_PLAYLIST_ID
-                    },
-                    events: {
-                        'onReady': onYouTubePlayerReady,
-                        'onStateChange': onYouTubePlayerStateChange
-                    }
-                });
-                console.log('YouTube API initializing with playlist...');
-            } catch (e) {
-                console.warn('YouTube API initialization failed:', e);
-            }
-        }
-
-        function onYouTubePlayerReady(event) {
-            youtubeAPIReady = true;
-            console.log('YouTube player ready with playlist!');
-        }
-
-        function onYouTubePlayerStateChange(event) {
-            try {
-                if (event.data === 0) {
-                    console.log('YouTube video ended, playing next...');
-                    playNextTrack();
-                }
-            } catch (e) {
-                console.warn('YouTube state change error:', e);
-            }
-        }
-
+        // YouTube playlist - using direct embed, no API needed!
+        
         function getYouTubeVideoId(url) {
             try {
                 const u = new URL(url);
@@ -1164,6 +1123,10 @@
         let allTags = new Set();
         let tagsVisible = false;
         let showTracklist = false; // Default to tracks only mode
+        
+        // YouTube playlist mapping
+        const YOUTUBE_PLAYLIST_ID = 'PLapBjnjxE544UhqAe21EDiSWF61rVvzLK';
+        let youtubeVideoIndexMap = {};
 
         // Function to extract Bandcamp album/track ID from URL
         function extractBandcampId(url) {
@@ -1204,13 +1167,10 @@
             
             // Show Bandcamp iframe, hide YouTube
             bandcampIframe.style.display = 'block';
+            youtubeIframe.style.display = 'none';
             
-            youtubeIframe.style.visibility = 'hidden';
-            youtubeIframe.style.opacity = '0';
-            youtubeIframe.style.height = '0';
-            youtubeIframe.style.pointerEvents = 'none';
-            
-            // Stop YouTube player
+            // IMPORTANT: Stop and clear YouTube to prevent playing in background
+            youtubeIframe.src = '';
             if (youtubePlayer && youtubePlayer.stopVideo) {
                 try { 
                     youtubePlayer.stopVideo();
@@ -1322,23 +1282,20 @@
             const youtubeIframe = document.getElementById('youtubeIframe');
             const label = document.getElementById('playerLabel');
 
-            // Get the playlist index for this video
+            // Get playlist index for this video
             const playlistIndex = youtubeVideoIndexMap[item.url];
             if (playlistIndex === undefined) {
-                console.warn('Video not found in playlist map:', item.url);
+                console.warn('Video not found in playlist, opening in new tab:', item.url);
                 window.open(item.url, '_blank');
                 return;
             }
 
             // Hide Bandcamp, show YouTube
             bandcampIframe.style.display = 'none';
+            youtubeIframe.style.display = 'block';
+            
+            // Stop Bandcamp player
             bandcampIframe.src = '';
-            
-            youtubeIframe.style.visibility = 'visible';
-            youtubeIframe.style.opacity = '1';
-            youtubeIframe.style.height = '120px';
-            youtubeIframe.style.pointerEvents = 'auto';
-            
             console.log('Stopped Bandcamp player');
 
             // YouTube uses BOTTOM BAR (not sidebar)
@@ -1359,36 +1316,35 @@
                 playerContainer.classList.remove('visible', 'sidebar-mode');
                 document.body.classList.remove('sidebar-active');
                 bandcampIframe.src = '';
-                if (youtubePlayer && youtubePlayer.stopVideo) {
-                    try { youtubePlayer.stopVideo(); } catch(e) {}
-                }
+                youtubeIframe.src = '';
             });
 
             // Show player
             playerContainer.classList.add('visible');
 
-            // Play video from playlist at specific index
-            if (youtubePlayer && youtubeAPIReady && youtubePlayer.playVideoAt) {
-                console.log(`Playing video at playlist index ${playlistIndex}`);
-                youtubePlayer.playVideoAt(playlistIndex);
-            } else {
-                console.warn('YouTube API not ready, waiting...');
-                // Wait for API to be ready
-                const checkReady = setInterval(() => {
-                    if (youtubePlayer && youtubeAPIReady && youtubePlayer.playVideoAt) {
-                        clearInterval(checkReady);
-                        console.log(`Playing video at playlist index ${playlistIndex}`);
-                        youtubePlayer.playVideoAt(playlistIndex);
-                    }
-                }, 100);
-                
-                // Timeout after 5 seconds
-                setTimeout(() => clearInterval(checkReady), 5000);
-            }
+            // Embed playlist starting at specific index
+            // This gives us auto-advance for free!
+            console.log(`Playing video at playlist index ${playlistIndex}`);
+            youtubeIframe.src = `https://www.youtube.com/embed?list=${YOUTUBE_PLAYLIST_ID}&index=${playlistIndex + 1}&autoplay=1&rel=0&modestbranding=1`;
 
             playerContainer.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
         }
 
+        // Listen for YouTube iframe messages
+        window.addEventListener('message', function(event) {
+            if (event.origin !== 'https://www.youtube.com') return;
+            
+            try {
+                const data = JSON.parse(event.data);
+                // State 0 = ended
+                if (data.event === 'onStateChange' && data.info === 0) {
+                    console.log('YouTube video ended (via postMessage), playing next...');
+                    playNextTrack();
+                }
+            } catch (e) {
+                // Ignore parse errors
+            }
+        });
 
         function playNextTrack() {
             let source = currentFilter;
@@ -1848,7 +1804,7 @@
                     
                     allItems = allItems.concat(uniqueYtData);
                     
-                    // Build index map for playlist - map each video URL to its position
+                    // Build YouTube playlist index map
                     uniqueYtData.forEach((video, index) => {
                         youtubeVideoIndexMap[video.url] = index;
                     });
