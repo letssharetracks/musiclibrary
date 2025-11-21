@@ -262,6 +262,36 @@
             transform: scale(1.1);
         }
 
+        .player-next {
+            position: absolute;
+            top: -5px;
+            right: 35px;
+            background: rgba(0, 212, 255, 0.1);
+            border: 1px solid rgba(0, 212, 255, 0.3);
+            border-radius: 50%;
+            width: 28px;
+            height: 28px;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: rgba(0, 212, 255, 0.8);
+            transition: all 0.3s;
+            font-size: 14px;
+            line-height: 1;
+        }
+
+        .player-next:hover {
+            background: rgba(0, 212, 255, 0.3);
+            border-color: rgba(0, 212, 255, 0.6);
+            color: #00d4ff;
+            transform: scale(1.1);
+        }
+
+        .player-next.visible {
+            display: flex;
+        }
+
         .bandcamp-player.sidebar-mode .player-close {
             display: flex;
         }
@@ -835,6 +865,7 @@
         <div class="bandcamp-player" id="bandcampPlayer">
             <div class="player-label" id="playerLabel">
                 🎵 Now Playing
+                <button class="player-next" id="playerNext" title="Next Track" style="display:none;">⏭️</button>
                 <button class="player-close" id="playerClose" title="Close player">×</button>
             </div>
             <iframe id="bandcampIframe" src="" seamless></iframe>
@@ -1119,7 +1150,6 @@
         let allItems = [];
         let currentFilter = 'all';
         let currentTags = new Set();
-        let lastPlayedTrack = null;
         let allTags = new Set();
         let tagsVisible = false;
         let showTracklist = false; // Default to tracks only mode
@@ -1127,6 +1157,10 @@
         // YouTube playlist mapping
         const YOUTUBE_PLAYLIST_ID = 'PLapBjnjxE544UhqAe21EDiSWF61rVvzLK';
         let youtubeVideoIndexMap = {};
+        
+        // Recently played tracking for better variety
+        let recentlyPlayed = [];
+        const RECENT_HISTORY_SIZE = 50; // Remember last 50 tracks
 
         // Function to extract Bandcamp album/track ID from URL
         function extractBandcampId(url) {
@@ -1169,14 +1203,9 @@
             bandcampIframe.style.display = 'block';
             youtubeIframe.style.display = 'none';
             
-            // IMPORTANT: Stop and clear YouTube to prevent playing in background
+            // Stop YouTube by clearing iframe
             youtubeIframe.src = '';
-            if (youtubePlayer && youtubePlayer.stopVideo) {
-                try { 
-                    youtubePlayer.stopVideo();
-                    console.log('Stopped YouTube player');
-                } catch(e) {}
-            }
+            console.log('Stopped YouTube player');
             
             label.innerHTML = `
                 🎵 Now Playing
@@ -1190,9 +1219,6 @@
                 document.body.classList.remove('sidebar-active');
                 bandcampIframe.src = '';
                 youtubeIframe.src = '';
-                if (youtubePlayer && youtubePlayer.stopVideo) {
-                    try { youtubePlayer.stopVideo(); } catch(e) {}
-                }
             });
             
             console.log('Loading Bandcamp player for:', item.title);
@@ -1282,10 +1308,10 @@
             const youtubeIframe = document.getElementById('youtubeIframe');
             const label = document.getElementById('playerLabel');
 
-            // Get playlist index for this video
-            const playlistIndex = youtubeVideoIndexMap[item.url];
-            if (playlistIndex === undefined) {
-                console.warn('Video not found in playlist, opening in new tab:', item.url);
+            // Get video ID from URL
+            const videoId = getYouTubeVideoId(item.url);
+            if (!videoId) {
+                console.warn('Could not extract video ID, opening in new tab:', item.url);
                 window.open(item.url, '_blank');
                 return;
             }
@@ -1322,10 +1348,10 @@
             // Show player
             playerContainer.classList.add('visible');
 
-            // Embed playlist starting at specific index
-            // This gives us auto-advance for free!
-            console.log(`Playing video at playlist index ${playlistIndex}`);
-            youtubeIframe.src = `https://www.youtube.com/embed?list=${YOUTUBE_PLAYLIST_ID}&index=${playlistIndex + 1}&autoplay=1&rel=0&modestbranding=1`;
+            // Embed specific video WITH playlist context
+            // This plays the exact video you clicked AND enables auto-advance!
+            console.log(`Playing video: ${videoId} (with playlist context)`);
+            youtubeIframe.src = `https://www.youtube.com/embed/${videoId}?list=${YOUTUBE_PLAYLIST_ID}&autoplay=1&rel=0&modestbranding=1`;
 
             playerContainer.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
         }
@@ -1614,13 +1640,26 @@
                 return;
             }
 
-            // Remove last played to avoid repeat
-            if (lastPlayedTrack && pool.length > 1) {
-                pool = pool.filter(i => i.url !== lastPlayedTrack.url);
+            // Filter out recently played tracks for better variety
+            let availablePool = pool;
+            if (recentlyPlayed.length > 0) {
+                const recentUrls = new Set(recentlyPlayed.map(t => t.url));
+                const freshTracks = pool.filter(i => !recentUrls.has(i.url));
+                
+                // Use fresh tracks if we have enough, otherwise use full pool
+                if (freshTracks.length > Math.max(5, pool.length * 0.1)) {
+                    availablePool = freshTracks;
+                    console.log(`Filtered out ${pool.length - freshTracks.length} recently played tracks`);
+                }
             }
 
-            const randomItem = pool[Math.floor(Math.random() * pool.length)];
-            lastPlayedTrack = randomItem;
+            const randomItem = availablePool[Math.floor(Math.random() * availablePool.length)];
+            
+            // Add to recently played history
+            recentlyPlayed.unshift(randomItem);
+            if (recentlyPlayed.length > RECENT_HISTORY_SIZE) {
+                recentlyPlayed = recentlyPlayed.slice(0, RECENT_HISTORY_SIZE);
+            }
 
             if (randomItem.source === 'bandcamp') {
                 updateBandcampPlayer(randomItem);
@@ -1629,6 +1668,7 @@
             }
 
             console.log('Random track:', randomItem.artist, '-', randomItem.title);
+            console.log(`Recently played history: ${recentlyPlayed.length} tracks`);
         });
 
         // Update random button visibility based on filter
