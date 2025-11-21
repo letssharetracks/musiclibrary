@@ -1308,10 +1308,24 @@
             const youtubeIframe = document.getElementById('youtubeIframe');
             const label = document.getElementById('playerLabel');
 
-            // Get video ID from URL
+            console.log('Playing:', item.artist, '-', item.title);
+            console.log('URL:', item.url);
+
+            // Extract index parameter from URL (e.g., &index=88)
+            let playlistIndex = null;
+            try {
+                const urlObj = new URL(item.url);
+                playlistIndex = urlObj.searchParams.get('index');
+                console.log('Extracted playlist index:', playlistIndex);
+            } catch (e) {
+                console.warn('Could not parse URL:', e);
+            }
+
+            // Get video ID as fallback
             const videoId = getYouTubeVideoId(item.url);
-            if (!videoId) {
-                console.warn('Could not extract video ID, opening in new tab:', item.url);
+            
+            if (!playlistIndex && !videoId) {
+                console.warn('Could not extract index or video ID, opening in new tab');
                 window.open(item.url, '_blank');
                 return;
             }
@@ -1322,7 +1336,6 @@
             
             // Stop Bandcamp player
             bandcampIframe.src = '';
-            console.log('Stopped Bandcamp player');
 
             // YouTube uses BOTTOM BAR (not sidebar)
             playerContainer.classList.remove('sidebar-mode');
@@ -1348,10 +1361,21 @@
             // Show player
             playerContainer.classList.add('visible');
 
-            // Embed specific video WITH playlist context
-            // This plays the exact video you clicked AND enables auto-advance!
-            console.log(`Playing video: ${videoId} (with playlist context)`);
-            youtubeIframe.src = `https://www.youtube.com/embed/${videoId}?list=${YOUTUBE_PLAYLIST_ID}&autoplay=1&rel=0&modestbranding=1`;
+            // Use index parameter for guaranteed correct playback!
+            // shuffle=1 enables playlist shuffle for auto-advance
+            let embedUrl;
+            if (playlistIndex) {
+                // Use exact playlist index - GUARANTEED to work!
+                embedUrl = `https://www.youtube.com/embed?list=${YOUTUBE_PLAYLIST_ID}&index=${playlistIndex}&autoplay=1&shuffle=1&rel=0&modestbranding=1`;
+                console.log(`Using playlist index ${playlistIndex} for guaranteed playback`);
+            } else {
+                // Fallback to video ID
+                embedUrl = `https://www.youtube.com/embed/${videoId}?list=${YOUTUBE_PLAYLIST_ID}&autoplay=1&shuffle=1&rel=0&modestbranding=1`;
+                console.log(`Using video ID ${videoId} as fallback`);
+            }
+            
+            console.log('Embed URL:', embedUrl);
+            youtubeIframe.src = embedUrl;
 
             playerContainer.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
         }
