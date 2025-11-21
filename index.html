@@ -1361,19 +1361,17 @@
             // Show player
             playerContainer.classList.add('visible');
 
-            // Use playlist INDEX (not video ID) - this is what worked for Rosemaria!
+            // CRITICAL: Use video ID + playlist (NOT index parameter!)
+            // YouTube iframe ignores index parameter but respects videoId+list
             let embedUrl;
-            if (playlistIndex) {
-                // PRIMARY: Use exact playlist index from URL
-                embedUrl = `https://www.youtube.com/embed?list=${YOUTUBE_PLAYLIST_ID}&index=${playlistIndex}&autoplay=1&rel=0&modestbranding=1`;
-                console.log(`✅ Playing playlist index ${playlistIndex}`);
+            if (videoId) {
+                // Use video ID with playlist - this makes YouTube find it in the playlist
+                embedUrl = `https://www.youtube.com/embed/${videoId}?list=${YOUTUBE_PLAYLIST_ID}&autoplay=1&rel=0&modestbranding=1`;
+                console.log(`✅ Playing video ${videoId} from playlist`);
                 console.log(`   Artist: ${item.artist}, Title: ${item.title}`);
-            } else if (videoId) {
-                // FALLBACK: Use video ID standalone (no playlist)
-                embedUrl = `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0&modestbranding=1`;
-                console.log(`⚠️ No index found, playing standalone video ${videoId}`);
+                console.log(`   Original index was: ${playlistIndex || 'unknown'}`);
             } else {
-                console.warn('❌ No index or video ID found, opening in new tab');
+                console.warn('❌ No video ID found, opening in new tab');
                 window.open(item.url, '_blank');
                 return;
             }
