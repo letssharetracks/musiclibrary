@@ -1362,15 +1362,15 @@
             playerContainer.classList.add('visible');
 
             // Use index parameter for guaranteed correct playback!
-            // shuffle=1 enables playlist shuffle for auto-advance
             let embedUrl;
             if (playlistIndex) {
-                // Use exact playlist index - GUARANTEED to work!
-                embedUrl = `https://www.youtube.com/embed?list=${YOUTUBE_PLAYLIST_ID}&index=${playlistIndex}&autoplay=1&shuffle=1&rel=0&modestbranding=1`;
+                // Use exact playlist index - DON'T use shuffle here, it overrides the index!
+                // Shuffle will kick in automatically for subsequent auto-advances
+                embedUrl = `https://www.youtube.com/embed?list=${YOUTUBE_PLAYLIST_ID}&index=${playlistIndex}&autoplay=1&rel=0&modestbranding=1`;
                 console.log(`Using playlist index ${playlistIndex} for guaranteed playback`);
             } else {
                 // Fallback to video ID
-                embedUrl = `https://www.youtube.com/embed/${videoId}?list=${YOUTUBE_PLAYLIST_ID}&autoplay=1&shuffle=1&rel=0&modestbranding=1`;
+                embedUrl = `https://www.youtube.com/embed/${videoId}?list=${YOUTUBE_PLAYLIST_ID}&autoplay=1&rel=0&modestbranding=1`;
                 console.log(`Using video ID ${videoId} as fallback`);
             }
             
