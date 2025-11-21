@@ -1361,20 +1361,25 @@
             // Show player
             playerContainer.classList.add('visible');
 
-            // Use index parameter for guaranteed correct playback!
+            // TESTING: First confirm video ID works WITHOUT shuffle
+            // Once confirmed, we can add shuffle=1 back
             let embedUrl;
-            if (playlistIndex) {
-                // Use exact playlist index - DON'T use shuffle here, it overrides the index!
-                // Shuffle will kick in automatically for subsequent auto-advances
-                embedUrl = `https://www.youtube.com/embed?list=${YOUTUBE_PLAYLIST_ID}&index=${playlistIndex}&autoplay=1&rel=0&modestbranding=1`;
-                console.log(`Using playlist index ${playlistIndex} for guaranteed playback`);
-            } else {
-                // Fallback to video ID
+            if (videoId) {
+                // Use video ID + playlist (NO SHUFFLE for now - testing!)
                 embedUrl = `https://www.youtube.com/embed/${videoId}?list=${YOUTUBE_PLAYLIST_ID}&autoplay=1&rel=0&modestbranding=1`;
-                console.log(`Using video ID ${videoId} as fallback`);
+                console.log(`✅ Playing video ${videoId} with playlist (NO SHUFFLE - testing)`);
+                console.log(`   Artist: ${item.artist}, Title: ${item.title}`);
+            } else if (playlistIndex) {
+                // Fallback to index if no video ID
+                embedUrl = `https://www.youtube.com/embed?list=${YOUTUBE_PLAYLIST_ID}&index=${playlistIndex}&autoplay=1&rel=0&modestbranding=1`;
+                console.log(`⚠️ Using playlist index ${playlistIndex} as fallback`);
+            } else {
+                console.warn('❌ No video ID or index found, opening in new tab');
+                window.open(item.url, '_blank');
+                return;
             }
             
-            console.log('Embed URL:', embedUrl);
+            console.log('🎵 Embed URL:', embedUrl);
             youtubeIframe.src = embedUrl;
 
             playerContainer.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
