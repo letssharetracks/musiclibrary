@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -959,18 +960,22 @@
             return null;
         }
 
-        function getYouTubePlaylistInfo(url) {
-            try {
-                const u = new URL(url);
-                const indexParam = u.searchParams.get('index');
-                const index = indexParam ? parseInt(indexParam, 10) : null;
-                const playlistId = u.searchParams.get('list') || null;
-                return { playlistId, index };
-            } catch (e) {
-                console.warn('Could not parse YouTube playlist info from URL:', url, e);
-                return { playlistId: null, index: null };
-            }
-        }
+function getYouTubePlaylistInfo(url) {
+    try {
+        const u = new URL(url);
+        const indexParam = u.searchParams.get('index');
+        const playlistId = u.searchParams.get('list') || null;
+
+        return {
+            playlistId,
+            index: indexParam ? parseInt(indexParam, 10) : null
+        };
+    } catch (e) {
+        console.warn('Could not parse playlist info:', url, e);
+        return { playlistId: null, index: null };
+    }
+}
+
 
 
         const gradients = ['gradient-1', 'gradient-2', 'gradient-3', 'gradient-4', 'gradient-5', 'gradient-6', 'gradient-7', 'gradient-8'];
@@ -1329,37 +1334,29 @@ function updateYouTubePlayer(item) {
     const videoId = getYouTubeVideoId(item.url);
     const { playlistId, index } = getYouTubePlaylistInfo(item.url);
 
-    // Strict: require both a video id and an index from the JSON URL.
     if (!videoId) {
-        console.error('YouTube URL is missing a videoId, cannot play deterministically:', item.url);
+        console.error('Missing videoId:', item.url);
         return;
     }
     if (index == null || Number.isNaN(index)) {
-        console.error('YouTube URL is missing an index param, cannot play deterministic playlist item:', item.url);
+        console.error('Missing playlist index:', item.url);
         return;
     }
 
-    // Hide Bandcamp, show YouTube
     bandcampIframe.style.display = 'none';
     youtubeIframe.style.display = 'block';
-
-    // Stop Bandcamp player by clearing iframe
     bandcampIframe.src = '';
-    console.log('Stopped Bandcamp player');
 
-    // YouTube uses bottom bar (not sidebar)
     playerContainer.classList.remove('sidebar-mode');
     document.body.classList.remove('sidebar-active');
     bandcampIframe.classList.remove('album-player');
     youtubeIframe.classList.remove('album-player');
 
-    // Update label
     label.innerHTML = `
         ▶️ Now Playing
         <button class="player-close" id="playerClose" title="Close player">×</button>
     `;
 
-    // Re-attach close handler
     document.getElementById('playerClose').addEventListener('click', (e) => {
         e.stopPropagation();
         playerContainer.classList.remove('visible', 'sidebar-mode');
@@ -1367,28 +1364,18 @@ function updateYouTubePlayer(item) {
         bandcampIframe.src = '';
         youtubeIframe.src = '';
         if (youtubePlayer && youtubePlayer.stopVideo) {
-            try { youtubePlayer.stopVideo(); } catch (e) {}
+            try { youtubePlayer.stopVideo(); } catch(e) {}
         }
     });
 
-    // Show player
     playerContainer.classList.add('visible');
 
-    // Build an embed URL that always includes the playlist index from the JSON URL
+    // Build clean embed URL (strip tracking e.g. &pp)
     let src = `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0&modestbranding=1&enablejsapi=1`;
     src += `&index=${index}`;
+    if (playlistId) src += `&list=${encodeURIComponent(playlistId)}`;
 
-    if (playlistId) {
-        src += `&list=${encodeURIComponent(playlistId)}`;
-    }
-
-    try {
-        youtubeIframe.src = src;
-    } catch (e) {
-        console.warn('YouTube player error when setting src:', e);
-        youtubeIframe.src = src;
-    }
-
+    youtubeIframe.src = src;
     playerContainer.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 }
 
