@@ -960,24 +960,6 @@
             return null;
         }
 
-function getYouTubePlaylistInfo(url) {
-    try {
-        const u = new URL(url);
-        const indexParam = u.searchParams.get('index');
-        const playlistId = u.searchParams.get('list') || null;
-
-        return {
-            playlistId,
-            index: indexParam ? parseInt(indexParam, 10) : null
-        };
-    } catch (e) {
-        console.warn('Could not parse playlist info:', url, e);
-        return { playlistId: null, index: null };
-    }
-}
-
-
-
         const gradients = ['gradient-1', 'gradient-2', 'gradient-3', 'gradient-4', 'gradient-5', 'gradient-6', 'gradient-7', 'gradient-8'];
 
         // Generate 365 dramatically different colour themes
@@ -1324,60 +1306,68 @@ function getYouTubePlaylistInfo(url) {
             console.log('Embed URL:', embedUrl);
         }
 
+        function updateYouTubePlayer(item) {
+            const playerContainer = document.getElementById('bandcampPlayer');
+            const bandcampIframe = document.getElementById('bandcampIframe');
+            const youtubeIframe = document.getElementById('youtubeIframe');
+            const label = document.getElementById('playerLabel');
 
-function updateYouTubePlayer(item) {
-    const playerContainer = document.getElementById('bandcampPlayer');
-    const bandcampIframe = document.getElementById('bandcampIframe');
-    const youtubeIframe = document.getElementById('youtubeIframe');
-    const label = document.getElementById('playerLabel');
+            const videoId = getYouTubeVideoId(item.url);
+            if (!videoId) {
+                console.warn('No videoId found, opening in new tab');
+                window.open(item.url, '_blank');
+                return;
+            }
 
-    const videoId = getYouTubeVideoId(item.url);
-    const { playlistId, index } = getYouTubePlaylistInfo(item.url);
+            // Hide Bandcamp, show YouTube
+            bandcampIframe.style.display = 'none';
+            youtubeIframe.style.display = 'block';
+            
+            // Stop Bandcamp player by clearing iframe
+            bandcampIframe.src = '';
+            console.log('Stopped Bandcamp player');
 
-    if (!videoId) {
-        console.error('Missing videoId:', item.url);
-        return;
-    }
-    if (index == null || Number.isNaN(index)) {
-        console.error('Missing playlist index:', item.url);
-        return;
-    }
+            // YouTube uses BOTTOM BAR (not sidebar)
+            playerContainer.classList.remove('sidebar-mode');
+            document.body.classList.remove('sidebar-active');
+            bandcampIframe.classList.remove('album-player');
+            youtubeIframe.classList.remove('album-player');
 
-    bandcampIframe.style.display = 'none';
-    youtubeIframe.style.display = 'block';
-    bandcampIframe.src = '';
+            // Update label
+            label.innerHTML = `
+                ▶️ Now Playing
+                <button class="player-close" id="playerClose" title="Close player">×</button>
+            `;
 
-    playerContainer.classList.remove('sidebar-mode');
-    document.body.classList.remove('sidebar-active');
-    bandcampIframe.classList.remove('album-player');
-    youtubeIframe.classList.remove('album-player');
+            // Re-attach close handler
+            document.getElementById('playerClose').addEventListener('click', (e) => {
+                e.stopPropagation();
+                playerContainer.classList.remove('visible', 'sidebar-mode');
+                document.body.classList.remove('sidebar-active');
+                bandcampIframe.src = '';
+                youtubeIframe.src = '';
+                if (youtubePlayer && youtubePlayer.stopVideo) {
+                    try { youtubePlayer.stopVideo(); } catch(e) {}
+                }
+            });
 
-    label.innerHTML = `
-        ▶️ Now Playing
-        <button class="player-close" id="playerClose" title="Close player">×</button>
-    `;
+            // Show player
+            playerContainer.classList.add('visible');
 
-    document.getElementById('playerClose').addEventListener('click', (e) => {
-        e.stopPropagation();
-        playerContainer.classList.remove('visible', 'sidebar-mode');
-        document.body.classList.remove('sidebar-active');
-        bandcampIframe.src = '';
-        youtubeIframe.src = '';
-        if (youtubePlayer && youtubePlayer.stopVideo) {
-            try { youtubePlayer.stopVideo(); } catch(e) {}
+            // Load video
+            try {
+                if (youtubePlayer && youtubeAPIReady && youtubePlayer.loadVideoById) {
+                    youtubePlayer.loadVideoById(videoId);
+                } else {
+                    youtubeIframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0&modestbranding=1&enablejsapi=1`;
+                }
+            } catch (e) {
+                console.warn('YouTube player error:', e);
+                youtubeIframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0&modestbranding=1&enablejsapi=1`;
+            }
+
+            playerContainer.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
         }
-    });
-
-    playerContainer.classList.add('visible');
-
-    // Build clean embed URL (strip tracking e.g. &pp)
-    let src = `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0&modestbranding=1&enablejsapi=1`;
-    src += `&index=${index}`;
-    if (playlistId) src += `&list=${encodeURIComponent(playlistId)}`;
-
-    youtubeIframe.src = src;
-    playerContainer.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-}
 
         // Listen for YouTube iframe messages
         window.addEventListener('message', function(event) {
