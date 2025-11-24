@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -1730,66 +1729,62 @@
                     }
                 });
 
-                allItems = Object.keys(imageData).map(url => {
+                // Use metadata as the source of truth for Bandcamp items
+                allItems = metaDataArray.map(metaItem => {
+                    const url = metaItem.url;
                     const item = parseUrl(url);
-                    item.imageUrl = imageData[url];
+                    // Use image from imageData if available
+                    item.imageUrl = imageData[url] || metaItem.image;
                     
-                    // Add metadata if available - store ALL tags and Bandcamp IDs
-                    if (metaMap[url]) {
-                        // Try to extract better artist/title info from metadata
-                        let artist = item.artist; // Default to URL-parsed
-                        let title = item.title;   // Default to URL-parsed
-                        
-                        // Check if title contains " - " or " – " which indicates "Artist - Title" format
-                        if (metaMap[url].title && (metaMap[url].title.includes(' - ') || metaMap[url].title.includes(' – '))) {
-                            const separator = metaMap[url].title.includes(' – ') ? ' – ' : ' - ';
-                            const parts = metaMap[url].title.split(separator);
-                            if (parts.length >= 2) {
-                                // Handle formats like "Artist1 & Artist2 - Title"
-                                artist = parts[0].trim();
-                                title = parts.slice(1).join(separator).trim();
-                            } else {
-                                title = metaMap[url].title;
-                            }
-                        } else if (metaMap[url].title) {
-                            title = metaMap[url].title;
+                    // Add metadata - store ALL tags and Bandcamp IDs
+                    // Try to extract better artist/title info from metadata
+                    let artist = item.artist; // Default to URL-parsed
+                    let title = item.title;   // Default to URL-parsed
+                    
+                    // Check if title contains " - " or " – " which indicates "Artist - Title" format
+                    if (metaItem.title && (metaItem.title.includes(' - ') || metaItem.title.includes(' – '))) {
+                        const separator = metaItem.title.includes(' – ') ? ' – ' : ' - ';
+                        const parts = metaItem.title.split(separator);
+                        if (parts.length >= 2) {
+                            // Handle formats like "Artist1 & Artist2 - Title"
+                            artist = parts[0].trim();
+                            title = parts.slice(1).join(separator).trim();
+                        } else {
+                            title = metaItem.title;
                         }
-                        
-                        // For tracks where artist field is the album name,
-                        // try to extract real artist from the release field
-                        if (metaMap[url].bandcamp_type === 'track' && metaMap[url].release) {
-                            const releaseText = metaMap[url].release;
-                            // Pattern: "from [Album Name] by [Artist], released..."
-                            const byMatch = releaseText.match(/by\s+([^,]+?)(?:,|\s*released)/i);
-                            if (byMatch) {
-                                artist = byMatch[1].trim();
-                            }
-                        }
-                        
-                        // For albums, prefer metadata artist
-                        if (metaMap[url].bandcamp_type === 'album' && metaMap[url].artist) {
-                            artist = metaMap[url].artist;
-                        }
-                        
-                        item.artist = artist;
-                        item.title = title;
-                        
-                        item.tags = metaMap[url].tags && metaMap[url].tags.length > 0 
-                            ? metaMap[url].tags.map(t => {
-                                const tagStr = typeof t === 'string' ? t : (t.name || String(t));
-                                return tagStr.toLowerCase();
-                              }).filter(t => t && t !== 'null' && t !== 'undefined')
-                            : [];
-                        // Add Bandcamp IDs and type for embedded player
-                        item.bandcamp_id = metaMap[url].bandcamp_id || null;
-                        item.bandcamp_album_id = metaMap[url].bandcamp_album_id || null;
-                        item.bandcamp_type = metaMap[url].bandcamp_type || null;
-                    } else {
-                        item.tags = [];
-                        item.bandcamp_id = null;
-                        item.bandcamp_album_id = null;
-                        item.bandcamp_type = null;
+                    } else if (metaItem.title) {
+                        title = metaItem.title;
                     }
+                    
+                    // For tracks where artist field is the album name,
+                    // try to extract real artist from the release field
+                    if (metaItem.bandcamp_type === 'track' && metaItem.release) {
+                        const releaseText = metaItem.release;
+                        // Pattern: "from [Album Name] by [Artist], released..."
+                        const byMatch = releaseText.match(/by\s+([^,]+?)(?:,|\s*released)/i);
+                        if (byMatch) {
+                            artist = byMatch[1].trim();
+                        }
+                    }
+                    
+                    // For albums, prefer metadata artist
+                    if (metaItem.bandcamp_type === 'album' && metaItem.artist) {
+                        artist = metaItem.artist;
+                    }
+                    
+                    item.artist = artist;
+                    item.title = title;
+                    
+                    item.tags = metaItem.tags && metaItem.tags.length > 0 
+                        ? metaItem.tags.map(t => {
+                            const tagStr = typeof t === 'string' ? t : (t.name || String(t));
+                            return tagStr.toLowerCase();
+                          }).filter(t => t && t !== 'null' && t !== 'undefined')
+                        : [];
+                    // Add Bandcamp IDs and type for embedded player
+                    item.bandcamp_id = metaItem.bandcamp_id || null;
+                    item.bandcamp_album_id = metaItem.bandcamp_album_id || null;
+                    item.bandcamp_type = metaItem.bandcamp_type || null;
                     
                     return item;
                 });
@@ -1826,24 +1821,39 @@
                         return a.title.localeCompare(b.title);
                     });
                     
-                    // Filter out YouTube duplicates - prioritize Bandcamp
+                    // Remove duplicate YouTube entries (same artist-title combination)
+                    const seenYtTracks = new Set();
+                    const deduplicatedYtData = validYtData.filter(ytItem => {
+                        const ytIdentifier = `${ytItem.artist.toLowerCase().trim()}-${ytItem.title.toLowerCase().trim()}`;
+                        if (seenYtTracks.has(ytIdentifier)) {
+                            return false; // Skip duplicate
+                        }
+                        seenYtTracks.add(ytIdentifier);
+                        return true;
+                    });
+                    
+                    if (deduplicatedYtData.length < validYtData.length) {
+                        console.log(`Removed ${validYtData.length - deduplicatedYtData.length} duplicate YouTube entries`);
+                    }
+                    
+                    // Filter out YouTube duplicates that exist in Bandcamp - prioritize Bandcamp
                     // Create a set of normalized Bandcamp track identifiers
                     const bandcampTracks = new Set(allItems.map(item => 
                         `${item.artist.toLowerCase().trim()}-${item.title.toLowerCase().trim()}`
                     ));
                     
-                    const uniqueYtData = validYtData.filter(ytItem => {
+                    const uniqueYtData = deduplicatedYtData.filter(ytItem => {
                         const ytIdentifier = `${ytItem.artist.toLowerCase().trim()}-${ytItem.title.toLowerCase().trim()}`;
                         return !bandcampTracks.has(ytIdentifier);
                     });
                     
-                    if (uniqueYtData.length < validYtData.length) {
-                        console.log(`Filtered out ${validYtData.length - uniqueYtData.length} duplicate YouTube tracks (available on Bandcamp)`);
+                    if (uniqueYtData.length < deduplicatedYtData.length) {
+                        console.log(`Filtered out ${deduplicatedYtData.length - uniqueYtData.length} YouTube tracks that are already available on Bandcamp`);
                     }
                     
                     allItems = allItems.concat(uniqueYtData);
                     
-                    console.log(`Total items loaded: ${allItems.length} (Bandcamp: ${Object.keys(imageData).length}, YouTube: ${uniqueYtData.length})`);
+                    console.log(`Total items loaded: ${allItems.length} (Bandcamp: ${metaDataArray.length}, YouTube: ${uniqueYtData.length})`);
                     
                 } catch (e) {
                     console.error('Error loading YouTube data:', e);
