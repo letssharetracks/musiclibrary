@@ -913,24 +913,37 @@
                     width: '100%',
                     playerVars: {
                         rel: 0,
-                        modestbranding: 1
+                        modestbranding: 1,
+                        enablejsapi: 1,
+                        origin: window.location.origin
                     },
                     events: {
+                        'onReady': onYouTubePlayerReady,
                         'onStateChange': onYouTubePlayerStateChange
                     }
                 });
-                youtubeAPIReady = true;
-                console.log('YouTube API ready');
+                console.log('YouTube API initializing...');
             } catch (e) {
                 console.warn('YouTube API initialization failed:', e);
             }
         }
 
+        function onYouTubePlayerReady(event) {
+            youtubeAPIReady = true;
+            console.log('YouTube API ready and player loaded');
+        }
+
         function onYouTubePlayerStateChange(event) {
             try {
-                if (event.data === 0) {
-                    console.log('YouTube video ended, playing next...');
-                    playNextTrack();
+                // Event states: -1 (unstarted), 0 (ended), 1 (playing), 2 (paused), 3 (buffering), 5 (cued)
+                if (event.data === YT.PlayerState.ENDED) {
+                    console.log('YouTube video ended - playlist will auto-advance');
+                    // Don't call playNextTrack() - let YouTube's playlist handle it
+                    // The playlist will automatically play the next video
+                } else if (event.data === YT.PlayerState.PLAYING) {
+                    console.log('YouTube video playing');
+                } else if (event.data === YT.PlayerState.PAUSED) {
+                    console.log('YouTube video paused');
                 }
             } catch (e) {
                 console.warn('YouTube state change error:', e);
@@ -1311,12 +1324,19 @@
             const youtubeIframe = document.getElementById('youtubeIframe');
             const label = document.getElementById('playerLabel');
 
+            // Extract playlist ID and index from URL
+            const urlParams = new URLSearchParams(new URL(item.url).search);
+            const playlistId = urlParams.get('list');
+            const videoIndex = urlParams.get('index');
             const videoId = getYouTubeVideoId(item.url);
+            
             if (!videoId) {
                 console.warn('No videoId found, opening in new tab');
                 window.open(item.url, '_blank');
                 return;
             }
+
+            console.log('YouTube Player:', { videoId, playlistId, videoIndex });
 
             // Hide Bandcamp, show YouTube
             bandcampIframe.style.display = 'none';
@@ -1334,7 +1354,7 @@
 
             // Update label
             label.innerHTML = `
-                ▶️ Now Playing
+                ▶️ Now Playing: ${item.title || 'YouTube Video'}
                 <button class="player-close" id="playerClose" title="Close player">×</button>
             `;
 
@@ -1353,16 +1373,49 @@
             // Show player
             playerContainer.classList.add('visible');
 
-            // Load video
+            // Build embed URL with playlist support
+            let embedUrl = `https://www.youtube.com/embed/${videoId}?autoplay=1&enablejsapi=1`;
+            
+            if (playlistId) {
+                embedUrl += `&list=${playlistId}`;
+                
+                // Use index if available (index in URL is 1-based, but embed uses 0-based)
+                if (videoIndex) {
+                    const embedIndex = parseInt(videoIndex) - 1; // Convert to 0-based
+                    embedUrl += `&index=${embedIndex}`;
+                }
+            }
+            
+            // Add additional parameters for better playback
+            embedUrl += '&rel=0&modestbranding=1';
+            
+            console.log('YouTube Embed URL:', embedUrl);
+
+            // Load video with playlist
             try {
-                if (youtubePlayer && youtubeAPIReady && youtubePlayer.loadVideoById) {
-                    youtubePlayer.loadVideoById(videoId);
+                if (youtubePlayer && youtubeAPIReady && youtubePlayer.loadPlaylist) {
+                    // Use YouTube API if available
+                    if (playlistId && videoIndex) {
+                        youtubePlayer.loadPlaylist({
+                            list: playlistId,
+                            index: parseInt(videoIndex) - 1, // 0-based index
+                            startSeconds: 0
+                        });
+                    } else if (playlistId) {
+                        youtubePlayer.loadPlaylist({
+                            list: playlistId,
+                            listType: 'playlist'
+                        });
+                    } else {
+                        youtubePlayer.loadVideoById(videoId);
+                    }
                 } else {
-                    youtubeIframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0&modestbranding=1&enablejsapi=1`;
+                    // Fallback to iframe src
+                    youtubeIframe.src = embedUrl;
                 }
             } catch (e) {
                 console.warn('YouTube player error:', e);
-                youtubeIframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0&modestbranding=1&enablejsapi=1`;
+                youtubeIframe.src = embedUrl;
             }
 
             playerContainer.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
@@ -1772,8 +1825,28 @@
                         artist = metaItem.artist;
                     }
                     
-                    item.artist = artist;
-                    item.title = title;
+                    // Clean up artist name (remove newlines, duplicates, extra whitespace)
+                    if (artist) {
+                        artist = artist.replace(/\n/g, ' ').replace(/\s+/g, ' ').trim();
+                        // Remove duplicate words (e.g. "Rest' La MaloyaRest' La Maloya" -> "Rest' La Maloya")
+                        const words = artist.split(' ');
+                        const halfLength = Math.floor(words.length / 2);
+                        if (halfLength > 0) {
+                            const firstHalf = words.slice(0, halfLength).join(' ');
+                            const secondHalf = words.slice(halfLength).join(' ');
+                            if (firstHalf === secondHalf) {
+                                artist = firstHalf;
+                            }
+                        }
+                    }
+                    
+                    // Only update artist/title if we got valid non-empty values
+                    if (artist && artist.trim()) {
+                        item.artist = artist.trim();
+                    }
+                    if (title && title.trim()) {
+                        item.title = title.trim();
+                    }
                     
                     item.tags = metaItem.tags && metaItem.tags.length > 0 
                         ? metaItem.tags.map(t => {
