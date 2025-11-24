@@ -902,11 +902,54 @@
         </div>
     </div>
 
-    <!-- YouTube IFrame API removed - not needed for simple playlist embedding -->
+    <script src="https://www.youtube.com/iframe_api"></script>
     <script>
-        // Simple iframe-based player - no API needed
-        let youtubePlayer = null; // Keep for compatibility
-        let youtubeAPIReady = false; // Keep for compatibility
+        let youtubePlayer = null;
+        let youtubeAPIReady = false;
+
+        function onYouTubeIframeAPIReady() {
+            try {
+                youtubePlayer = new YT.Player('youtubeIframe', {
+                    height: '120',
+                    width: '100%',
+                    playerVars: {
+                        rel: 0,
+                        modestbranding: 1,
+                        enablejsapi: 1,
+                        origin: window.location.origin
+                    },
+                    events: {
+                        'onReady': onYouTubePlayerReady,
+                        'onStateChange': onYouTubePlayerStateChange
+                    }
+                });
+                console.log('YouTube API initializing...');
+            } catch (e) {
+                console.warn('YouTube API initialization failed:', e);
+            }
+        }
+
+        function onYouTubePlayerReady(event) {
+            youtubeAPIReady = true;
+            console.log('YouTube API ready and player loaded');
+        }
+
+        function onYouTubePlayerStateChange(event) {
+            try {
+                // Event states: -1 (unstarted), 0 (ended), 1 (playing), 2 (paused), 3 (buffering), 5 (cued)
+                if (event.data === YT.PlayerState.ENDED) {
+                    console.log('YouTube video ended - playlist will auto-advance');
+                    // Don't call playNextTrack() - let YouTube's playlist handle it
+                    // The playlist will automatically play the next video
+                } else if (event.data === YT.PlayerState.PLAYING) {
+                    console.log('YouTube video playing');
+                } else if (event.data === YT.PlayerState.PAUSED) {
+                    console.log('YouTube video paused');
+                }
+            } catch (e) {
+                console.warn('YouTube state change error:', e);
+            }
+        }
 
         function getYouTubeVideoId(url) {
             try {
@@ -1282,10 +1325,9 @@
             const youtubeIframe = document.getElementById('youtubeIframe');
             const label = document.getElementById('playerLabel');
 
-            // Extract info from URL
+            // Extract playlist ID from URL
             const urlParams = new URLSearchParams(new URL(item.url).search);
             const playlistId = urlParams.get('list');
-            const playlistIndex = urlParams.get('index');
             const videoId = getYouTubeVideoId(item.url);
             
             if (!videoId) {
@@ -1294,18 +1336,21 @@
                 return;
             }
 
-            console.log('YouTube Player:');
-            console.log('  Title:', item.title);
-            console.log('  Video ID:', videoId);
-            console.log('  Playlist ID:', playlistId);
-            console.log('  Index:', playlistIndex);
+            console.log('YouTube Player Loading:', { 
+                videoId: videoId, 
+                playlistId: playlistId,
+                title: item.title,
+                artist: item.artist
+            });
 
             // Hide Bandcamp, show YouTube
             bandcampIframe.style.display = 'none';
             youtubeIframe.style.display = 'block';
+            
+            // Stop Bandcamp player by clearing iframe
             bandcampIframe.src = '';
 
-            // YouTube uses BOTTOM BAR
+            // YouTube uses BOTTOM BAR (not sidebar)
             playerContainer.classList.remove('sidebar-mode');
             document.body.classList.remove('sidebar-active');
             bandcampIframe.classList.remove('album-player');
@@ -1324,37 +1369,35 @@
                 document.body.classList.remove('sidebar-active');
                 bandcampIframe.src = '';
                 youtubeIframe.src = '';
+                if (youtubePlayer && youtubePlayer.stopVideo) {
+                    try { youtubePlayer.stopVideo(); } catch(e) {}
+                }
             });
 
             // Show player
             playerContainer.classList.add('visible');
 
-            // SIMPLE APPROACH: Just play the individual video
-            // No playlist = no Ghost Cop issues
-            // Every track plays correctly 100% of the time
+            // Build embed URL with playlist support
+            // The KEY: When you put the video ID in the embed URL path along with the playlist parameter,
+            // YouTube will start playing THAT specific video and then continue with the playlist
+            let embedUrl = `https://www.youtube.com/embed/${videoId}?autoplay=1&enablejsapi=1`;
             
-            let embedUrl = `https://www.youtube.com/embed/${videoId}`;
-            embedUrl += '?autoplay=1';
-            embedUrl += '&rel=0';              // Don't show related videos
-            embedUrl += '&modestbranding=1';   // Minimal branding
+            if (playlistId) {
+                // Add playlist parameter - this ensures continuous playback through the playlist
+                // starting from THIS video
+                embedUrl += `&list=${playlistId}`;
+            }
             
-            console.log('Playing video:', videoId);
-            console.log('Title:', item.title);
+            // Additional parameters
+            embedUrl += '&rel=0';           // Don't show related videos at end
+            embedUrl += '&modestbranding=1'; // Minimal YouTube branding
+            embedUrl += '&playsinline=1';    // Play inline on mobile
+            
             console.log('Embed URL:', embedUrl);
 
-            // NUCLEAR: Completely destroy and recreate iframe
-            const oldIframe = youtubeIframe;
-            const newIframe = document.createElement('iframe');
-            newIframe.id = 'youtubeIframe';
-            newIframe.style.cssText = oldIframe.style.cssText;
-            newIframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
-            newIframe.allowFullscreen = true;
-            newIframe.src = embedUrl;
-            
-            // Replace old iframe with new one (clears all cache/state)
-            oldIframe.parentNode.replaceChild(newIframe, oldIframe);
-            
-            console.log('✓ Playing:', item.title);
+            // ALWAYS use iframe src method (most reliable)
+            // The YouTube IFrame API can be inconsistent with playlist handling
+            youtubeIframe.src = embedUrl;
 
             playerContainer.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
         }
