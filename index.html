@@ -902,54 +902,11 @@
         </div>
     </div>
 
-    <script src="https://www.youtube.com/iframe_api"></script>
+    <!-- YouTube IFrame API removed - not needed for simple playlist embedding -->
     <script>
-        let youtubePlayer = null;
-        let youtubeAPIReady = false;
-
-        function onYouTubeIframeAPIReady() {
-            try {
-                youtubePlayer = new YT.Player('youtubeIframe', {
-                    height: '120',
-                    width: '100%',
-                    playerVars: {
-                        rel: 0,
-                        modestbranding: 1,
-                        enablejsapi: 1,
-                        origin: window.location.origin
-                    },
-                    events: {
-                        'onReady': onYouTubePlayerReady,
-                        'onStateChange': onYouTubePlayerStateChange
-                    }
-                });
-                console.log('YouTube API initializing...');
-            } catch (e) {
-                console.warn('YouTube API initialization failed:', e);
-            }
-        }
-
-        function onYouTubePlayerReady(event) {
-            youtubeAPIReady = true;
-            console.log('YouTube API ready and player loaded');
-        }
-
-        function onYouTubePlayerStateChange(event) {
-            try {
-                // Event states: -1 (unstarted), 0 (ended), 1 (playing), 2 (paused), 3 (buffering), 5 (cued)
-                if (event.data === YT.PlayerState.ENDED) {
-                    console.log('YouTube video ended - playlist will auto-advance');
-                    // Don't call playNextTrack() - let YouTube's playlist handle it
-                    // The playlist will automatically play the next video
-                } else if (event.data === YT.PlayerState.PLAYING) {
-                    console.log('YouTube video playing');
-                } else if (event.data === YT.PlayerState.PAUSED) {
-                    console.log('YouTube video paused');
-                }
-            } catch (e) {
-                console.warn('YouTube state change error:', e);
-            }
-        }
+        // Simple iframe-based player - no API needed
+        let youtubePlayer = null; // Keep for compatibility
+        let youtubeAPIReady = false; // Keep for compatibility
 
         function getYouTubeVideoId(url) {
             try {
@@ -1378,20 +1335,20 @@
             playerContainer.classList.add('visible');
 
             // Build embed URL with playlist support
-            // The KEY: When you put the video ID in the embed URL path along with the playlist parameter,
-            // YouTube will start playing THAT specific video and then continue with the playlist
-            let embedUrl = `https://www.youtube.com/embed/${videoId}?autoplay=1&enablejsapi=1`;
+            // For PUBLIC playlists accessed by multiple users simultaneously:
+            // Use the video ID with playlist parameter for proper positioning
+            let embedUrl = `https://www.youtube.com/embed/${videoId}?autoplay=1`;
             
             if (playlistId) {
                 // Add playlist parameter - this ensures continuous playback through the playlist
-                // starting from THIS video
                 embedUrl += `&list=${playlistId}`;
             }
             
-            // Additional parameters
-            embedUrl += '&rel=0';           // Don't show related videos at end
-            embedUrl += '&modestbranding=1'; // Minimal YouTube branding
-            embedUrl += '&playsinline=1';    // Play inline on mobile
+            // Parameters optimized for public playlist access:
+            embedUrl += '&rel=0';              // Don't show related videos
+            embedUrl += '&modestbranding=1';   // Minimal branding
+            embedUrl += '&playsinline=1';      // Mobile support
+            embedUrl += '&origin=' + encodeURIComponent(window.location.origin); // Security
             
             console.log('Embed URL:', embedUrl);
 
