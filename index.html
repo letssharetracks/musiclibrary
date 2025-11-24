@@ -1282,9 +1282,10 @@
             const youtubeIframe = document.getElementById('youtubeIframe');
             const label = document.getElementById('playerLabel');
 
-            // Extract playlist ID from URL
+            // Extract info from URL
             const urlParams = new URLSearchParams(new URL(item.url).search);
             const playlistId = urlParams.get('list');
+            const playlistIndex = urlParams.get('index');
             const videoId = getYouTubeVideoId(item.url);
             
             if (!videoId) {
@@ -1293,21 +1294,18 @@
                 return;
             }
 
-            console.log('YouTube Player Loading:', { 
-                videoId: videoId, 
-                playlistId: playlistId,
-                title: item.title,
-                artist: item.artist
-            });
+            console.log('YouTube Player:');
+            console.log('  Title:', item.title);
+            console.log('  Video ID:', videoId);
+            console.log('  Playlist ID:', playlistId);
+            console.log('  Index:', playlistIndex);
 
             // Hide Bandcamp, show YouTube
             bandcampIframe.style.display = 'none';
             youtubeIframe.style.display = 'block';
-            
-            // Stop Bandcamp player by clearing iframe
             bandcampIframe.src = '';
 
-            // YouTube uses BOTTOM BAR (not sidebar)
+            // YouTube uses BOTTOM BAR
             playerContainer.classList.remove('sidebar-mode');
             document.body.classList.remove('sidebar-active');
             bandcampIframe.classList.remove('album-player');
@@ -1326,35 +1324,37 @@
                 document.body.classList.remove('sidebar-active');
                 bandcampIframe.src = '';
                 youtubeIframe.src = '';
-                if (youtubePlayer && youtubePlayer.stopVideo) {
-                    try { youtubePlayer.stopVideo(); } catch(e) {}
-                }
             });
 
             // Show player
             playerContainer.classList.add('visible');
 
-            // Build embed URL with playlist support
-            // For PUBLIC playlists accessed by multiple users simultaneously:
-            // Use the video ID with playlist parameter for proper positioning
-            let embedUrl = `https://www.youtube.com/embed/${videoId}?autoplay=1`;
+            // KEY INSIGHT: Use BOTH video ID in path AND list parameter
+            // The video ID in the path is what actually gets played
+            // The list parameter enables playlist continuity
+            let embedUrl = `https://www.youtube.com/embed/${videoId}`;
+            embedUrl += '?autoplay=1';
+            embedUrl += '&rel=0';
+            embedUrl += '&modestbranding=1';
             
+            // Add playlist AFTER other parameters
             if (playlistId) {
-                // Add playlist parameter - this ensures continuous playback through the playlist
                 embedUrl += `&list=${playlistId}`;
             }
             
-            // Parameters optimized for public playlist access:
-            embedUrl += '&rel=0';              // Don't show related videos
-            embedUrl += '&modestbranding=1';   // Minimal branding
-            embedUrl += '&playsinline=1';      // Mobile support
-            embedUrl += '&origin=' + encodeURIComponent(window.location.origin); // Security
+            // Add timestamp to prevent caching issues
+            embedUrl += `&t=${Date.now()}`;
             
             console.log('Embed URL:', embedUrl);
 
-            // ALWAYS use iframe src method (most reliable)
-            // The YouTube IFrame API can be inconsistent with playlist handling
-            youtubeIframe.src = embedUrl;
+            // IMPORTANT: Clear iframe src first to force complete reload
+            youtubeIframe.src = '';
+            
+            // Small delay to ensure clean state
+            setTimeout(() => {
+                youtubeIframe.src = embedUrl;
+                console.log('Iframe source set');
+            }, 100);
 
             playerContainer.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
         }
