@@ -1329,32 +1329,33 @@
             // Show player
             playerContainer.classList.add('visible');
 
-            // KEY INSIGHT: Use BOTH video ID in path AND list parameter
-            // The video ID in the path is what actually gets played
-            // The list parameter enables playlist continuity
+            // Build embed URL with video ID and playlist
             let embedUrl = `https://www.youtube.com/embed/${videoId}`;
             embedUrl += '?autoplay=1';
             embedUrl += '&rel=0';
             embedUrl += '&modestbranding=1';
             
-            // Add playlist AFTER other parameters
+            // Add playlist for continuity
             if (playlistId) {
                 embedUrl += `&list=${playlistId}`;
             }
             
-            // Add timestamp to prevent caching issues
-            embedUrl += `&t=${Date.now()}`;
-            
             console.log('Embed URL:', embedUrl);
 
-            // IMPORTANT: Clear iframe src first to force complete reload
-            youtubeIframe.src = '';
+            // CRITICAL FIX: Completely remove and recreate iframe to force fresh load
+            // This prevents YouTube from serving cached/wrong video
+            const oldIframe = youtubeIframe;
+            const newIframe = document.createElement('iframe');
+            newIframe.id = 'youtubeIframe';
+            newIframe.style.cssText = oldIframe.style.cssText;
+            newIframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
+            newIframe.allowFullscreen = true;
+            newIframe.src = embedUrl;
             
-            // Small delay to ensure clean state
-            setTimeout(() => {
-                youtubeIframe.src = embedUrl;
-                console.log('Iframe source set');
-            }, 100);
+            // Replace old iframe with new one
+            oldIframe.parentNode.replaceChild(newIframe, oldIframe);
+            
+            console.log('Iframe completely recreated with video:', videoId);
 
             playerContainer.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
         }
