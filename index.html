@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -1329,18 +1328,19 @@
             // Show player
             playerContainer.classList.add('visible');
 
-            // Build embed URL with video ID and playlist
+            // Build embed URL - WITHOUT PLAYLIST (testing)
+            // Let's see if playlist parameter is causing YouTube to ignore video ID
             let embedUrl = `https://www.youtube.com/embed/${videoId}`;
             embedUrl += '?autoplay=1';
             embedUrl += '&rel=0';
             embedUrl += '&modestbranding=1';
             
-            // Add playlist for continuity
-            if (playlistId) {
-                embedUrl += `&list=${playlistId}`;
-            }
+            // DO NOT ADD PLAYLIST - it seems to be causing issues
+            // if (playlistId) {
+            //     embedUrl += `&list=${playlistId}`;
+            // }
             
-            console.log('Embed URL:', embedUrl);
+            console.log('Embed URL (NO PLAYLIST):', embedUrl);
 
             // CRITICAL FIX: Completely remove and recreate iframe to force fresh load
             // This prevents YouTube from serving cached/wrong video
@@ -1355,7 +1355,7 @@
             // Replace old iframe with new one
             oldIframe.parentNode.replaceChild(newIframe, oldIframe);
             
-            console.log('Iframe completely recreated with video:', videoId);
+            console.log('Iframe recreated WITHOUT playlist. Video ID:', videoId);
 
             playerContainer.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
         }
