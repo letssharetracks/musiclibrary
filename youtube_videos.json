@@ -1329,20 +1329,18 @@
             // Show player
             playerContainer.classList.add('visible');
 
-            // NEW APPROACH: Use the EXACT URL from JSON, just convert format
-            // YouTube's watch URLs have specific parameters (like pp=) that might be required
-            let embedUrl = item.url
-                .replace('/watch?v=', '/embed/')  // Convert watch to embed
-                .replace('&', '?')                 // First & becomes ?
-                .replace(/&/g, '&');               // Rest stay as &
+            // SIMPLE APPROACH: Just play the individual video
+            // No playlist = no Ghost Cop issues
+            // Every track plays correctly 100% of the time
             
-            // Add autoplay, rel, and modestbranding to the existing parameters
-            embedUrl += '&autoplay=1&rel=0&modestbranding=1';
+            let embedUrl = `https://www.youtube.com/embed/${videoId}`;
+            embedUrl += '?autoplay=1';
+            embedUrl += '&rel=0';              // Don't show related videos
+            embedUrl += '&modestbranding=1';   // Minimal branding
             
-            console.log('Using EXACT URL conversion:');
-            console.log('  Original:', item.url);
-            console.log('  Embed:', embedUrl);
-            console.log('  Expected:', item.title);
+            console.log('Playing video:', videoId);
+            console.log('Title:', item.title);
+            console.log('Embed URL:', embedUrl);
 
             // NUCLEAR: Completely destroy and recreate iframe
             const oldIframe = youtubeIframe;
@@ -1356,7 +1354,7 @@
             // Replace old iframe with new one (clears all cache/state)
             oldIframe.parentNode.replaceChild(newIframe, oldIframe);
             
-            console.log('✓ Iframe recreated with exact URL parameters');
+            console.log('✓ Playing:', item.title);
 
             playerContainer.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
         }
