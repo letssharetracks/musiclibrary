@@ -1328,22 +1328,27 @@
             // Show player
             playerContainer.classList.add('visible');
 
-            // Build embed URL - WITHOUT PLAYLIST (testing)
-            // Let's see if playlist parameter is causing YouTube to ignore video ID
+            // NUCLEAR APPROACH: Use the exact URL from JSON (watch format) in embed
+            // Convert watch URL to embed format BUT use index parameter correctly
             let embedUrl = `https://www.youtube.com/embed/${videoId}`;
             embedUrl += '?autoplay=1';
             embedUrl += '&rel=0';
             embedUrl += '&modestbranding=1';
             
-            // DO NOT ADD PLAYLIST - it seems to be causing issues
-            // if (playlistId) {
-            //     embedUrl += `&list=${playlistId}`;
-            // }
+            // Add playlist WITH index to force correct starting position
+            if (playlistId && playlistIndex) {
+                embedUrl += `&list=${playlistId}`;
+                // Use listType=playlist and index (0-based)
+                embedUrl += `&listType=playlist`;
+                embedUrl += `&index=${parseInt(playlistIndex) - 1}`; // Convert to 0-based
+            } else if (playlistId) {
+                embedUrl += `&list=${playlistId}`;
+            }
             
-            console.log('Embed URL (NO PLAYLIST):', embedUrl);
+            console.log('Embed URL with index:', embedUrl);
+            console.log('Expected video:', videoId, 'at index', playlistIndex);
 
-            // CRITICAL FIX: Completely remove and recreate iframe to force fresh load
-            // This prevents YouTube from serving cached/wrong video
+            // NUCLEAR: Completely remove and recreate iframe
             const oldIframe = youtubeIframe;
             const newIframe = document.createElement('iframe');
             newIframe.id = 'youtubeIframe';
@@ -1352,10 +1357,11 @@
             newIframe.allowFullscreen = true;
             newIframe.src = embedUrl;
             
-            // Replace old iframe with new one
+            // Replace old iframe with new one (nuclear option - destroys all cache/state)
             oldIframe.parentNode.replaceChild(newIframe, oldIframe);
             
-            console.log('Iframe recreated WITHOUT playlist. Video ID:', videoId);
+            console.log('NUCLEAR: Iframe completely destroyed and recreated');
+            console.log('Should play:', item.title);
 
             playerContainer.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
         }
