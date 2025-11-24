@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -1324,10 +1325,9 @@
             const youtubeIframe = document.getElementById('youtubeIframe');
             const label = document.getElementById('playerLabel');
 
-            // Extract playlist ID and index from URL
+            // Extract playlist ID from URL
             const urlParams = new URLSearchParams(new URL(item.url).search);
             const playlistId = urlParams.get('list');
-            const videoIndex = urlParams.get('index');
             const videoId = getYouTubeVideoId(item.url);
             
             if (!videoId) {
@@ -1336,7 +1336,12 @@
                 return;
             }
 
-            console.log('YouTube Player:', { videoId, playlistId, videoIndex });
+            console.log('YouTube Player Loading:', { 
+                videoId: videoId, 
+                playlistId: playlistId,
+                title: item.title,
+                artist: item.artist
+            });
 
             // Hide Bandcamp, show YouTube
             bandcampIframe.style.display = 'none';
@@ -1344,7 +1349,6 @@
             
             // Stop Bandcamp player by clearing iframe
             bandcampIframe.src = '';
-            console.log('Stopped Bandcamp player');
 
             // YouTube uses BOTTOM BAR (not sidebar)
             playerContainer.classList.remove('sidebar-mode');
@@ -1354,7 +1358,7 @@
 
             // Update label
             label.innerHTML = `
-                ▶️ Now Playing: ${item.title || 'YouTube Video'}
+                ▶️ Now Playing: ${item.artist || ''} - ${item.title || 'YouTube Video'}
                 <button class="player-close" id="playerClose" title="Close player">×</button>
             `;
 
@@ -1374,49 +1378,26 @@
             playerContainer.classList.add('visible');
 
             // Build embed URL with playlist support
+            // The KEY: When you put the video ID in the embed URL path along with the playlist parameter,
+            // YouTube will start playing THAT specific video and then continue with the playlist
             let embedUrl = `https://www.youtube.com/embed/${videoId}?autoplay=1&enablejsapi=1`;
             
             if (playlistId) {
+                // Add playlist parameter - this ensures continuous playback through the playlist
+                // starting from THIS video
                 embedUrl += `&list=${playlistId}`;
-                
-                // Use index if available (index in URL is 1-based, but embed uses 0-based)
-                if (videoIndex) {
-                    const embedIndex = parseInt(videoIndex) - 1; // Convert to 0-based
-                    embedUrl += `&index=${embedIndex}`;
-                }
             }
             
-            // Add additional parameters for better playback
-            embedUrl += '&rel=0&modestbranding=1';
+            // Additional parameters
+            embedUrl += '&rel=0';           // Don't show related videos at end
+            embedUrl += '&modestbranding=1'; // Minimal YouTube branding
+            embedUrl += '&playsinline=1';    // Play inline on mobile
             
-            console.log('YouTube Embed URL:', embedUrl);
+            console.log('Embed URL:', embedUrl);
 
-            // Load video with playlist
-            try {
-                if (youtubePlayer && youtubeAPIReady && youtubePlayer.loadPlaylist) {
-                    // Use YouTube API if available
-                    if (playlistId && videoIndex) {
-                        youtubePlayer.loadPlaylist({
-                            list: playlistId,
-                            index: parseInt(videoIndex) - 1, // 0-based index
-                            startSeconds: 0
-                        });
-                    } else if (playlistId) {
-                        youtubePlayer.loadPlaylist({
-                            list: playlistId,
-                            listType: 'playlist'
-                        });
-                    } else {
-                        youtubePlayer.loadVideoById(videoId);
-                    }
-                } else {
-                    // Fallback to iframe src
-                    youtubeIframe.src = embedUrl;
-                }
-            } catch (e) {
-                console.warn('YouTube player error:', e);
-                youtubeIframe.src = embedUrl;
-            }
+            // ALWAYS use iframe src method (most reliable)
+            // The YouTube IFrame API can be inconsistent with playlist handling
+            youtubeIframe.src = embedUrl;
 
             playerContainer.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
         }
