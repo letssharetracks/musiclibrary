@@ -1329,22 +1329,20 @@
             // Show player
             playerContainer.classList.add('visible');
 
-            // Build embed URL with CORRECT indexing
-            // CRITICAL: YouTube uses 1-based indexing, NOT 0-based!
-            let embedUrl = `https://www.youtube.com/embed/${videoId}`;
-            embedUrl += '?autoplay=1';
-            embedUrl += '&rel=0';
-            embedUrl += '&modestbranding=1';
+            // NEW APPROACH: Use the EXACT URL from JSON, just convert format
+            // YouTube's watch URLs have specific parameters (like pp=) that might be required
+            let embedUrl = item.url
+                .replace('/watch?v=', '/embed/')  // Convert watch to embed
+                .replace('&', '?')                 // First & becomes ?
+                .replace(/&/g, '&');               // Rest stay as &
             
-            // Add playlist and index (use the index AS-IS from JSON, it's already 1-based)
-            if (playlistId && playlistIndex) {
-                embedUrl += `&list=${playlistId}`;
-                embedUrl += `&listType=playlist`;
-                embedUrl += `&index=${playlistIndex}`; // Keep 1-based index!
-            }
+            // Add autoplay, rel, and modestbranding to the existing parameters
+            embedUrl += '&autoplay=1&rel=0&modestbranding=1';
             
-            console.log('Embed URL with index:', embedUrl);
-            console.log('Expected video:', videoId, 'at index', playlistIndex);
+            console.log('Using EXACT URL conversion:');
+            console.log('  Original:', item.url);
+            console.log('  Embed:', embedUrl);
+            console.log('  Expected:', item.title);
 
             // NUCLEAR: Completely destroy and recreate iframe
             const oldIframe = youtubeIframe;
@@ -1358,8 +1356,7 @@
             // Replace old iframe with new one (clears all cache/state)
             oldIframe.parentNode.replaceChild(newIframe, oldIframe);
             
-            console.log('NUCLEAR: Iframe completely destroyed and recreated');
-            console.log('Should play:', item.title);
+            console.log('✓ Iframe recreated with exact URL parameters');
 
             playerContainer.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
         }
