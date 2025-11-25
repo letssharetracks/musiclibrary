@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -902,11 +901,19 @@
         </div>
     </div>
 
-    <!-- YouTube IFrame API removed - not needed for simple playlist embedding -->
+    <!-- YouTube IFrame API for error detection -->
+    <script src="https://www.youtube.com/iframe_api"></script>
     <script>
-        // Simple iframe-based player - no API needed
-        let youtubePlayer = null; // Keep for compatibility
-        let youtubeAPIReady = false; // Keep for compatibility
+        // YouTube API player for error detection
+        let youtubePlayer = null;
+        let youtubeAPIReady = false;
+        let currentYouTubeItem = null;
+        let unavailableVideos = new Set(); // Track videos that failed to load
+
+        function onYouTubeIframeAPIReady() {
+            console.log('YouTube IFrame API Ready');
+            youtubeAPIReady = true;
+        }
 
         function getYouTubeVideoId(url) {
             try {
@@ -1288,6 +1295,16 @@
             const playlistIndex = urlParams.get('index');
             const videoId = getYouTubeVideoId(item.url);
             
+            // PROMINENT DEBUG - Check browser console!
+            console.log('═══════════════════════════════════════════════════════');
+            console.log('🎵 CLICKED TRACK:');
+            console.log('   Title:', item.title);
+            console.log('   Artist:', item.artist);
+            console.log('   Full URL:', item.url);
+            console.log('   Extracted Video ID:', videoId);
+            console.log('   Playlist Index from URL:', playlistIndex);
+            console.log('═══════════════════════════════════════════════════════');
+            
             if (!videoId) {
                 console.warn('No videoId found, opening in new tab');
                 window.open(item.url, '_blank');
@@ -1329,51 +1346,93 @@
             // Show player
             playerContainer.classList.add('visible');
 
-            // SIMPLE APPROACH: Just play the individual video
-            // No playlist = no Ghost Cop issues
-            // Every track plays correctly 100% of the time
-            
-            let embedUrl = `https://www.youtube.com/embed/${videoId}`;
-            embedUrl += '?autoplay=1';
-            embedUrl += '&rel=0';              // Don't show related videos
-            embedUrl += '&modestbranding=1';   // Minimal branding
-            
-            console.log('Playing video:', videoId);
-            console.log('Title:', item.title);
-            console.log('Embed URL:', embedUrl);
+            // Check if this video was previously marked as unavailable
+            if (unavailableVideos.has(videoId)) {
+                console.warn('Video marked as unavailable, skipping:', videoId);
+                setTimeout(() => playNextTrack(), 500);
+                return;
+            }
 
-            // NUCLEAR: Completely destroy and recreate iframe
-            const oldIframe = youtubeIframe;
-            const newIframe = document.createElement('iframe');
-            newIframe.id = 'youtubeIframe';
-            newIframe.style.cssText = oldIframe.style.cssText;
-            newIframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
-            newIframe.allowFullscreen = true;
-            newIframe.src = embedUrl;
+            // Store current item for error handling
+            currentYouTubeItem = item;
+
+            // Destroy existing player if any
+            if (youtubePlayer) {
+                try {
+                    youtubePlayer.destroy();
+                } catch (e) {}
+                youtubePlayer = null;
+            }
+
+            // Clear the container
+            const youtubeContainer = youtubeIframe.parentElement;
+            youtubeIframe.remove();
             
-            // Replace old iframe with new one (clears all cache/state)
-            oldIframe.parentNode.replaceChild(newIframe, oldIframe);
+            // Create new div for player
+            const playerDiv = document.createElement('div');
+            playerDiv.id = 'youtubeIframe';
+            playerDiv.style.cssText = 'width: 100%; height: 100%;';
+            youtubeContainer.appendChild(playerDiv);
+
+            // Use YouTube API for proper error handling
+            if (youtubeAPIReady) {
+                youtubePlayer = new YT.Player('youtubeIframe', {
+                    videoId: videoId,
+                    playerVars: {
+                        autoplay: 1,
+                        rel: 0,
+                        modestbranding: 1,
+                        playsinline: 1
+                    },
+                    events: {
+                        onReady: function(event) {
+                            console.log('✓ Player ready for:', item.title);
+                        },
+                        onStateChange: function(event) {
+                            // State 0 = ended
+                            if (event.data === 0) {
+                                console.log('Video ended, playing next...');
+                                playNextTrack();
+                            }
+                        },
+                        onError: function(event) {
+                            // Error codes: 2 = invalid param, 5 = HTML5 error, 
+                            // 100 = not found, 101/150 = embedding not allowed
+                            console.error('YouTube Error:', event.data, 'for video:', videoId);
+                            console.error('Video unavailable:', item.title);
+                            
+                            // Mark this video as unavailable
+                            unavailableVideos.add(videoId);
+                            
+                            // Update the label to show error
+                            label.innerHTML = `
+                                ⚠️ Video unavailable: ${item.title} - Skipping...
+                                <button class="player-close" id="playerClose" title="Close player">×</button>
+                            `;
+                            
+                            // Auto-skip to next track
+                            setTimeout(() => playNextTrack(), 1500);
+                        }
+                    }
+                });
+            } else {
+                // Fallback to iframe if API not ready
+                console.log('API not ready, using iframe fallback');
+                const newIframe = document.createElement('iframe');
+                newIframe.id = 'youtubeIframe';
+                newIframe.style.cssText = 'width: 100%; height: 100%; border: none;';
+                newIframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
+                newIframe.allowFullscreen = true;
+                newIframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0&modestbranding=1&enablejsapi=1`;
+                playerDiv.replaceWith(newIframe);
+            }
             
             console.log('✓ Playing:', item.title);
 
             playerContainer.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
         }
 
-        // Listen for YouTube iframe messages
-        window.addEventListener('message', function(event) {
-            if (event.origin !== 'https://www.youtube.com') return;
-            
-            try {
-                const data = JSON.parse(event.data);
-                // State 0 = ended
-                if (data.event === 'onStateChange' && data.info === 0) {
-                    console.log('YouTube video ended (via postMessage), playing next...');
-                    playNextTrack();
-                }
-            } catch (e) {
-                // Ignore parse errors
-            }
-        });
+        // YouTube state changes are now handled by API onStateChange event
 
         function playNextTrack() {
             let source = currentFilter;
@@ -1994,11 +2053,5 @@
         // Load data when page loads
         loadData();
     </script>
-
-    <!-- Test Page Button -->
-    <a href="youtube_playlist_test.html" 
-       style="position: fixed; bottom: 20px; right: 20px; z-index: 9999; display: inline-block; padding: 12px 24px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; text-decoration: none; border-radius: 8px; font-weight: 600; box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);">
-        🧪 Test Playlist Fix
-    </a>
 </body>
 </html>
