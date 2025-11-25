@@ -1358,7 +1358,6 @@
         function updateYouTubePlayer(item) {
             const playerContainer = document.getElementById('bandcampPlayer');
             const bandcampIframe = document.getElementById('bandcampIframe');
-            const playerContent = document.querySelector('.player-content');
             const label = document.getElementById('playerLabel');
 
             // Extract info from URL
@@ -1430,11 +1429,11 @@
                 existingYT.remove();
             }
             
-            // Create fresh player container
+            // Create fresh player div - append to playerContainer (#bandcampPlayer)
             const playerDiv = document.createElement('div');
             playerDiv.id = 'youtubeIframe';
             playerDiv.style.cssText = 'width: 100%; height: 100%;';
-            playerContent.appendChild(playerDiv);
+            playerContainer.appendChild(playerDiv);
 
             // Use YouTube API with playlist for continuous play
             if (youtubeAPIReady && currentIndex !== -1) {
