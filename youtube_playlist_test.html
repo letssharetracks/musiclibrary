@@ -1358,7 +1358,7 @@
         function updateYouTubePlayer(item) {
             const playerContainer = document.getElementById('bandcampPlayer');
             const bandcampIframe = document.getElementById('bandcampIframe');
-            const youtubeIframe = document.getElementById('youtubeIframe');
+            const playerContent = document.querySelector('.player-content');
             const label = document.getElementById('playerLabel');
 
             // Extract info from URL
@@ -1382,16 +1382,14 @@
             console.log('   CURRENT index (from YT):', currentIndex);
             console.log('═══════════════════════════════════════════════════════');
 
-            // Hide Bandcamp, show YouTube
+            // Hide Bandcamp
             bandcampIframe.style.display = 'none';
-            youtubeIframe.style.display = 'block';
             bandcampIframe.src = '';
 
             // YouTube uses BOTTOM BAR
             playerContainer.classList.remove('sidebar-mode');
             document.body.classList.remove('sidebar-active');
             bandcampIframe.classList.remove('album-player');
-            youtubeIframe.classList.remove('album-player');
 
             // Update label
             label.innerHTML = `
@@ -1405,10 +1403,10 @@
                 playerContainer.classList.remove('visible', 'sidebar-mode');
                 document.body.classList.remove('sidebar-active');
                 bandcampIframe.src = '';
-                youtubeIframe.src = '';
-                // Stop the player
-                if (youtubePlayer && youtubePlayer.stopVideo) {
-                    youtubePlayer.stopVideo();
+                // Stop and cleanup player
+                if (youtubePlayer && youtubePlayer.destroy) {
+                    try { youtubePlayer.destroy(); } catch(err) {}
+                    youtubePlayer = null;
                 }
             });
 
@@ -1426,18 +1424,21 @@
                 youtubePlayer = null;
             }
 
-            // Clear the container and create new player div
-            const youtubeContainer = youtubeIframe.parentElement;
-            youtubeIframe.remove();
+            // Remove any existing youtube iframe/div
+            const existingYT = document.getElementById('youtubeIframe');
+            if (existingYT) {
+                existingYT.remove();
+            }
             
+            // Create fresh player container
             const playerDiv = document.createElement('div');
             playerDiv.id = 'youtubeIframe';
             playerDiv.style.cssText = 'width: 100%; height: 100%;';
-            youtubeContainer.appendChild(playerDiv);
+            playerContent.appendChild(playerDiv);
 
             // Use YouTube API with playlist for continuous play
             if (youtubeAPIReady && currentIndex !== -1) {
-                console.log(`🎵 Loading playlist at index ${currentIndex} for continuous play`);
+                console.log(`🎵 Loading playlist at index ${currentIndex}`);
                 
                 youtubePlayer = new YT.Player('youtubeIframe', {
                     playerVars: {
@@ -1452,29 +1453,31 @@
                     events: {
                         onReady: function(event) {
                             console.log('✓ Playlist player ready');
-                            // Verify correct video is playing
+                            // Force play at the correct index after a short delay
                             setTimeout(() => {
+                                event.target.playVideoAt(currentIndex);
+                            }, 500);
+                        },
+                        onStateChange: function(event) {
+                            if (event.data === 1) { // Playing
                                 const videoData = event.target.getVideoData();
                                 const playingIndex = event.target.getPlaylistIndex();
                                 console.log('▶ Now playing:', videoData.title);
-                                console.log('  At index:', playingIndex);
+                                console.log('  At index:', playingIndex, '(requested:', currentIndex, ')');
                                 if (videoData.video_id !== videoId) {
-                                    console.error('⚠️ WRONG VIDEO! Expected', videoId, 'got', videoData.video_id);
+                                    console.warn('⚠️ Wrong video, forcing correct one...');
+                                    event.target.playVideoAt(currentIndex);
                                 } else {
-                                    console.log('✓ Correct video playing!');
+                                    console.log('✓ Correct video!');
                                 }
-                            }, 1500);
-                        },
-                        onStateChange: function(event) {
-                            // State 0 = ended, but playlist should auto-continue
+                            }
                             if (event.data === 0) {
-                                console.log('Video ended - playlist should auto-continue');
+                                console.log('Video ended - playlist continues');
                             }
                         },
                         onError: function(event) {
                             console.error('YouTube Error:', event.data);
                             unavailableVideos.add(videoId);
-                            // Skip to next
                             setTimeout(() => playNextTrack(), 1500);
                         }
                     }
@@ -1496,7 +1499,7 @@
                         },
                         onStateChange: function(event) {
                             if (event.data === 0) {
-                                console.log('Video ended, playing next from library...');
+                                console.log('Video ended, playing next...');
                                 playNextTrack();
                             }
                         },
@@ -1509,13 +1512,11 @@
             } else {
                 // Fallback: API not ready, use simple iframe
                 console.log('API not ready, using iframe fallback');
-                const newIframe = document.createElement('iframe');
-                newIframe.id = 'youtubeIframe';
-                newIframe.style.cssText = 'width: 100%; height: 100%; border: none;';
-                newIframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
-                newIframe.allowFullscreen = true;
-                newIframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0&modestbranding=1`;
-                playerDiv.replaceWith(newIframe);
+                playerDiv.innerHTML = `<iframe 
+                    style="width:100%;height:100%;border:none;"
+                    src="https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0"
+                    allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture"
+                    allowfullscreen></iframe>`;
             }
             
             console.log('✓ Playing:', item.title);
