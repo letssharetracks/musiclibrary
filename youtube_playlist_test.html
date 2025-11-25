@@ -1438,47 +1438,57 @@
 
             // Use YouTube API with playlist for continuous play
             if (youtubeAPIReady && currentIndex !== -1) {
-                console.log(`🎵 Loading playlist at index ${currentIndex}`);
+                console.log(`🎵 Loading playlist starting at index ${currentIndex}`);
                 
+                // Create player first, then load playlist
                 youtubePlayer = new YT.Player('youtubeIframe', {
-                    playerVars: {
-                        listType: 'playlist',
-                        list: PLAYLIST_ID,
-                        index: currentIndex,
-                        autoplay: 1,
-                        rel: 0,
-                        modestbranding: 1,
-                        playsinline: 1
-                    },
                     events: {
                         onReady: function(event) {
-                            console.log('✓ Playlist player ready');
-                            // Force play at the correct index after a short delay
-                            setTimeout(() => {
-                                event.target.playVideoAt(currentIndex);
-                            }, 500);
+                            console.log('✓ Player ready, loading playlist...');
+                            // Load the playlist starting at the correct index
+                            event.target.loadPlaylist({
+                                listType: 'playlist',
+                                list: PLAYLIST_ID,
+                                index: currentIndex,
+                                startSeconds: 0
+                            });
                         },
                         onStateChange: function(event) {
                             if (event.data === 1) { // Playing
                                 const videoData = event.target.getVideoData();
                                 const playingIndex = event.target.getPlaylistIndex();
+                                const playlist = event.target.getPlaylist();
                                 console.log('▶ Now playing:', videoData.title);
-                                console.log('  At index:', playingIndex, '(requested:', currentIndex, ')');
-                                if (videoData.video_id !== videoId) {
-                                    console.warn('⚠️ Wrong video, forcing correct one...');
-                                    event.target.playVideoAt(currentIndex);
-                                } else {
-                                    console.log('✓ Correct video!');
+                                console.log('  Index:', playingIndex, '/', playlist ? playlist.length : '?');
+                                
+                                // Check if we got the right video
+                                if (videoData.video_id === videoId) {
+                                    console.log('✓ Correct video playing!');
+                                } else if (playingIndex !== currentIndex) {
+                                    // Only force if we're not at the right index
+                                    console.log('  (Different video, but playlist is playing)');
                                 }
                             }
-                            if (event.data === 0) {
-                                console.log('Video ended - playlist continues');
+                            if (event.data === 0) { // Ended
+                                console.log('Video ended - checking if playlist continues...');
+                                // Playlist should auto-continue, but check
+                                setTimeout(() => {
+                                    const state = event.target.getPlayerState();
+                                    if (state !== 1 && state !== 3) { // Not playing or buffering
+                                        console.log('Playlist stopped, might be at end');
+                                    }
+                                }, 1000);
                             }
                         },
                         onError: function(event) {
                             console.error('YouTube Error:', event.data);
                             unavailableVideos.add(videoId);
-                            setTimeout(() => playNextTrack(), 1500);
+                            // Try next video in playlist
+                            try {
+                                event.target.nextVideo();
+                            } catch(e) {
+                                setTimeout(() => playNextTrack(), 1500);
+                            }
                         }
                     }
                 });
