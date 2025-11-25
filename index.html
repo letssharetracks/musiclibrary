@@ -901,11 +901,92 @@
         </div>
     </div>
 
-    <!-- YouTube IFrame API removed - not needed for simple playlist embedding -->
+    <!-- YouTube IFrame API for playlist index lookup and continuous play -->
+    <script src="https://www.youtube.com/iframe_api"></script>
     <script>
-        // Simple iframe-based player - no API needed
-        let youtubePlayer = null; // Keep for compatibility
-        let youtubeAPIReady = false; // Keep for compatibility
+        // YouTube API players
+        let youtubePlayer = null;        // The visible player
+        let playlistLoader = null;       // Hidden player for loading playlist order
+        let youtubeAPIReady = false;
+        let currentYouTubeItem = null;
+        let unavailableVideos = new Set();
+        
+        // Playlist cache - maps video ID to current index
+        let playlistVideoIds = [];
+        let playlistIndexMap = new Map(); // videoId -> currentIndex
+        let playlistLoaded = false;
+        let playlistLoadAttempts = 0;
+        const PLAYLIST_ID = 'PLapBjnjxE544UhqAe21EDiSWF61rVvzLK';
+
+        function onYouTubeIframeAPIReady() {
+            console.log('✓ YouTube IFrame API Ready');
+            youtubeAPIReady = true;
+            
+            // Pre-load the playlist to get current video order
+            initPlaylistLoader();
+        }
+        
+        function initPlaylistLoader() {
+            console.log('Initializing playlist loader...');
+            
+            // Create a hidden player just to load the playlist
+            const tempDiv = document.createElement('div');
+            tempDiv.id = 'yt-playlist-loader';
+            tempDiv.style.cssText = 'position:absolute;width:1px;height:1px;overflow:hidden;left:-9999px;';
+            document.body.appendChild(tempDiv);
+            
+            playlistLoader = new YT.Player('yt-playlist-loader', {
+                height: '1',
+                width: '1',
+                playerVars: {
+                    listType: 'playlist',
+                    list: PLAYLIST_ID
+                },
+                events: {
+                    onReady: function(event) {
+                        console.log('✓ Playlist loader ready, caching playlist...');
+                        cachePlaylistOrder();
+                    },
+                    onStateChange: function(event) {
+                        if ((event.data === 5 || event.data === -1) && !playlistLoaded) {
+                            cachePlaylistOrder();
+                        }
+                    }
+                }
+            });
+        }
+        
+        function cachePlaylistOrder() {
+            playlistLoadAttempts++;
+            
+            if (!playlistLoader || typeof playlistLoader.getPlaylist !== 'function') {
+                if (playlistLoadAttempts < 20) {
+                    setTimeout(cachePlaylistOrder, 500);
+                }
+                return;
+            }
+            
+            const playlist = playlistLoader.getPlaylist();
+            if (playlist && playlist.length > 0) {
+                playlistVideoIds = playlist;
+                playlistIndexMap.clear();
+                
+                playlist.forEach((videoId, index) => {
+                    playlistIndexMap.set(videoId, index);
+                });
+                
+                playlistLoaded = true;
+                console.log(`✓ PLAYLIST CACHED: ${playlist.length} videos ready for continuous play`);
+            } else if (playlistLoadAttempts < 20) {
+                setTimeout(cachePlaylistOrder, 500);
+            }
+        }
+        
+        function getCurrentPlaylistIndex(videoId) {
+            if (!playlistLoaded) return -1;
+            const index = playlistIndexMap.get(videoId);
+            return index !== undefined ? index : -1;
+        }
 
         function getYouTubeVideoId(url) {
             try {
@@ -1278,13 +1359,11 @@
         function updateYouTubePlayer(item) {
             const playerContainer = document.getElementById('bandcampPlayer');
             const bandcampIframe = document.getElementById('bandcampIframe');
-            const youtubeIframe = document.getElementById('youtubeIframe');
             const label = document.getElementById('playerLabel');
 
             // Extract info from URL
             const urlParams = new URLSearchParams(new URL(item.url).search);
-            const playlistId = urlParams.get('list');
-            const playlistIndex = urlParams.get('index');
+            const oldPlaylistIndex = urlParams.get('index'); // Stale index from JSON
             const videoId = getYouTubeVideoId(item.url);
             
             if (!videoId) {
@@ -1293,22 +1372,54 @@
                 return;
             }
 
-            console.log('YouTube Player:');
-            console.log('  Title:', item.title);
-            console.log('  Video ID:', videoId);
-            console.log('  Playlist ID:', playlistId);
-            console.log('  Index:', playlistIndex);
+            // Look up the CURRENT index in YouTube's playlist
+            let currentIndex = getCurrentPlaylistIndex(videoId);
+            
+            // If playlist not loaded yet, wait for it (max 5 seconds)
+            if (!playlistLoaded && youtubeAPIReady) {
+                console.log('⏳ Waiting for playlist to cache...');
+                label.innerHTML = `
+                    ⏳ Loading playlist data...
+                    <button class="player-close" id="playerClose" title="Close player">×</button>
+                `;
+                playerContainer.classList.add('visible');
+                
+                let waitCount = 0;
+                const waitForPlaylist = setInterval(() => {
+                    waitCount++;
+                    if (playlistLoaded) {
+                        clearInterval(waitForPlaylist);
+                        currentIndex = getCurrentPlaylistIndex(videoId);
+                        console.log('✓ Playlist loaded, continuing...');
+                        continuePlayback();
+                    } else if (waitCount > 10) {
+                        clearInterval(waitForPlaylist);
+                        console.warn('Playlist cache timeout, playing standalone');
+                        currentIndex = -1;
+                        continuePlayback();
+                    }
+                }, 500);
+                return;
+            }
+            
+            continuePlayback();
+            
+            function continuePlayback() {
+            
+            console.log('═══════════════════════════════════════════════════════');
+            console.log('🎵 PLAYING:', item.title);
+            console.log('   Video ID:', videoId);
+            console.log('   Playlist index:', currentIndex);
+            console.log('═══════════════════════════════════════════════════════');
 
-            // Hide Bandcamp, show YouTube
+            // Hide Bandcamp
             bandcampIframe.style.display = 'none';
-            youtubeIframe.style.display = 'block';
             bandcampIframe.src = '';
 
             // YouTube uses BOTTOM BAR
             playerContainer.classList.remove('sidebar-mode');
             document.body.classList.remove('sidebar-active');
             bandcampIframe.classList.remove('album-player');
-            youtubeIframe.classList.remove('album-player');
 
             // Update label
             label.innerHTML = `
@@ -1322,40 +1433,117 @@
                 playerContainer.classList.remove('visible', 'sidebar-mode');
                 document.body.classList.remove('sidebar-active');
                 bandcampIframe.src = '';
-                youtubeIframe.src = '';
+                if (youtubePlayer && youtubePlayer.destroy) {
+                    try { youtubePlayer.destroy(); } catch(err) {}
+                    youtubePlayer = null;
+                }
             });
 
             // Show player
             playerContainer.classList.add('visible');
 
-            // SIMPLE APPROACH: Just play the individual video
-            // No playlist = no Ghost Cop issues
-            // Every track plays correctly 100% of the time
-            
-            let embedUrl = `https://www.youtube.com/embed/${videoId}`;
-            embedUrl += '?autoplay=1';
-            embedUrl += '&rel=0';              // Don't show related videos
-            embedUrl += '&modestbranding=1';   // Minimal branding
-            
-            console.log('Playing video:', videoId);
-            console.log('Title:', item.title);
-            console.log('Embed URL:', embedUrl);
+            // Store current item
+            currentYouTubeItem = item;
 
-            // NUCLEAR: Completely destroy and recreate iframe
-            const oldIframe = youtubeIframe;
-            const newIframe = document.createElement('iframe');
-            newIframe.id = 'youtubeIframe';
-            newIframe.style.cssText = oldIframe.style.cssText;
-            newIframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
-            newIframe.allowFullscreen = true;
-            newIframe.src = embedUrl;
-            
-            // Replace old iframe with new one (clears all cache/state)
-            oldIframe.parentNode.replaceChild(newIframe, oldIframe);
-            
-            console.log('✓ Playing:', item.title);
+            // Destroy existing visible player if any
+            if (youtubePlayer && youtubePlayer.destroy) {
+                try {
+                    youtubePlayer.destroy();
+                } catch (e) {}
+                youtubePlayer = null;
+            }
 
+            // Remove any existing youtube iframe/div
+            const existingYT = document.getElementById('youtubeIframe');
+            if (existingYT) {
+                existingYT.remove();
+            }
+            
+            // Create fresh player div
+            const playerDiv = document.createElement('div');
+            playerDiv.id = 'youtubeIframe';
+            playerDiv.style.cssText = 'width: 100%; height: 100%;';
+            playerContainer.appendChild(playerDiv);
+
+            // Use YouTube API with playlist for continuous play
+            if (youtubeAPIReady && currentIndex !== -1) {
+                console.log(`🎵 Loading playlist at index ${currentIndex} for continuous play`);
+                
+                youtubePlayer = new YT.Player('youtubeIframe', {
+                    events: {
+                        onReady: function(event) {
+                            console.log('✓ Player ready, loading playlist...');
+                            event.target.loadPlaylist({
+                                listType: 'playlist',
+                                list: PLAYLIST_ID,
+                                index: currentIndex,
+                                startSeconds: 0
+                            });
+                        },
+                        onStateChange: function(event) {
+                            if (event.data === 1) { // Playing
+                                const videoData = event.target.getVideoData();
+                                const playingIndex = event.target.getPlaylistIndex();
+                                const playlist = event.target.getPlaylist();
+                                console.log('▶ Now playing:', videoData.title);
+                                console.log('  Index:', playingIndex, '/', playlist ? playlist.length : '?');
+                            }
+                            if (event.data === 0) { // Ended
+                                console.log('Video ended - playlist continues...');
+                            }
+                        },
+                        onError: function(event) {
+                            console.error('YouTube Error:', event.data);
+                            unavailableVideos.add(videoId);
+                            try {
+                                event.target.nextVideo();
+                            } catch(e) {
+                                setTimeout(() => playNextTrack(), 1500);
+                            }
+                        }
+                    }
+                });
+            } else if (youtubeAPIReady) {
+                // Video not found in playlist - play standalone
+                console.log('⚠️ Video not in playlist, playing standalone');
+                youtubePlayer = new YT.Player('youtubeIframe', {
+                    videoId: videoId,
+                    playerVars: {
+                        autoplay: 1,
+                        rel: 0,
+                        modestbranding: 1,
+                        playsinline: 1
+                    },
+                    events: {
+                        onReady: function(event) {
+                            console.log('✓ Standalone player ready');
+                        },
+                        onStateChange: function(event) {
+                            if (event.data === 0) {
+                                console.log('Video ended, playing next from library...');
+                                playNextTrack();
+                            }
+                        },
+                        onError: function(event) {
+                            console.error('YouTube Error:', event.data);
+                            setTimeout(() => playNextTrack(), 1500);
+                        }
+                    }
+                });
+            } else {
+                // Fallback: API not ready
+                console.log('API not ready, using iframe fallback');
+                playerDiv.innerHTML = `<iframe 
+                    style="width:100%;height:100%;border:none;"
+                    src="https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0"
+                    allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture"
+                    allowfullscreen></iframe>`;
+            }
+            
+            console.log('✓ Initiating:', item.title);
             playerContainer.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            
+            } // end continuePlayback
         }
 
         // Listen for YouTube iframe messages
