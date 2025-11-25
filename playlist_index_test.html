@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Playlist Index Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #1a1a1a;
+            color: #fff;
+            padding: 20px;
+        }
+        .test-row {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin: 15px 0;
+            padding: 15px;
+            background: #2a2a2a;
+            border-radius: 8px;
+        }
+        .test-row img {
+            width: 100px;
+            height: 56px;
+            object-fit: cover;
+            border-radius: 4px;
+            background: #333;
+        }
+        .test-info { flex: 1; }
+        .test-title { font-weight: bold; }
+        .test-index { font-family: monospace; color: #ffa500; }
+        .test-id { font-family: monospace; color: #888; font-size: 12px; }
+        button {
+            padding: 10px 20px;
+            background: #ff4444;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover { background: #ff6666; }
+        #player-container {
+            margin: 20px 0;
+            background: #000;
+            border-radius: 8px;
+            overflow: hidden;
+            width: 640px;
+        }
+        #player { width: 640px; height: 360px; }
+        #log {
+            background: #111;
+            padding: 15px;
+            border-radius: 8px;
+            font-family: monospace;
+            font-size: 12px;
+            max-height: 250px;
+            overflow-y: auto;
+            margin-top: 20px;
+        }
+        .success { color: #4caf50; }
+        .error { color: #f44336; }
+        .info { color: #2196f3; }
+        .warn { color: #ffa500; }
+        h2 { color: #888; margin-top: 30px; }
+        .status-bar {
+            background: #333;
+            padding: 10px 15px;
+            border-radius: 4px;
+            margin: 10px 0;
+            font-family: monospace;
+        }
+    </style>
+</head>
+<body>
+    <h1>🎵 Playlist Index Test</h1>
+    <p>Testing: Click thumbnail → Play that song IN THE PLAYLIST → Playlist continues from there</p>
+    
+    <div class="status-bar">
+        <strong>Current:</strong> <span id="current-status">Not playing</span> | 
+        <strong>Index:</strong> <span id="current-index">-</span> | 
+        <strong>Will play next:</strong> <span id="next-track">-</span>
+    </div>
+    
+    <div id="player-container">
+        <div id="player"></div>
+    </div>
+    
+    <h2>Your Playlist Tracks (click to jump to that position):</h2>
+    
+    <!-- Working ones -->
+    <div class="test-row">
+        <img src="https://i.ytimg.com/vi/xvu4lb8tl-A/mqdefault.jpg">
+        <div class="test-info">
+            <div class="test-title">✓ there 4 u (radio edit)</div>
+            <div class="test-index">Playlist Index: 3 (zero-based: 2)</div>
+            <div class="test-id">Video ID: xvu4lb8tl-A</div>
+        </div>
+        <button onclick="playAtIndex(2, 'there 4 u')">Play at Index 2</button>
+    </div>
+    
+    <div class="test-row">
+        <img src="https://i.ytimg.com/vi/o41W4zWbL-E/mqdefault.jpg">
+        <div class="test-info">
+            <div class="test-title">✓ Limit - 2XM</div>
+            <div class="test-index">Playlist Index: 152 (zero-based: 151)</div>
+            <div class="test-id">Video ID: o41W4zWbL-E</div>
+        </div>
+        <button onclick="playAtIndex(151, 'Limit')">Play at Index 151</button>
+    </div>
+    
+    <div class="test-row">
+        <img src="https://i.ytimg.com/vi/YtQhgrOXABk/mqdefault.jpg">
+        <div class="test-info">
+            <div class="test-title">✓ Total Confusion (Heavenly Mix)</div>
+            <div class="test-index">Playlist Index: 65 (zero-based: 64)</div>
+            <div class="test-id">Video ID: YtQhgrOXABk</div>
+        </div>
+        <button onclick="playAtIndex(64, 'Total Confusion')">Play at Index 64</button>
+    </div>
+    
+    <!-- Broken ones -->
+    <div class="test-row" style="border: 2px solid #f44336;">
+        <img src="https://i.ytimg.com/vi/evZbeUAMoYg/mqdefault.jpg">
+        <div class="test-info">
+            <div class="test-title">✗ Candlewick Green - Who Do You Think You Are</div>
+            <div class="test-index">Playlist Index: 676 (zero-based: 675)</div>
+            <div class="test-id">Video ID: evZbeUAMoYg</div>
+        </div>
+        <button onclick="playAtIndex(675, 'Candlewick Green')">Play at Index 675</button>
+    </div>
+    
+    <div class="test-row" style="border: 2px solid #f44336;">
+        <img src="https://i.ytimg.com/vi/QXjXBSzYEOI/mqdefault.jpg">
+        <div class="test-info">
+            <div class="test-title">✗ Madlib - Static Invazion</div>
+            <div class="test-index">Playlist Index: 439 (zero-based: 438)</div>
+            <div class="test-id">Video ID: QXjXBSzYEOI</div>
+        </div>
+        <button onclick="playAtIndex(438, 'Madlib')">Play at Index 438</button>
+    </div>
+    
+    <!-- Ghost Cop -->
+    <div class="test-row" style="border: 2px solid #ffa500;">
+        <img src="https://i.ytimg.com/vi/Nq5k1sCocuM/mqdefault.jpg">
+        <div class="test-info">
+            <div class="test-title">🔶 GHOST COP - A SHOT IN THE DARK</div>
+            <div class="test-index">Playlist Index: 29 (zero-based: 28)</div>
+            <div class="test-id">Video ID: Nq5k1sCocuM</div>
+        </div>
+        <button onclick="playAtIndex(28, 'Ghost Cop')">Play at Index 28</button>
+    </div>
+    
+    <h2>Debug Log:</h2>
+    <div id="log"></div>
+
+    <script>
+        const PLAYLIST_ID = 'PLapBjnjxE544UhqAe21EDiSWF61rVvzLK';
+        let player;
+        let expectedTitle = '';
+        
+        function log(msg, type = 'info') {
+            const logEl = document.getElementById('log');
+            const time = new Date().toLocaleTimeString();
+            logEl.innerHTML = `<div class="${type}">[${time}] ${msg}</div>` + logEl.innerHTML;
+            console.log(msg);
+        }
+        
+        // Load YouTube API
+        var tag = document.createElement('script');
+        tag.src = 'https://www.youtube.com/iframe_api';
+        var firstScriptTag = document.getElementsByTagName('script')[0];
+        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+        
+        function onYouTubeIframeAPIReady() {
+            log('YouTube API Ready - Loading playlist...', 'success');
+            
+            player = new YT.Player('player', {
+                height: '360',
+                width: '640',
+                playerVars: {
+                    listType: 'playlist',
+                    list: PLAYLIST_ID,
+                    index: 0,
+                    enablejsapi: 1
+                },
+                events: {
+                    onReady: onPlayerReady,
+                    onStateChange: onPlayerStateChange,
+                    onError: onPlayerError
+                }
+            });
+        }
+        
+        function onPlayerReady(event) {
+            log('Player ready!', 'success');
+            
+            // Get playlist info
+            setTimeout(() => {
+                const playlist = player.getPlaylist();
+                if (playlist) {
+                    log(`Playlist loaded: ${playlist.length} videos`, 'success');
+                    
+                    // Check what's at various indexes
+                    log(`Video at index 0: ${playlist[0]}`, 'info');
+                    log(`Video at index 28 (Ghost Cop?): ${playlist[28]}`, 'info');
+                    log(`Video at index 438 (Madlib?): ${playlist[438]}`, 'info');
+                    
+                    // Verify Ghost Cop's position
+                    const ghostCopIndex = playlist.indexOf('Nq5k1sCocuM');
+                    log(`Ghost Cop (Nq5k1sCocuM) is at index: ${ghostCopIndex}`, 'warn');
+                    
+                    // Verify Madlib's position
+                    const madlibIndex = playlist.indexOf('QXjXBSzYEOI');
+                    log(`Madlib (QXjXBSzYEOI) is at index: ${madlibIndex}`, 'warn');
+                }
+            }, 2000);
+        }
+        
+        function onPlayerStateChange(event) {
+            if (event.data === 1) { // Playing
+                const videoData = player.getVideoData();
+                const currentIndex = player.getPlaylistIndex();
+                const playlist = player.getPlaylist();
+                
+                document.getElementById('current-status').textContent = videoData.title;
+                document.getElementById('current-index').textContent = currentIndex;
+                
+                if (playlist && playlist[currentIndex + 1]) {
+                    document.getElementById('next-track').textContent = `Index ${currentIndex + 1}`;
+                }
+                
+                log(`▶ NOW PLAYING: "${videoData.title}"`, 'success');
+                log(`  Index: ${currentIndex}, Video ID: ${videoData.video_id}`, 'info');
+                
+                if (expectedTitle && !videoData.title.toLowerCase().includes(expectedTitle.toLowerCase())) {
+                    log(`⚠️ WRONG VIDEO! Expected "${expectedTitle}" but got "${videoData.title}"`, 'error');
+                }
+            }
+        }
+        
+        function onPlayerError(event) {
+            log(`ERROR ${event.data}`, 'error');
+        }
+        
+        function playAtIndex(index, title) {
+            expectedTitle = title;
+            log(`═══════════════════════════════════════`, 'info');
+            log(`REQUESTING: "${title}" at index ${index}`, 'info');
+            
+            if (player && player.playVideoAt) {
+                player.playVideoAt(index);
+                log(`Called player.playVideoAt(${index})`, 'info');
+            } else {
+                log('Player not ready!', 'error');
+            }
+        }
+    </script>
+</body>
+</html>
