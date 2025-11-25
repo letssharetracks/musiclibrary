@@ -915,10 +915,11 @@
         let playlistVideoIds = [];
         let playlistIndexMap = new Map(); // videoId -> currentIndex
         let playlistLoaded = false;
+        let playlistLoadAttempts = 0;
         const PLAYLIST_ID = 'PLapBjnjxE544UhqAe21EDiSWF61rVvzLK';
 
         function onYouTubeIframeAPIReady() {
-            console.log('YouTube IFrame API Ready');
+            console.log('✓ YouTube IFrame API Ready');
             youtubeAPIReady = true;
             
             // Pre-load the playlist to get current video order
@@ -926,6 +927,8 @@
         }
         
         function initPlaylistLoader() {
+            console.log('Initializing playlist loader...');
+            
             // Create a hidden player just to load the playlist
             const tempDiv = document.createElement('div');
             tempDiv.id = 'yt-playlist-loader';
@@ -941,17 +944,38 @@
                 },
                 events: {
                     onReady: function(event) {
-                        console.log('Playlist loader ready, caching playlist order...');
-                        setTimeout(cachePlaylistOrder, 2000);
+                        console.log('✓ Playlist loader ready, caching playlist...');
+                        // Start caching immediately, then retry quickly
+                        cachePlaylistOrder();
+                    },
+                    onStateChange: function(event) {
+                        // When playlist starts playing/cueing, try to cache
+                        if (event.data === 5 || event.data === -1) { // CUED or UNSTARTED
+                            if (!playlistLoaded) {
+                                cachePlaylistOrder();
+                            }
+                        }
                     }
                 }
             });
         }
         
         function cachePlaylistOrder() {
-            if (!playlistLoader || !playlistLoader.getPlaylist) {
-                console.warn('Playlist loader not ready, retrying...');
-                setTimeout(cachePlaylistOrder, 1000);
+            playlistLoadAttempts++;
+            
+            if (!playlistLoader) {
+                console.warn('Playlist loader not created yet, attempt', playlistLoadAttempts);
+                if (playlistLoadAttempts < 20) {
+                    setTimeout(cachePlaylistOrder, 500);
+                }
+                return;
+            }
+            
+            if (typeof playlistLoader.getPlaylist !== 'function') {
+                console.warn('Playlist loader not ready yet, attempt', playlistLoadAttempts);
+                if (playlistLoadAttempts < 20) {
+                    setTimeout(cachePlaylistOrder, 500);
+                }
                 return;
             }
             
@@ -965,22 +989,27 @@
                 });
                 
                 playlistLoaded = true;
-                console.log(`✓ Playlist cached: ${playlist.length} videos`);
+                console.log('═══════════════════════════════════════════════════════');
+                console.log(`✓ PLAYLIST CACHED: ${playlist.length} videos`);
                 console.log('  Sample lookups (CURRENT indexes):');
                 console.log('    Ghost Cop (Nq5k1sCocuM):', playlistIndexMap.get('Nq5k1sCocuM'));
                 console.log('    Madlib (QXjXBSzYEOI):', playlistIndexMap.get('QXjXBSzYEOI'));
                 console.log('    there 4 u (xvu4lb8tl-A):', playlistIndexMap.get('xvu4lb8tl-A'));
                 console.log('    Candlewick (evZbeUAMoYg):', playlistIndexMap.get('evZbeUAMoYg'));
+                console.log('    Total Confusion (YtQhgrOXABk):', playlistIndexMap.get('YtQhgrOXABk'));
+                console.log('═══════════════════════════════════════════════════════');
             } else {
-                console.warn('Playlist empty, retrying...');
-                setTimeout(cachePlaylistOrder, 1000);
+                console.warn('Playlist empty or not loaded, attempt', playlistLoadAttempts);
+                if (playlistLoadAttempts < 20) {
+                    setTimeout(cachePlaylistOrder, 500);
+                }
             }
         }
         
         // Look up the CURRENT index for a video ID
         function getCurrentPlaylistIndex(videoId) {
             if (!playlistLoaded) {
-                console.warn('Playlist not yet cached');
+                console.warn('Playlist not yet cached - wait a moment and try again');
                 return -1;
             }
             const index = playlistIndexMap.get(videoId);
@@ -1372,7 +1401,38 @@
             }
 
             // Look up the CURRENT index in YouTube's playlist
-            const currentIndex = getCurrentPlaylistIndex(videoId);
+            let currentIndex = getCurrentPlaylistIndex(videoId);
+            
+            // If playlist not loaded yet, wait for it (max 5 seconds)
+            if (!playlistLoaded && youtubeAPIReady) {
+                console.log('⏳ Waiting for playlist to cache...');
+                label.innerHTML = `
+                    ⏳ Loading playlist data...
+                    <button class="player-close" id="playerClose" title="Close player">×</button>
+                `;
+                playerContainer.classList.add('visible');
+                
+                let waitCount = 0;
+                const waitForPlaylist = setInterval(() => {
+                    waitCount++;
+                    if (playlistLoaded) {
+                        clearInterval(waitForPlaylist);
+                        currentIndex = getCurrentPlaylistIndex(videoId);
+                        console.log('✓ Playlist loaded, continuing...');
+                        continuePlayback();
+                    } else if (waitCount > 10) {
+                        clearInterval(waitForPlaylist);
+                        console.warn('Playlist cache timeout, playing standalone');
+                        currentIndex = -1;
+                        continuePlayback();
+                    }
+                }, 500);
+                return;
+            }
+            
+            continuePlayback();
+            
+            function continuePlayback() {
             
             console.log('═══════════════════════════════════════════════════════');
             console.log('🎵 CLICKED:', item.title);
@@ -1528,8 +1588,10 @@
                     allowfullscreen></iframe>`;
             }
             
-            console.log('✓ Playing:', item.title);
+            console.log('✓ Initiating:', item.title);
             playerContainer.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            
+            } // end continuePlayback
         }
 
         // YouTube state changes handled by API - remove old postMessage listener
