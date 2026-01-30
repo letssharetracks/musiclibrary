@@ -20236,5 +20236,41 @@
     "bandcamp_id": null,
     "bandcamp_type": null,
     "bandcamp_album_id": null
+  },
+  {
+    "url": "https://garifunacollective.bandcamp.com/track/y-nd-ya-weyu-the-sun-has-set",
+    "title": "Yündüya Weyu (The Sun Has Set), by Sofia Blanco",
+    "artist": "Sofia Blanco",
+    "tags": [],
+    "release": "released March 18, 2008",
+    "description": " from the album Umalali: The Garifuna Women's Project ",
+    "image": "https://f4.bcbits.com/img/a1379141625_5.jpg",
+    "bandcamp_id": null,
+    "bandcamp_type": "track",
+    "bandcamp_album_id": null
+  },
+  {
+    "url": "https://tdotno.bandcamp.com/track/detonate",
+    "title": "DETONATE, by T.NO",
+    "artist": "T.NO",
+    "tags": [],
+    "release": "released December 5, 2025",
+    "description": " from the album CODEX ",
+    "image": "https://f4.bcbits.com/img/a1515426333_5.jpg",
+    "bandcamp_id": null,
+    "bandcamp_type": "track",
+    "bandcamp_album_id": null
+  },
+  {
+    "url": "https://clawsisthebastard.bandcamp.com/track/dont-flip-the-crystal-ship",
+    "title": "Don't Flip The Crystal Ship, by C.l.a.w.s.",
+    "artist": "C.l.a.w.s.",
+    "tags": [],
+    "release": "released November 21, 2025",
+    "description": " from the album Splat City II ",
+    "image": "https://f4.bcbits.com/img/a3795847605_5.jpg",
+    "bandcamp_id": null,
+    "bandcamp_type": "track",
+    "bandcamp_album_id": null
   }
 ]
